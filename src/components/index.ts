@@ -6,7 +6,6 @@ import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator';
 import { PokemonDetails } from './PokemonDetails/PokemonDetails';
 import { PokemonList } from './PokemonList/PokemonList';
 import { PokemonListItem } from './PokemonListItem/PokemonListItem';
-import { DarkLightTheme } from './DarkLightTheme/DarkLightTheme';
 
 export { 
     FilterByName,
@@ -17,5 +16,4 @@ export {
     PokemonDetails, 
     PokemonList,
     PokemonListItem,
-    DarkLightTheme
 };
