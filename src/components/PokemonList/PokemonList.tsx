@@ -21,15 +21,15 @@ export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
   // }
 
   return (
-    <section id="pokemon-list">
-      <ul>
+    <section id="pokemon-list" className="pokemonList">
+      <ul className="pokemonList">
         {[...pokemons].slice(0, 20).map((pokemon) => {
           return (
               <PokemonListItem pokemon={pokemon} />
           );
         })}
       </ul>
-      <button
+      <button className="pokemonList__btn pokemonList__btn--light"
         onClick={() => {
           console.log('load more Pokemons on click');
         }}

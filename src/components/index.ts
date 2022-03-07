@@ -3,10 +3,10 @@ import { FilterByType } from './FilterByType/FilterByType';
 import { Footer } from './Footer/Footer';
 import { LandingPage } from './LandingPage/LandingPage';
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator';
-import { NavBar } from './NavBar/NavBar';
 import { PokemonDetails } from './PokemonDetails/PokemonDetails';
 import { PokemonList } from './PokemonList/PokemonList';
 import { PokemonListItem } from './PokemonListItem/PokemonListItem';
+import { DarkLightTheme } from './DarkLightTheme/DarkLightTheme';
 
 export { 
     FilterByName,
@@ -14,8 +14,8 @@ export {
     Footer, 
     LandingPage,
     LoadingIndicator,
-    NavBar, 
     PokemonDetails, 
     PokemonList,
     PokemonListItem,
+    DarkLightTheme
 };

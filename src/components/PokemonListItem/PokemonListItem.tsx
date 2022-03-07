@@ -24,7 +24,7 @@ export function PokemonListItem({
         {/* <img src={require(`${pokemon.url}`)} alt={`${pokemon.name}`} /> */}
         <img
           className="pokemonListItem__img--small"
-          src={"../../images/pokemonFavicon.svg}"`)"}
+          src={require("../../images/pokemonExample.png")}
           alt={`${pokemon.name}`}
         />
         <figcaption className="pokemonListItem__label">

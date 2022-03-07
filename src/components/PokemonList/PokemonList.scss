@@ -3,10 +3,44 @@
 @import "../../styles/variables/variables.scss";
 
 .pokemonList {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 90vw;
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent;
+}
+
+.pokemonList__btn--light {
+    @extend %btnLight;
+}
+
+.pokemonList__container--without-jumping {
+    // align-items: center;
+    // display: flex;
+    // height: 80px;
+    // justify-content: center;
+    // padding: 10px;
+}
+
+.pokemonList__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    width: 250px;
+    transition: height 0.3s width 0.3s;
+
+    // &:hover {
+    //     height: 52px;
+    //     width: 202px;
+    // }
+
+    a {
+        text-decoration: none;
+    }
 }

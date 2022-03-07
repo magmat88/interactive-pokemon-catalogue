@@ -1,7 +1,7 @@
 import React from 'react';
+import useLocalStorage from 'use-local-storage';
 import {
   PokemonList,
-  NavBar,
   Footer,
   LandingPage,
   FilterByName,
@@ -193,10 +193,23 @@ const pokemons = [
 ];
 
 export function App() {
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage(
+    'theme',
+    defaultDark ? 'dark' : 'light'
+  );
+
+  function handleOnClickSwitchTheme() {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  }
+
   return (
-    <main className="app">
-      <NavBar />
+    <main className="app" data-theme={theme}>
       <LandingPage />
+      <button onClick={handleOnClickSwitchTheme}>
+        Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
+      </button>
       <section className="app__filters">
         <FilterByType pokemons={pokemons} />
         <FilterByName pokemons={pokemons} />
