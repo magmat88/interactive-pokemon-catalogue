@@ -1,0 +1,78 @@
+@import "../../styles/mixins/mixins.scss";
+@import "../../styles/placeholders/placeholders.scss";
+@import "../../styles/variables/variables.scss";
+
+.filterByName {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 80px;
+}
+
+.filterByName__btn--light {
+    @extend %btnLight;
+}
+
+.filterByName__container {
+    align-items: center;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.filterByName__container--without-jumping {
+    align-items: center;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.filterByName__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    transition: height 0.3s width 0.3s;
+
+    // &:hover {
+    //     height: 52px;
+    //     width: 202px;
+    // }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.filterByName__input--standard {
+    border-color: $color_dark;
+    color: $color_grey;
+    transition: border-color 0.3s;
+
+    &:hover,
+    &:focus {
+        border-color: $color_contrast;
+    }
+}
+
+.filterByName__input {
+    @extend %textStandard;
+    border-radius: 5px;
+    border: 2px solid;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+
+    input[type="text"] {
+        background: transparent;
+        border: none;
+        width: 82vw;
+    }
+}

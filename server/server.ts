@@ -61,7 +61,7 @@ fastify.get(DASHBOARD_ROUTE, async (req: any, reply: any) => {
     ]);
 
     const response = {
-      pokemonList: pokemonDetailsById.data,
+      pokemonList: pokemonList.data,
       pokemonDetailsById: pokemonDetailsById.data,
     };
     reply.send(response);

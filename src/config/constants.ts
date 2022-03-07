@@ -1,5 +1,4 @@
-// export const URL_BASE = 'https://pokeapi.co/api/v2/ability/?offset=0&limit=20';
-export const URL_BASE = 'https://pokeapi.co/api/v2/';
+export const URL_BASE = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20';
 export const URL_ABOUT_API = 'https://pokeapi.co';
 export const DASHBOARD_ROUTE = '/dashboard';
 export const HOME_ROUTE = '/';

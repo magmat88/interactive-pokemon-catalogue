@@ -1,0 +1,77 @@
+@import "../../styles/mixins/mixins.scss";
+@import "../../styles/placeholders/placeholders.scss";
+@import "../../styles/variables/variables.scss";
+
+.landingPage__btn--light {
+    @extend %btnLight;
+}
+
+.landingPage__btn--container {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landingPage__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+
+    &:hover {
+        height: 52px;
+        width: 202px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+//source of landing image: https://unsplash.com/photos/TWCnHKKhqSo
+
+.landingPage {
+    align-items: center;
+    background-image: url("../../images/landingImageSmall.jpg");
+    background-position: center;
+    background-size: cover;
+    border-bottom: 3px solid $color_contrast;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    max-width: 100vw;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
+
+    @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+        background-image: url("../../images/landingImageMedium.jpg");
+    }
+
+    @include forLargeScreens($breakpoint-medium) {
+        background-image: url("../../images/landingImageLarge.jpg");
+    }
+}
+
+.landingPage__container {
+    font-size: 1.4rem;
+    color: $color_contrast;
+    cursor: default;
+    background-color: $color_light;
+    width: 100vw;
+
+    h1 {
+        font-size: 2.7rem;
+        line-height: 1.2;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+}

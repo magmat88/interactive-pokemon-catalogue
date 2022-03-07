@@ -7,6 +7,7 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 15px 35px;
     padding: 15px 30px;
     width: 90px;
@@ -18,17 +19,18 @@
 }
 
 %btnLight {
-    background-color: $color_light;
     color: $color_contrast;
-
-    &:hover {
-        background-color: $color_alert;
-        color: $color_light;
-    }
+    background-color: transparent;
+    border: 1px solid $color_dark;
+    transition: background-color 0.3s, color 0.5s, height 0.3s, width 0.3s;
 
     a {
-        color: $color_contrast;
-        text-decoration: none;
+        color: $color_dark;
+    }
+
+    &:hover {
+        background-color: $color_contrast;
+        color: $color_light;
     }
 }
 

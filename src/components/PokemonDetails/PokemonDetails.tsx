@@ -10,13 +10,17 @@ export function PokemonDetails({ pokemon }: PokemonDetailsProps): JSX.Element {
   return (
     <article>
       <h1>{pokemon.name}</h1>
-      <h2>{pokemon.types}</h2>
       <figure>
-        <img src={require(`${pokemon.url}`)} alt={`${pokemon.name}`} />
+        {'place for img'}
+        {/* <img src={require(`${pokemon.url}`)} alt={`${pokemon.name}`} /> */}
+        <figcaption>
+          {/* labels with different colors for each type */}
+          <p>{pokemon.types}</p>
+        </figcaption>
       </figure>
       <p>
-        <strong>Height:</strong> {pokemon.height} m 
-        <strong>Weight:</strong> {pokemon.weight} kg 
+        <strong>Height:</strong> {pokemon.height} m<strong>Weight:</strong>{' '}
+        {pokemon.weight} kg
         <strong>Sprite:</strong> {pokemon.sprite}
       </p>
       <p>{pokemon.description}</p>

@@ -1,0 +1,44 @@
+@import "../../styles/mixins/mixins.scss";
+@import "../../styles/placeholders/placeholders.scss";
+@import "../../styles/variables/variables.scss";
+
+.filterByType {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 80px;
+}
+
+.filterByType___container {
+    align-items: center;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+}
+
+.filterByType__input--standard {
+    border-color: $color_dark;
+    color: $color_grey;
+    transition: border-color 0.3s;
+
+    &:hover,
+    &:focus {
+        border-color: $color_contrast;
+    }
+}
+
+.filterByType__input {
+    @extend %textStandard;
+    border-radius: 5px;
+    border: 2px solid;
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+
+    input[type="text"] {
+        background: transparent;
+        border: none;
+        width: 82vw;
+    }
+}
