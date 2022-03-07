@@ -1,0 +1,47 @@
+@import "../variables/variables.scss";
+
+%btn {
+    @extend %textLabel;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 15px 35px;
+    padding: 15px 30px;
+    width: 90px;
+
+    &:active {
+        border: 5px solid $color_active;
+        padding: 10px 25px;
+    }
+}
+
+%btnLight {
+    background-color: $color_light;
+    color: $color_contrast;
+
+    &:hover {
+        background-color: $color_alert;
+        color: $color_light;
+    }
+
+    a {
+        color: $color_contrast;
+        text-decoration: none;
+    }
+}
+
+%btnContrast {
+    background-color: $color_contrast;
+    color: $color_light;
+
+    &:hover {
+        background-color: $color_contrast;
+    }
+
+    a {
+        color: $color_light;
+        text-decoration: none;
+    }
+}

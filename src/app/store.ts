@@ -1,17 +1,18 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import React from 'react';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createBrowserHistory } from 'history';
+import thunk from 'redux-thunk';
+import { routerMiddleware } from 'connected-react-router';
+import { rootReducer } from '../reducers';
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+export const history = createBrowserHistory();
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export const store = createStore(
+    rootReducer,
+    compose(
+      applyMiddleware(thunk, routerMiddleware(history)),
+    //   window.__REDUX_DEVTOOLS_EXTENSION__
+    //     ? window.__REDUX_DEVTOOLS_EXTENSION__()
+    //     : (f) => f
+    )
+  );
