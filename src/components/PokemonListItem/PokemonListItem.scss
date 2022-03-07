@@ -2,11 +2,9 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.pokemonList {
+
+.pokemonListItem {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90vw;
-    flex-wrap: wrap;
+    
 }

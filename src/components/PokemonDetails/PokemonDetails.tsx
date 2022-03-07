@@ -8,7 +8,7 @@ interface PokemonDetailsProps {
 
 export function PokemonDetails({ pokemon }: PokemonDetailsProps): JSX.Element {
   return (
-    <article>
+    <article className="pokemonDetails">
       <h1>{pokemon.name}</h1>
       <figure>
         {'place for img'}
