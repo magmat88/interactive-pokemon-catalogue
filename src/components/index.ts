@@ -1,4 +1,6 @@
 import { NavBar } from './NavBar/NavBar';
-import { Pokemons } from './PokemonList/PokemonList';
+import { PokemonList } from './PokemonList/PokemonList';
+import { PokemonDetails } from './PokemonDetails/PokemonDetails';
+import { Footer } from './Footer/Footer';
 
-export { NavBar, Pokemons };
+export { NavBar, PokemonList, PokemonDetails, Footer };

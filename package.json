@@ -1,6 +1,9 @@
 {
   "name": "interactive-pokemon-catalogue",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.13.0"
+  },
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
@@ -16,7 +19,7 @@
     "body-parser": "^1.19.2",
     "connected-react-router": "^6.9.2",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "fastify": "^3.27.2",
     "history": "^5.3.0",
     "node-sass": "^7.0.1",
     "nodemon": "^2.0.15",
@@ -47,5 +50,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

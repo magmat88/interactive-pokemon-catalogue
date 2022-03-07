@@ -1,9 +1,11 @@
 import React from 'react';
+import { PokemonList, NavBar, Footer } from '../components';
 import './App.scss';
 
 export function App() {
   return (
-    <div>
-    </div>
+    <main className="app">
+      <
+    </main>
   );
 }
