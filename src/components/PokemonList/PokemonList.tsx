@@ -7,10 +7,6 @@ interface PokemonListProps {
   pokemons: Array<PokemonType>;
 }
 
-function handleOnClickPokemonListItem(event: any) {
-  console.log('on click show Pokemon Details');
-}
-
 export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
   return (
     <section id="pokemon-list" className="pokemonList">
@@ -19,7 +15,6 @@ export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
           return (
             <li
               key={pokemon.name}
-              onClick={handleOnClickPokemonListItem}
               className="pokemonList__listItem"
             >
               <PokemonListItem pokemon={pokemon} />
