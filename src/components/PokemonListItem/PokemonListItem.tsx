@@ -33,87 +33,80 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
   const [isDetailsRequestPending, setIsDetailsRequestPending] = useState(true);
   const [detailsVisibility, setDetailsVisibility] = useState(false);
   const [isDetailsError, setIsDetailsError] = useState(false);
-  const detailsVisibilityClass = detailsVisibility
-    ? 'pokemonList__details--visible'
-    : 'pokemonList__details--hidden';
 
-  // useEffect(() => {
-  //   if (currentPokemonId) {
-  //     setIsDetailsRequestPending(true);
-  //     axios
-  //       .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemonId}`)
-  //       .then((res) => {
-  //         setIsDetailsRequestPending(false);
-  //         setDetailsResponse(res.data);
-  //         // console.log('sprite:', res.data.sprites.front_default, 'types:',res.data.types, 'height:',res.data.height, 'weight:',res.data.weight);
-  //         res.data.types.forEach((type: any) => {
-  //           detailsResponse.types = [
-  //             ...detailsResponse.types,
-  //             `${type.type.name}`,
-  //           ];
-  //         });
-  //         detailsResponse.weight = res.data.weight;
-  //         detailsResponse.height = res.data.height;
-  //         detailsResponse.sprite = res.data.sprites.front_default;
+  useEffect((): any => {
+    if (currentPokemonId) {
+      setIsDetailsRequestPending(true);
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemonId}`)
+        .then((res) => {
+          setIsDetailsRequestPending(false);
+          const newDetails = {
+            weight: res.data.weight,
+            height: res.data.height,
+            types: res.data.types.map((typeItem: any) => {
+              return typeItem.type.name;
+            }),
+            sprite: res.data.sprites.front_default,
+          };
+        
+          setDetailsResponse(newDetails);
 
-  //         console.log('detailsresponse', detailsResponse);
-  //       })
-  //       .catch((error) => {
-  //         setIsDetailsError(true);
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [currentPokemonId]);
+          // setDetailsResponse({types: [],
+          //   sprite: res.data.sprites.front_default, weight: res.data.weight, height: res.data.height})
+
+          // }
+        })
+        .catch((error) => {
+          setIsDetailsError(true);
+          console.log(error);
+        });
+    }
+  }, [currentPokemonId]);
 
   function showHideDetailsOnClick(): any {
     if (!detailsVisibility) {
       setDetailsVisibility(true);
-      const pokemonId = pokemon.url.split('/')[6];
-      setCurrentPokemonId(pokemonId);
     } else {
       setDetailsVisibility(false);
     }
   }
 
-  function LoadPokemonInfo() {
-    useEffect(() => {
-      if (currentPokemonId) {
-        setIsDetailsRequestPending(true);
-        axios
-          .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemonId}`)
-          .then((res) => {
-            setIsDetailsRequestPending(false);
-            setDetailsResponse(res.data);
-            // console.log('sprite:', res.data.sprites.front_default, 'types:',res.data.types, 'height:',res.data.height, 'weight:',res.data.weight);
-            res.data.types.forEach((type: any) => {
-              detailsResponse.types = [
-                ...detailsResponse.types,
-                `${type.type.name}`,
-              ];
-            });
-            detailsResponse.weight = res.data.weight;
-            detailsResponse.height = res.data.height;
-            detailsResponse.sprite = res.data.sprites.front_default;
-  
-            console.log('detailsresponse', detailsResponse);
-          })
-          .catch((error) => {
-            setIsDetailsError(true);
-            console.log(error);
-          });
-      }
-    }, [currentPokemonId]);
+  function setCurrentPokemonIdOnLoad() {
+    const pokemonId = pokemon.url.split('/')[6];
+    setCurrentPokemonId(pokemonId);
   }
 
+  function LoadPokemonInfo(): any {
+    // const [detailsResponse, setDetailsResponse] = useState<DetailsResponseType>({
+    //   weight: null,
+    //   height: null,
+    //   types: [],
+    //   sprite: null,
+    // });
+
+    return <p>Types: {`${detailsResponse.types}`}</p>;
+  }
+
+  const detailsVisibilityClass = detailsVisibility
+    ? 'pokemonList__details--visible'
+    : 'pokemonList__details--hidden';
+
   return (
-    <div className="pokemonListItem" onClick={showHideDetailsOnClick}>
+    <div
+      className="pokemonListItem"
+      onClick={showHideDetailsOnClick}
+      onLoad={setCurrentPokemonIdOnLoad}
+    >
       {LoadPokemonInfo()}
-      <p>height: {detailsResponse.height}</p>
+      {console.log(detailsResponse)}
+      {/* <p>Types: {`${detailsResponse.types}`}</p> */}
+
       <figure className="pokemonListItem__figure">
-        {/* <img src={require(`${pokemon.url}`)} alt={`${pokemon.name}`} /> */}
+        {/* <img src={require(`${detailsResponse.sprite}`)} alt={`${pokemon.name}`} /> */}
         <img
           className="pokemonListItem__img--small"
-          src={require('../../images/pokemonExample.png')}
+          src={`${detailsResponse.sprite}`}
           alt={`${pokemon.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
@@ -137,7 +130,11 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
         ) : isDetailsRequestPending ? (
           <LoadingIndicator />
         ) : (
-          <PokemonDetails pokemonDetails={pokemon} />
+          // <PokemonDetails pokemonDetails={pokemon} />
+          <div>
+            <p>Height: {detailsResponse.height} m</p>
+            <p>Weight: {detailsResponse.weight} kg</p>
+          </div>
         )}
       </article>
     </div>
