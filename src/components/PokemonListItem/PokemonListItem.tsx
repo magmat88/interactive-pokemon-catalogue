@@ -23,7 +23,6 @@ type DetailsResponseType = {
 // }
 
 export function PokemonListItem({ pokemon }: any): JSX.Element {
-  const [currentPokemonId, setCurrentPokemonId] = useState<number | null>(null);
   const [detailsResponse, setDetailsResponse] = useState<DetailsResponseType>({
     weight: null,
     height: null,
@@ -34,35 +33,30 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
   const [detailsVisibility, setDetailsVisibility] = useState(false);
   const [isDetailsError, setIsDetailsError] = useState(false);
 
-  useEffect((): any => {
-    if (currentPokemonId) {
-      setIsDetailsRequestPending(true);
-      axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${currentPokemonId}`)
-        .then((res) => {
-          setIsDetailsRequestPending(false);
-          const newDetails = {
-            weight: res.data.weight,
-            height: res.data.height,
-            types: res.data.types.map((typeItem: any) => {
-              return typeItem.type.name;
-            }),
-            sprite: res.data.sprites.front_default,
-          };
-        
-          setDetailsResponse(newDetails);
+  console.log(pokemon);
 
-          // setDetailsResponse({types: [],
-          //   sprite: res.data.sprites.front_default, weight: res.data.weight, height: res.data.height})
+  useEffect(() => {
+    axios
+      .get(pokemon.url)
+      .then((res) => {
+        console.log(res.data);
+        const newDetails = {
+          weight: res.data.weight,
+          height: res.data.height,
+          types: res.data.types.map((typeItem: any) => {
+            return typeItem.type.name;
+          }),
+          sprite: res.data.sprites.front_default,
+        };
 
-          // }
-        })
-        .catch((error) => {
-          setIsDetailsError(true);
-          console.log(error);
-        });
-    }
-  }, [currentPokemonId]);
+        setDetailsResponse(newDetails);
+        setIsDetailsRequestPending(false);
+      })
+      .catch((error) => {
+        setIsDetailsError(true);
+        setIsDetailsRequestPending(false);
+      });
+  }, [pokemon.url]);
 
   function showHideDetailsOnClick(): any {
     if (!detailsVisibility) {
@@ -70,22 +64,6 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
     } else {
       setDetailsVisibility(false);
     }
-  }
-
-  function setCurrentPokemonIdOnLoad() {
-    const pokemonId = pokemon.url.split('/')[6];
-    setCurrentPokemonId(pokemonId);
-  }
-
-  function LoadPokemonInfo(): any {
-    // const [detailsResponse, setDetailsResponse] = useState<DetailsResponseType>({
-    //   weight: null,
-    //   height: null,
-    //   types: [],
-    //   sprite: null,
-    // });
-
-    return <p>Types: {`${detailsResponse.types}`}</p>;
   }
 
   const detailsVisibilityClass = detailsVisibility
@@ -96,10 +74,8 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
     <div
       className="pokemonListItem"
       onClick={showHideDetailsOnClick}
-      onLoad={setCurrentPokemonIdOnLoad}
     >
-      {LoadPokemonInfo()}
-      {console.log(detailsResponse)}
+      <p>Types: {`${detailsResponse.types}`}</p>
       {/* <p>Types: {`${detailsResponse.types}`}</p> */}
 
       <figure className="pokemonListItem__figure">
