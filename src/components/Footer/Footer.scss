@@ -1,3 +1,36 @@
 @import "../../styles/mixins/mixins.scss";
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
+
+.footer {
+    align-items: center;
+    background-color: $color_contrast;
+    display: flex;
+    flex-direction: row;
+    font-weight: 400;
+    justify-content: center;
+    margin: 30px 0 0 0;
+    padding: 10px 0;
+    width: 100vw;
+}
+
+a {
+    color: $color_medium;
+    text-decoration: none;
+    transition: color 0.5s;
+
+    &:active {
+        background-color: none;
+        color: $color_contrast;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: none;
+        color: $color_contrast;
+    }
+}
+
+.footer__text--description {
+    @extend %textDescription;
+}

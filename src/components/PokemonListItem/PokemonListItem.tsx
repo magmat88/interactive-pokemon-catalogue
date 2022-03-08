@@ -27,10 +27,10 @@ export function PokemonListItem({
           src={require("../../images/pokemonExample.png")}
           alt={`${pokemon.name}`}
         />
-        <figcaption className="pokemonListItem__label">
-          <h1>Name:{pokemon.name}</h1>
-          <p>Sprite: {pokemon.sprite}</p>
-          <p>Types: {pokemon.types}</p>
+        <figcaption className="pokemonListItem__figcaption">
+          <h1 className="pokemonListItem__text--label">Name:{pokemon.name}</h1>
+          <p className="pokemonListItem__text--description">Sprite: {pokemon.sprite}</p>
+          <p className="pokemonListItem__text--description">Types: {pokemon.types}</p>
         </figcaption>
       </figure>
     </li>

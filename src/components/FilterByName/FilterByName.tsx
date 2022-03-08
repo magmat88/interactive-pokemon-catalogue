@@ -11,7 +11,7 @@ export function FilterByName({ pokemons }: FilterByNameProps): JSX.Element {
     <section className="filterByName">
       <div className="filterByName__container">
         <input
-          placeholder="Pokemon name"
+          placeholder="Filter by name"
           className="filterByName__input filterByName__input--standard"
           onChange={(event: any) => {
             const value = (event.target as any).value;
@@ -20,16 +20,16 @@ export function FilterByName({ pokemons }: FilterByNameProps): JSX.Element {
           }}
         />
       </div>
-      <div className="filterByName__container filterByName__container--without-jumping">
+      {/* <div className="filterByName__container">
         <button
           className="filterByName__btn filterByName__btn--light"
           onClick={() => {
             console.log('on click filter by name');
           }}
         >
-          Filter By Name
+          Filter
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }

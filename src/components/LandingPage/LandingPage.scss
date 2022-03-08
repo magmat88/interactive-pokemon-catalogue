@@ -7,7 +7,6 @@
 }
 
 .landingPage__btn--container {
-    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,8 +44,8 @@
     flex-direction: column;
     height: 100vh;
     justify-content: center;
-    max-width: 100vw;
-    padding: 0 20px;
+    width: 100vw;
+    padding: 0;
     position: relative;
     text-align: center;
 
@@ -63,8 +62,10 @@
     font-size: 1.4rem;
     color: $color_contrast;
     cursor: default;
-    background-color: $color_light;
-    width: 100vw;
+    background-color: var(--background-landing);
+    width: 100%;
+    margin: 0;
+    padding: 0;
 
     h1 {
         font-size: 2.7rem;

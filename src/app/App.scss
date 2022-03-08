@@ -7,27 +7,36 @@
     padding: 0;
     display: flex;
     flex-direction: column;
+    width: 100vw;
 }
 
 .app__filters {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-.app {
+.app--dark-light {
     color: var(--text-primary);
     background-color: var(--background);
     font-size: large;
     font-weight: bold;
-    padding: 20px;
     height: calc(100% - 40px);
     transition: all 0.5s;
 }
 
+.app__container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 0;
+    flex-direction: column;
+}
+
 button {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     background-color: var(--background);
     border: 2px var(--text-primary) solid;
     float: right;
@@ -44,17 +53,35 @@ button {
     cursor: pointer;
     display: flex;
     height: 50px;
-    margin: 10px;
+    margin: 0;
     padding: 10px;
-    width: 250px;
-    transition: height 0.3s width 0.3s;
-
-    // &:hover {
-    //     height: 52px;
-    //     width: 202px;
-    // }
+    width: 150px;
 
     a {
         text-decoration: none;
+    }
+}
+
+@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+    .app__filters {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .app__container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@include forLargeScreens($breakpoint-medium) {
+    .app__filters {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .app__container {
+        flex-direction: row;
+        justify-content: space-between;
     }
 }

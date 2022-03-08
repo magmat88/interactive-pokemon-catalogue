@@ -22,7 +22,7 @@ export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
 
   return (
     <section id="pokemon-list" className="pokemonList">
-      <ul className="pokemonList">
+      <ul className="pokemonList--unordered">
         {[...pokemons].slice(0, 20).map((pokemon) => {
           return (
               <PokemonListItem pokemon={pokemon} />

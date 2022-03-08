@@ -8,11 +8,45 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid red;
-    width: 20%;
+    width: 100%;
     margin: 10px;
+    background-color: var(--background-tile-primary);
+    transition: background-color 0.5s;
+    border-radius: 5px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--background-tile-secondary);
+    }
 }
 
 .pokemonListItem__img--small {
     height: 150px;
+}
+
+.pokemonListItem__text--description {
+    @extend %textDescription;
+}
+
+.pokemonListItem__text--label {
+    @extend %textLabel;
+}
+
+.pokemonListItem__figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+    .pokemonListItem {
+        width: 20%;
+    }
+}
+
+@include forLargeScreens($breakpoint-medium) {
+    .pokemonListItem {
+        width: 20%;
+    }
 }

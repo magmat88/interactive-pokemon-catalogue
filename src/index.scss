@@ -1,5 +1,10 @@
+@import "./styles/mixins/mixins.scss";
+@import "./styles/placeholders/placeholders.scss";
+@import "./styles/variables/variables.scss";
+
 body {
   margin: 0;
+  width: 100vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -13,14 +18,21 @@ code {
 }
 
 :root {
-  --background: white;
-  --text-primary: black;
-  --text-secondary: royalblue;
-  --accent: purple;
+  --background: #ffffff;
+  --background-tile-primary: #f0eeee;
+  --background-tile-secondary: #fce9aa;
+  --background-landing: #ffffff;
+  --background-input: #ffffff;
+  --text-primary: #212229;
+  --text-secondary: #b90710;
 }
+
 [data-theme='dark'] {
-  --background: black;
-  --text-primary: white;
-  --text-secondary: grey;
-  --accent: darkred;
+  --background: #212229;
+  --background-tile-primary: #b6b6b6;
+  --background-tile-secondary: #e7e5e4;
+  --background-landing: #b6b6b6;
+  --background-input: #b6b6b6;
+  --text-primary: #212229;
+  --text-secondary: #f0eeee;
 }

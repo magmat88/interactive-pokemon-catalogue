@@ -205,18 +205,24 @@ export function App() {
   }
 
   return (
-    <main className="app" data-theme={theme}>
+    <main className="app app--dark-light" data-theme={theme}>
       <LandingPage />
-      <div data-theme={theme}>
-        <button className="app__btn app__btn--light" onClick={handleOnClickSwitchTheme}>
-          Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
-        </button>
-        <section className="app__filters">
-          <FilterByType pokemons={pokemons} />
-          <FilterByName pokemons={pokemons} />
-        </section>
+      {/* <div data-theme={theme}> */}
+        <div className="app__container" data-theme={theme}>
+          <button
+            className="app__btn app__btn--light"
+            onClick={handleOnClickSwitchTheme}
+          >
+            {theme === 'light' ? 'Dark' : 'Light'} Theme
+          </button>
+          <section className="app__filters">
+            <FilterByType pokemons={pokemons} />
+            <FilterByName pokemons={pokemons} />
+          </section>
+        </div>
+
         <PokemonList pokemons={pokemons} />
-      </div>
+      {/* </div> */}
       <Footer />
     </main>
   );
