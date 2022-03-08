@@ -7,6 +7,7 @@ import {
   FilterByName,
   FilterByType,
   LoadingIndicator,
+  ErrorIndicator,
 } from '../components';
 import './App.scss';
 import axios from 'axios';
@@ -15,10 +16,18 @@ import '../components/PokemonList/PokemonList.scss';
 function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
   return (
     <footer className="app__pagination">
-      <button className="app__btn app__btn--contrast" onClick={gotoPrevPage} disabled={isRequestPending}>
-        {"<<"}
+      <button
+        className="app__btn app__btn--contrast"
+        onClick={gotoPrevPage}
+        disabled={isRequestPending}
+      >
+        {'<<'}
       </button>
-      <button className="app__btn  app__btn--contrast" onClick={gotoNextPage} disabled={isRequestPending}>
+      <button
+        className="app__btn  app__btn--contrast"
+        onClick={gotoNextPage}
+        disabled={isRequestPending}
+      >
         {'>>'}
       </button>
     </footer>
@@ -28,16 +37,23 @@ function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
 export function App(): JSX.Element {
   const [pokemonResponse, setPokemonResponse] = useState();
   const [isRequestPending, setIsRequestPending] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [currentPageUrl, setCurrentPageUrl] = useState(
     `https://pokeapi.co/api/v2/pokemon?limit=20`
   );
 
   useEffect(() => {
     setIsRequestPending(true);
-    axios.get(currentPageUrl).then((res) => {
-      setPokemonResponse(res.data);
-      setIsRequestPending(false);
-    });
+    axios
+      .get(currentPageUrl)
+      .then((res) => {
+        setPokemonResponse(res.data);
+        setIsRequestPending(false);
+      })
+      .catch((error) => {
+        setIsError(true);
+        console.log(error);
+      });
   }, [currentPageUrl]);
 
   const gotoPrevPage = () => {
@@ -51,7 +67,6 @@ export function App(): JSX.Element {
       setCurrentPageUrl((pokemonResponse as any).next);
     }
   };
-
 
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
@@ -75,11 +90,12 @@ export function App(): JSX.Element {
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme
           </button>
-          {pokemonResponse ?
-          <section className="app__filters">
-            <FilterByType pokemons={(pokemonResponse as any)?.results} />
-            <FilterByName pokemons={(pokemonResponse as any)?.results} />
-          </section> : null}
+          {pokemonResponse ? (
+            <section className="app__filters">
+              <FilterByType pokemons={(pokemonResponse as any)?.results} />
+              <FilterByName pokemons={(pokemonResponse as any)?.results} />
+            </section>
+          ) : null}
         </div>
         <Pagination
           gotoNextPage={gotoNextPage}
@@ -88,13 +104,14 @@ export function App(): JSX.Element {
         />
       </div>
       <ul>
-        {isRequestPending ? (
+        {isError ? (
+          <ErrorIndicator />
+        ) : isRequestPending ? (
           <LoadingIndicator />
         ) : (
           <PokemonList pokemons={(pokemonResponse as any).results} />
         )}
       </ul>
-      {/* <Pokedex /> */}
       <Footer />
     </main>
   );

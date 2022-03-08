@@ -1,7 +1,7 @@
 import React from 'react';
-import './errorInfo.component.scss';
+import './ErrorIndicator.scss';
 
-export function ErrorInfo() {
+export function ErrorIndicator() {
     return (
         <div className="errorIndicator">
             <img

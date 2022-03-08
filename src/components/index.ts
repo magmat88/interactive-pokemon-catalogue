@@ -6,6 +6,7 @@ import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator';
 import { PokemonDetails } from './PokemonDetails/PokemonDetails';
 import { PokemonList } from './PokemonList/PokemonList';
 import { PokemonListItem } from './PokemonListItem/PokemonListItem';
+import { ErrorIndicator } from './ErrorIndicator/ErrorIndicator';
 
 export { 
     FilterByName,
@@ -16,4 +17,5 @@ export {
     PokemonDetails, 
     PokemonList,
     PokemonListItem,
+    ErrorIndicator
 };

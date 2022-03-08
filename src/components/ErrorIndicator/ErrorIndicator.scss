@@ -8,12 +8,12 @@
 
 .errorIndicator {
     align-items: space-between;
-    background-color: $color_light;
+    background-color: transparent;
     box-sizing: border-box;
-    color: $color_text-dark;
+    color: $color_dark;
     display: flex;
     flex-direction: column;
-    height: 90vh;
+    // height: 90vh;
     justify-content: center;
     margin: 0 20px;
   
