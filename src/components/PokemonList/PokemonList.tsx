@@ -8,22 +8,11 @@ interface PokemonListProps {
 }
 
 export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
-  // const { content } = useStoreon('content');
-
-  // useEffect(() => {}, [content.pending]);
-
-  // if (content.pending) {
-  //     return <LoadingIndicator />;
-  // }
-
-  // if (content.error) {
-  //     return <ErrorInfo />;
-  // }
-
-  return (
+    return (
     <section id="pokemon-list" className="pokemonList">
       <ul className="pokemonList--unordered">
         {[...pokemons].slice(0, 20).map((pokemon) => {
+          console.log(pokemon.url)
           return (
               <PokemonListItem pokemon={pokemon} />
           );

@@ -3,9 +3,9 @@ import { PokemonType } from '../../config/state';
 import { PokemonDetails } from '..';
 import './PokemonListItem.scss';
 
-interface PokemonListItemProps {
-  pokemon: PokemonType;
-}
+// interface PokemonListItemProps {
+//   pokemon: PokemonType;
+// }
 
 function handleOnClickPokemonListItem(event: any) {
   console.log('on click show Pokemon Details');
@@ -13,7 +13,7 @@ function handleOnClickPokemonListItem(event: any) {
 
 export function PokemonListItem({
   pokemon,
-}: PokemonListItemProps): JSX.Element {
+}: any): JSX.Element {
   return (
     <li
       className="pokemonListItem"
@@ -28,9 +28,9 @@ export function PokemonListItem({
           alt={`${pokemon.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          <h1 className="pokemonListItem__text--label">Name:{pokemon.name}</h1>
-          <p className="pokemonListItem__text--description">Sprite: {pokemon.sprite}</p>
-          <p className="pokemonListItem__text--description">Types: {pokemon.types}</p>
+          <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
+          {/* <p className="pokemonListItem__text--description">Sprite: {pokemon.sprite}</p>
+          <p className="pokemonListItem__text--description">Types: {pokemon.types}</p> */}
         </figcaption>
       </figure>
     </li>
