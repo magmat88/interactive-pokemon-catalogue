@@ -54,3 +54,34 @@
         width: 20%;
     }
 }
+
+.pokemonList__listItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 250px;
+    margin: 10px;
+    background-color: var(--background-tile-primary);
+    transition: background-color 0.5s;
+    border-radius: 5px;
+    text-decoration: none;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--background-tile-secondary);
+    }
+}
+
+@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+    .pokemonList__listItem {
+        width: 20%;
+    }
+}
+
+@include forLargeScreens($breakpoint-medium) {
+    .pokemonList__listItem {
+        width: 20%;
+    }
+}

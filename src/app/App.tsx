@@ -14,12 +14,12 @@ import '../components/PokemonList/PokemonList.scss';
 
 function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
   return (
-    <footer className="pagination">
-      <button onClick={gotoPrevPage} disabled={isRequestPending}>
-        Previous
+    <footer className="app__pagination">
+      <button className="app__btn app__btn--contrast" onClick={gotoPrevPage} disabled={isRequestPending}>
+        {"<<"}
       </button>
-      <button onClick={gotoNextPage} disabled={isRequestPending}>
-        Next
+      <button className="app__btn  app__btn--contrast" onClick={gotoNextPage} disabled={isRequestPending}>
+        {'>>'}
       </button>
     </footer>
   );
@@ -70,7 +70,7 @@ export function App(): JSX.Element {
       <div data-theme={theme}>
         <div className="app__container" data-theme={theme}>
           <button
-            className="app__btn app__btn--light"
+            className="app__btn app_btn--light-no-border"
             onClick={handleOnClickSwitchTheme}
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme

@@ -43,8 +43,20 @@ button {
     transition: all 0.5s;
 }
 
-.app_btn--light {
-    @extend %btnLight;
+.app_btn--light-no-border {
+    width: 150px;
+}
+
+.app__btn--contrast {
+    width: 50px;
+    font-size: 0.7rem;
+    margin: 10px;
+    padding: 10px;
+
+    &:active {
+        border: 5px solid $color_active;
+        padding: 10px 10px;
+    }
 }
 
 .app__btn {
@@ -55,11 +67,20 @@ button {
     height: 50px;
     margin: 0;
     padding: 10px;
-    width: 150px;
+    
 
     a {
         text-decoration: none;
     }
+}
+
+.app__pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px 20px 0 0;
+    // padding: 10px;
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {

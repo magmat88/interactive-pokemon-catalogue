@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { PokemonType } from '../../config/state';
 import { PokemonDetails } from '..';
 import './PokemonListItem.scss';
@@ -7,18 +7,12 @@ import './PokemonListItem.scss';
 //   pokemon: PokemonType;
 // }
 
-function handleOnClickPokemonListItem(event: any) {
-  console.log('on click show Pokemon Details');
-}
 
 export function PokemonListItem({
   pokemon,
 }: any): JSX.Element {
   return (
-    <li
-      className="pokemonListItem"
-      key={pokemon.name}
-      onClick={handleOnClickPokemonListItem}
+    <Fragment      
     >
       <figure className="pokemonListItem__figure">
         {/* <img src={require(`${pokemon.url}`)} alt={`${pokemon.name}`} /> */}
@@ -33,6 +27,6 @@ export function PokemonListItem({
           <p className="pokemonListItem__text--description">Types: {pokemon.types}</p> */}
         </figcaption>
       </figure>
-    </li>
+    </Fragment>
   );
 }

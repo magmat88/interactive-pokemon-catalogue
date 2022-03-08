@@ -3,22 +3,16 @@
 @import "../../styles/variables/variables.scss";
 
 
-.pokemonListItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 10px;
-    background-color: var(--background-tile-primary);
-    transition: background-color 0.5s;
-    border-radius: 5px;
-
-    &:hover {
-        cursor: pointer;
-        background-color: var(--background-tile-secondary);
-    }
-}
+// .pokemonListItem {
+//     display: flex;
+//     margin: 0;
+//     padding: 0;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100%;
+// }
 
 .pokemonListItem__img--small {
     height: 150px;
@@ -39,14 +33,3 @@
     justify-content: center;
 }
 
-@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    .pokemonListItem {
-        width: 20%;
-    }
-}
-
-@include forLargeScreens($breakpoint-medium) {
-    .pokemonListItem {
-        width: 20%;
-    }
-}
