@@ -16,7 +16,7 @@ export const getPokemonItem = createAsyncThunk(
 );
 
 const pokemonApiItemInitState = {
-  pokemonList: {
+  pokemonApiItem: {
     status: 'idle',
     data: {},
     error: null,
@@ -30,21 +30,21 @@ export const pokemonApiItemSlice = createSlice({
   extraReducers: {
     // [getPokemonItem.pending.type]: (state, action) => {
     POKEMON_API_ITEM__GET_POKEMON_ITEM_PENDING: (state, action) => {
-      state.pokemonList = {
+      state.pokemonApiItem = {
         status: 'loading',
         data: {},
         error: null,
       };
     },
     POKEMON_API_ITEM__GET_POKEMON_ITEM_FULFILLED: (state, action) => {
-      state.pokemonList = {
+      state.pokemonApiItem = {
         status: 'idle',
         data: action.payload,
         error: null,
       };
     },
     POKEMON_API_ITEM__GET_POKEMON_ITEM_REJECTED: (state, action) => {
-      state.pokemonList = {
+      state.pokemonApiItem = {
         status: 'idle',
         data: {},
         error: action.payload,

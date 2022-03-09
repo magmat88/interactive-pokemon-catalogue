@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
-import { POKEMON_SELECT_TYPES } from '../../config/constants';
-import { connect } from 'react-redux';
-import { changePokemonTypeFilter } from '../../actions';
+import { POKEMON_SELECT_TYPES } from '../config/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  removePokemonWithVisibleDetails,
+  addPokemonWithVisibleDetails,
+  addPokemonDetails,
+  changePokemonTypeFilter,
+  changePokemonNameFilter,
+  setCurrentListUrl,
+} from './pokemonAppSlice';
+import { getpokemonApiList } from './pokemonApiListSlice';
+import { getPokemonItem } from './pokemonApiItemSlice';
 import './FilterByType.scss';
 
 export function FilterByType({
@@ -41,10 +50,10 @@ export function FilterByType({
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    pokemonApp: state.pokemonApp,
-  };
-};
+// const mapStateToProps = (state: any) => {
+//   return {
+//     pokemonApp: state.pokemonApp,
+//   };
+// };
 
-export default connect(mapStateToProps, changePokemonTypeFilter)(FilterByType);
+// export default connect(mapStateToProps, changePokemonTypeFilter)(FilterByType);

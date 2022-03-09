@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { changePokemonNameFilter } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  removePokemonWithVisibleDetails,
+  addPokemonWithVisibleDetails,
+  addPokemonDetails,
+  changePokemonTypeFilter,
+  changePokemonNameFilter,
+  setCurrentListUrl,
+} from './pokemonAppSlice';
+import { getpokemonApiList } from './pokemonApiListSlice';
+import { getPokemonItem } from './pokemonApiItemSlice';
 import './FilterByName.scss';
 
 export function FilterByName({
@@ -27,10 +36,10 @@ export function FilterByName({
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    pokemonApp: state.pokemonApp,
-  };
-};
+// const mapStateToProps = (state: any) => {
+//   return {
+//     pokemonApp: state.pokemonApp,
+//   };
+// };
 
-export default connect(mapStateToProps, changePokemonNameFilter)(FilterByName);
+// export default connect(mapStateToProps, changePokemonNameFilter)(FilterByName);

@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  getPokemonItem,
-  addPokemonWithVisibleDetails,
   removePokemonWithVisibleDetails,
+  addPokemonWithVisibleDetails,
   addPokemonDetails,
-} from '../actions';
-import { LoadingIndicator } from '../components';
+  changePokemonTypeFilter,
+  changePokemonNameFilter,
+  setCurrentListUrl,
+} from './pokemonAppSlice';
+import { getpokemonApiList } from './pokemonApiListSlice';
+import { getPokemonItem } from './pokemonApiItemSlice';
+import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
 import './PokemonListItem.scss';
 
 export type PokemonDetailsType = {
@@ -135,11 +139,11 @@ export function PokemonListItem({
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    pokemonApiItem: state.pokemonApiItem,
-    pokemonApp: state.pokemonApp,
-  };
-};
+// const mapStateToProps = (state: any) => {
+//   return {
+//     pokemonApiItem: state.pokemonApiItem,
+//     pokemonApp: state.pokemonApp,
+//   };
+// };
 
-export default connect(mapStateToProps, { getPokemonItem })(PokemonListItem);
+// export default connect(mapStateToProps, { getPokemonItem })(PokemonListItem);

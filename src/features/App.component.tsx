@@ -1,17 +1,22 @@
-
 import React, { useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { FilterByName } from './FilterByName.component';
+import { FilterByType } from './FilterByType.component';
+import { Footer } from '../components/Footer/Footer';
+import { LandingPage } from '../components/LandingPage/LandingPage';
+import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
+import { PokemonList } from './PokemonList.component';
 import {
-  FilterByName,
-  FilterByType,
-  Footer,
-  LandingPage,
-  LoadingIndicator,
-} from '../components';
-import { PokemonList } from './PokemonList';
-import { fetchPokemons } from '../store';
-// import { getPokemonList, setCurrentListUrl } from '../actions';
+  removePokemonWithVisibleDetails,
+  addPokemonWithVisibleDetails,
+  addPokemonDetails,
+  changePokemonTypeFilter,
+  changePokemonNameFilter,
+  setCurrentListUrl,
+} from './pokemonAppSlice';
+import { getpokemonApiList } from './pokemonApiListSlice';
+import { getPokemonItem } from './pokemonApiItemSlice';
 import './App.scss';
 
 export function App({
@@ -47,12 +52,12 @@ export function App({
   }
 
   useEffect(() => {
-    dispatch(fetchPokemons('https://pokeapi.co/api/v2/pokemon?limit=20'))
-  }, [dispatch])
+    dispatch(getPokemonList('https://pokeapi.co/api/v2/pokemon?limit=20'));
+  }, [dispatch]);
 
   useEffect(() => {
     console.log(pokemons);
-  }, [pokemons])
+  }, [pokemons]);
 
   return (
     <main className="app app--dark-light" data-theme={theme}>
@@ -74,8 +79,10 @@ export function App({
         </div>
         {/* <button onClick={loadMorePokemons}>Load more Pokemons</button> */}
       </div>
-      {pokemons?.data?.data?.results.length ? <PokemonList pokemons={pokemons.data.data.results} /> : null }
-    
+      {pokemons?.data?.data?.results.length ? (
+        <PokemonList pokemons={pokemons.data.data.results} />
+      ) : null}
+
       {/* <ul>
         {error ? (
           <p>Error</p>

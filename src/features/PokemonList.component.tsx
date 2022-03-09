@@ -1,11 +1,17 @@
 import React from 'react';
-// import { PokemonType } from '../PokemonListItem/PokemonListItem';
-import { PokemonListItem } from '../../../components';
+import { PokemonListItem } from './PokemonListItem.component';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  removePokemonWithVisibleDetails,
+  addPokemonWithVisibleDetails,
+  addPokemonDetails,
+  changePokemonTypeFilter,
+  changePokemonNameFilter,
+  setCurrentListUrl,
+} from './pokemonAppSlice';
+import { getpokemonApiList } from './pokemonApiListSlice';
+import { getPokemonItem } from './pokemonApiItemSlice';
 import './PokemonList.scss';
-
-// interface PokemonListProps {
-//   pokemons: Array<PokemonType>;
-// }
 
 export function PokemonList({ pokemons }: any): JSX.Element {
   return (
