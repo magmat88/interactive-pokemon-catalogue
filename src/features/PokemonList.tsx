@@ -1,6 +1,6 @@
 import React from 'react';
 // import { PokemonType } from '../PokemonListItem/PokemonListItem';
-import { PokemonListItem } from '..';
+import { PokemonListItem } from '../../../components';
 import './PokemonList.scss';
 
 // interface PokemonListProps {

@@ -1,15 +1,17 @@
+
 import React, { useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
   FilterByName,
   FilterByType,
   Footer,
   LandingPage,
   LoadingIndicator,
-  PokemonList,
 } from '../components';
-import { getPokemonList, setCurrentListUrl } from '../actions';
+import { PokemonList } from './PokemonList';
+import { fetchPokemons } from '../store';
+// import { getPokemonList, setCurrentListUrl } from '../actions';
 import './App.scss';
 
 export function App({
@@ -18,16 +20,19 @@ export function App({
   pokemonApp,
   pokemonApiList,
 }: any): JSX.Element {
-  const { pokemonResponse, status, error } = pokemonApiList;
-  const { listUrl } = pokemonApp;
+  const pokemons = useSelector((state: any) => state.pokemon.pokemonList);
+  const dispatch = useDispatch();
+  // const { pokemonResponse, status, error } = pokemonApiList;
+  // const { listUrl } = pokemonApp;
 
-  useEffect(() => {
-    getPokemonList(listUrl);
-  }, [listUrl, getPokemonList]);
+  // useEffect(() => {
+  //   setCurrentListUrl('https://pokeapi.co/api/v2/pokemon?limit=20');
+  //   getPokemonList(listUrl);
+  // }, [listUrl, getPokemonList, setCurrentListUrl, pokemonResponse]);
 
-  function loadMorePokemons() {
-    setCurrentListUrl(pokemonResponse.next);
-  }
+  // function loadMorePokemons() {
+  //   setCurrentListUrl(pokemonResponse.next);
+  // }
 
   //switchDarkLightThemeReducer instead of local storage
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -41,6 +46,14 @@ export function App({
     setTheme(newTheme);
   }
 
+  useEffect(() => {
+    dispatch(fetchPokemons('https://pokeapi.co/api/v2/pokemon?limit=20'))
+  }, [dispatch])
+
+  useEffect(() => {
+    console.log(pokemons);
+  }, [pokemons])
+
   return (
     <main className="app app--dark-light" data-theme={theme}>
       <LandingPage />
@@ -52,16 +65,18 @@ export function App({
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme
           </button>
-          {pokemonResponse ? (
+          {/* {pokemonResponse && (
             <section className="app__filters">
               <FilterByType />
               <FilterByName />
             </section>
-          ) : null}
+          )} */}
         </div>
-        <button onClick={loadMorePokemons}>Load more Pokemons</button>
+        {/* <button onClick={loadMorePokemons}>Load more Pokemons</button> */}
       </div>
-      <ul>
+      {pokemons?.data?.data?.results.length ? <PokemonList pokemons={pokemons.data.data.results} /> : null }
+    
+      {/* <ul>
         {error ? (
           <p>Error</p>
         ) : status === 'rejected' ? (
@@ -71,19 +86,21 @@ export function App({
         ) : (
           <PokemonList pokemons={pokemonResponse.results} />
         )}
-      </ul>
+      </ul> */}
       <Footer />
     </main>
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    pokemonApp: state.pokemonApp,
-    pokemonApiList: state.pokemonApiList,
-  };
-};
+// function mapStateToProps(state: any) {
+//   console.log(state);
+//   return {
+//     pokemonApp: 'state.pokemonApp',
+//     pokemonApiList: 'state.pokemonApiList',
+//   };
+// };
 
-export default connect(mapStateToProps, { setCurrentListUrl, getPokemonList })(
-  App
-);
+// export default connect(mapStateToProps, { setCurrentListUrl, getPokemonList })(
+//   App
+// );
+// export default connect(mapStateToProps)(App);

@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getPokemonItem, 
-  addPokemonWithVisibleDetails, removePokemonWithVisibleDetails, addPokemonDetails } from '../../actions';
-import { LoadingIndicator } from '..';
+import {
+  getPokemonItem,
+  addPokemonWithVisibleDetails,
+  removePokemonWithVisibleDetails,
+  addPokemonDetails,
+} from '../actions';
+import { LoadingIndicator } from '../components';
 import './PokemonListItem.scss';
 
 export type PokemonDetailsType = {
@@ -22,25 +26,37 @@ export function PokemonListItem({
   pokemonApiItem,
 }: any): JSX.Element {
   const { pokemonItemResponse, status, error } = pokemonApiItem;
-  const { pokemonsWithVisibleDetails, pokemons, filterByName, filterByType } = pokemonApp;
-
+  const { pokemonsWithVisibleDetails, pokemons, filterByName, filterByType } =
+    pokemonApp;
 
   useEffect(() => {
     getPokemonItem(pokemon.url);
 
-    function filterByTypes(filterByType: string, currentTypes: Array<string>): Boolean {
+    function filterByTypes(
+      filterByType: string,
+      currentTypes: Array<string>
+    ): Boolean {
       return currentTypes.includes(filterByType);
     }
 
-    function filterByNames(filterByName: string, currentPokemonName: string): Boolean {
+    function filterByNames(
+      filterByName: string,
+      currentPokemonName: string
+    ): Boolean {
       return currentPokemonName.includes(filterByName.toLowerCase());
     }
 
-    const currentPokemonTypes = pokemonItemResponse.types.map((typeItem: any) => {
-      return typeItem.type.name;
-    });
+    const currentPokemonTypes = pokemonItemResponse.types.map(
+      (typeItem: any) => {
+        return typeItem.type.name;
+      }
+    );
     const currentPokemonName = pokemonItemResponse.name;
-    const currentPokemonVisibility = (filterByTypes(filterByType, currentPokemonTypes) && filterByNames(filterByName, currentPokemonName)) ? true : false;
+    const currentPokemonVisibility =
+      filterByTypes(filterByType, currentPokemonTypes) &&
+      filterByNames(filterByName, currentPokemonName)
+        ? true
+        : false;
     const currentPokemonDetails: PokemonDetailsType = {
       name: currentPokemonName,
       height: pokemonItemResponse.height,
@@ -51,14 +67,29 @@ export function PokemonListItem({
     };
 
     addPokemonDetails(currentPokemonDetails);
-  }, [getPokemonItem, addPokemonDetails, pokemons, filterByName, filterByType]);
+  }, [
+    getPokemonItem,
+    addPokemonDetails,
+    pokemons,
+    filterByName,
+    filterByType,
+    pokemon.url,
+    pokemonItemResponse.height,
+    pokemonItemResponse.name,
+    pokemonItemResponse.sprites.front_default,
+    pokemonItemResponse.types,
+    pokemonItemResponse.weight,
+  ]);
 
   function togglePokemonDetailsVisibility(event: any): any {
-    pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name) ?
-    removePokemonWithVisibleDetails(pokemonItemResponse.name) : addPokemonWithVisibleDetails(pokemonItemResponse.name);
+    pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name)
+      ? removePokemonWithVisibleDetails(pokemonItemResponse.name)
+      : addPokemonWithVisibleDetails(pokemonItemResponse.name);
   }
 
-  const listItemVisibilityClass = pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name)
+  const listItemVisibilityClass = pokemonsWithVisibleDetails.hasOwnProperty(
+    pokemonItemResponse.name
+  )
     ? 'pokemonList__listItem--visible'
     : 'pokemonList__listItem--hidden';
 
@@ -111,6 +142,4 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-export default connect(mapStateToProps, { getPokemonItem })(
-  PokemonListItem
-);
+export default connect(mapStateToProps, { getPokemonItem })(PokemonListItem);
