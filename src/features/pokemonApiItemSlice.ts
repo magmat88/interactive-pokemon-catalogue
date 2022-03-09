@@ -28,7 +28,6 @@ export const pokemonApiItemSlice = createSlice({
   initialState: pokemonApiItemInitState,
   reducers: {},
   extraReducers: {
-    // [getPokemonItem.pending.type]: (state, action) => {
     POKEMON_API_ITEM__GET_POKEMON_ITEM_PENDING: (state, action) => {
       state.pokemonApiItem = {
         status: 'loading',
@@ -52,45 +51,3 @@ export const pokemonApiItemSlice = createSlice({
     },
   },
 });
-
-////////////
-
-// const defaultState = {
-//   status: 'idle',
-//   pokemonItemResponse: undefined,
-//   error: undefined,
-// };
-
-// export function getPokemonItem(itemUrl: string) {
-//   const request = axios.get(itemUrl);
-//   return {
-//     type: POKEMON_API_ITEM__GET_POKEMON_ITEM_STATUS,
-//     payload: request,
-//   };
-// }
-
-// export default function PokemonItemReducer(state = defaultState, action: any) {
-//   switch (action.type) {
-//     case POKEMON_API_ITEM__GET_POKEMON_ITEM_PENDING:
-//       return {
-//         ...state,
-//         status: 'loading',
-//       };
-//     case POKEMON_API_ITEM__GET_POKEMON_ITEM_FULFILLED:
-//       return {
-//         ...state,
-//         status: 'succeeded',
-//         pokemonItemResponse: action.payload.data,
-//       };
-//     case POKEMON_API_ITEM__GET_POKEMON_ITEM_REJECTED:
-//       return {
-//         ...state,
-//         status: 'rejected',
-//         error: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// }
-
-/////////////

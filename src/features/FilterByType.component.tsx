@@ -1,27 +1,19 @@
 import React, { useEffect } from 'react';
 import { POKEMON_SELECT_TYPES } from '../config/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  removePokemonWithVisibleDetails,
-  addPokemonWithVisibleDetails,
-  addPokemonDetails,
-  changePokemonTypeFilter,
-  changePokemonNameFilter,
-  setCurrentListUrl,
-} from './pokemonAppSlice';
-import { getpokemonApiList } from './pokemonApiListSlice';
-import { getPokemonItem } from './pokemonApiItemSlice';
+import { changePokemonTypeFilter } from './pokemonAppSlice';
 import './FilterByType.scss';
 
-export function FilterByType({
-  changePokemonTypeFilter,
-  pokemonApp,
-}: any): JSX.Element {
+export function FilterByType(props: any): JSX.Element {
+  const filterByType = useSelector(
+    (state: any) => state.pokemonApp.filterByType
+  );
+  const dispatch = useDispatch();
 
-  useEffect(() => {}, [changePokemonTypeFilter, pokemonApp]);
+  useEffect(() => {}, [changePokemonTypeFilter, filterByType]);
 
   function changeTypeFilter(event: any): void {
-    changePokemonTypeFilter(event.target.value as string);
+    dispatch(changePokemonTypeFilter(event.target.value as string));
   }
 
   return (
@@ -49,11 +41,3 @@ export function FilterByType({
     </section>
   );
 }
-
-// const mapStateToProps = (state: any) => {
-//   return {
-//     pokemonApp: state.pokemonApp,
-//   };
-// };
-
-// export default connect(mapStateToProps, changePokemonTypeFilter)(FilterByType);

@@ -11,6 +11,7 @@ export const getpokemonApiList = createAsyncThunk(
   POKEMON_API_LIST__GET_POKEMON_LIST_STATUS,
   async (listUrl: string) => {
     const response = await axios.get(listUrl);
+    console.log(response)
     return response;
   }
 );
@@ -51,54 +52,3 @@ export const pokemonApiListSlice = createSlice({
     },
   },
 });
-
-////////////////
-
-// const defaultState: any = {
-//   status: 'idle',
-//   pokemonResponse: {
-//     count: undefined,
-//     next: undefined,
-//     previous: undefined,
-//     results: undefined,
-//   },
-//   error: undefined,
-// };
-
-// export function getpokemonApiList(listUrl: string) {
-//   const request = axios.get(listUrl).then((response) => {
-//     return response;
-//   });
-//   return {
-//     type: POKEMON_API_LIST__GET_POKEMON_LIST,
-//     payload: request,
-//   };
-// }
-
-// export default function pokemonApiListReducer(
-//   state = defaultState,
-//   action: any
-// ) {
-//   switch (action.type) {
-//     case POKEMON_API_LIST__GET_POKEMON_LIST_PENDING:
-//       return {
-//         ...state,
-//         status: 'loading',
-//       };
-//     case POKEMON_API_LIST__GET_POKEMON_LIST_FULFILLED:
-//       return {
-//         ...state,
-//         status: 'idle',
-//         pokemonResponse: action.payload.data,
-//       };
-//     case POKEMON_API_LIST__GET_POKEMON_LIST_REJECTED:
-//       return {
-//         ...state,
-//         status: 'idle',
-//         error: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// }
-/////////////

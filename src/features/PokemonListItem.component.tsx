@@ -8,7 +8,6 @@ import {
   changePokemonNameFilter,
   setCurrentListUrl,
 } from './pokemonAppSlice';
-import { getpokemonApiList } from './pokemonApiListSlice';
 import { getPokemonItem } from './pokemonApiItemSlice';
 import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
 import './PokemonListItem.scss';
@@ -22,19 +21,19 @@ export type PokemonDetailsType = {
   visibility: Boolean;
 };
 
-export function PokemonListItem({
-  pokemon,
-  getPokemonItem,
-  addPokemonDetails,
-  pokemonApp,
-  pokemonApiItem,
-}: any): JSX.Element {
-  const { pokemonItemResponse, status, error } = pokemonApiItem;
-  const { pokemonsWithVisibleDetails, pokemons, filterByName, filterByType } =
-    pokemonApp;
+export function PokemonListItem(pokemon: any): JSX.Element {
+  // const pokemons = useSelector((state: any) => state.pokemonApiList);
+  const dispatch = useDispatch();
+  const filterByName = useSelector((state: any) => state.pokemonApp.filterByName);
+  const filterByType = useSelector((state: any) => state.pokemonApp.filterByType);
+  const itemUrl = pokemon.url;
+  const pokemonsWithVisibleDetails = useSelector((state: any) => state.pokemonApp.pokemonsWithVisibleDetails);
+  const pokemons = useSelector((state: any) => state.pokemonApp.pokemons);
+  const pokemonApiItem = useSelector((state: any) => state.pokemonApiItem);
+
 
   useEffect(() => {
-    getPokemonItem(pokemon.url);
+    dispatch(getPokemonItem(itemUrl));
 
     function filterByTypes(
       filterByType: string,
@@ -50,12 +49,12 @@ export function PokemonListItem({
       return currentPokemonName.includes(filterByName.toLowerCase());
     }
 
-    const currentPokemonTypes = pokemonItemResponse.types.map(
+    const currentPokemonTypes = pokemonApiItem.data.types.map(
       (typeItem: any) => {
         return typeItem.type.name;
       }
     );
-    const currentPokemonName = pokemonItemResponse.name;
+    const currentPokemonName = pokemonApiItem.data.name;
     const currentPokemonVisibility =
       filterByTypes(filterByType, currentPokemonTypes) &&
       filterByNames(filterByName, currentPokemonName)
@@ -63,14 +62,14 @@ export function PokemonListItem({
         : false;
     const currentPokemonDetails: PokemonDetailsType = {
       name: currentPokemonName,
-      height: pokemonItemResponse.height,
-      sprite: pokemonItemResponse.sprites.front_default,
+      height: pokemonApiItem.data.height,
+      sprite: pokemonApiItem.data.sprites.front_default,
       types: currentPokemonTypes,
-      weight: pokemonItemResponse.weight,
+      weight: pokemonApiItem.data.weight,
       visibility: currentPokemonVisibility,
     };
 
-    addPokemonDetails(currentPokemonDetails);
+    dispatch(addPokemonDetails(currentPokemonDetails));
   }, [
     getPokemonItem,
     addPokemonDetails,
@@ -78,21 +77,21 @@ export function PokemonListItem({
     filterByName,
     filterByType,
     pokemon.url,
-    pokemonItemResponse.height,
-    pokemonItemResponse.name,
-    pokemonItemResponse.sprites.front_default,
-    pokemonItemResponse.types,
-    pokemonItemResponse.weight,
+    pokemonApiItem.data.height,
+    pokemonApiItem.data.name,
+    pokemonApiItem.data.sprites.front_default,
+    pokemonApiItem.data.types,
+    pokemonApiItem.data.weight,
   ]);
 
   function togglePokemonDetailsVisibility(event: any): any {
-    pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name)
-      ? removePokemonWithVisibleDetails(pokemonItemResponse.name)
-      : addPokemonWithVisibleDetails(pokemonItemResponse.name);
+    pokemonsWithVisibleDetails.hasOwnProperty(pokemonApiItem.data.name)
+      ? dispatch(removePokemonWithVisibleDetails(pokemonApiItem.data.name))
+      : dispatch(addPokemonWithVisibleDetails(pokemonApiItem.data.name));
   }
 
   const listItemVisibilityClass = pokemonsWithVisibleDetails.hasOwnProperty(
-    pokemonItemResponse.name
+    pokemonApiItem.data.name
   )
     ? 'pokemonList__listItem--visible'
     : 'pokemonList__listItem--hidden';
@@ -100,16 +99,16 @@ export function PokemonListItem({
   return (
     <div className="pokemonListItem" onClick={togglePokemonDetailsVisibility}>
       <h1 className="pokemonListItem__text--label">
-        {pokemonItemResponse.name}
+        {pokemonApiItem.data.name}
       </h1>
       <figure className="pokemonListItem__figure">
         <img
           className="pokemonListItem__img--small"
-          src={`${pokemonItemResponse.sprite}`}
-          alt={`${pokemonItemResponse.name}`}
+          src={`${pokemonApiItem.data.sprite}`}
+          alt={`${pokemonApiItem.data.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          {pokemonItemResponse.types.map((type: any, index: number) => {
+          {pokemonApiItem.data.types.map((type: any, index: number) => {
             return (
               <div
                 className="pokemonListItem__figcaptionItem"
@@ -122,28 +121,19 @@ export function PokemonListItem({
         </figcaption>
       </figure>
       <article className={listItemVisibilityClass}>
-        {error ? (
+        {/* {error ? (
           <p>Error</p>
         ) : status === 'rejected' ? (
           <p>Status: rejected</p>
         ) : status === 'loading' ? (
           <LoadingIndicator />
-        ) : (
-          <div>
-            <p>Height: {pokemonItemResponse.height} m</p>
-            <p>Weight: {pokemonItemResponse.weight} kg</p>
-          </div>
-        )}
+        ) : ( */}
+        <div>
+          <p>Height: {pokemonApiItem.data.height} m</p>
+          <p>Weight: {pokemonApiItem.data.weight} kg</p>
+        </div>
+        {/* )} */}
       </article>
     </div>
   );
 }
-
-// const mapStateToProps = (state: any) => {
-//   return {
-//     pokemonApiItem: state.pokemonApiItem,
-//     pokemonApp: state.pokemonApp,
-//   };
-// };
-
-// export default connect(mapStateToProps, { getPokemonItem })(PokemonListItem);

@@ -1,16 +1,5 @@
 import React from 'react';
-import { PokemonListItem } from './PokemonListItem.component';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  removePokemonWithVisibleDetails,
-  addPokemonWithVisibleDetails,
-  addPokemonDetails,
-  changePokemonTypeFilter,
-  changePokemonNameFilter,
-  setCurrentListUrl,
-} from './pokemonAppSlice';
-import { getpokemonApiList } from './pokemonApiListSlice';
-import { getPokemonItem } from './pokemonApiItemSlice';
+import { PokemonListItem } from '../../features/PokemonListItem.component';
 import './PokemonList.scss';
 
 export function PokemonList({ pokemons }: any): JSX.Element {

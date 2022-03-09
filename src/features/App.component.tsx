@@ -6,7 +6,7 @@ import { FilterByType } from './FilterByType.component';
 import { Footer } from '../components/Footer/Footer';
 import { LandingPage } from '../components/LandingPage/LandingPage';
 import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
-import { PokemonList } from './PokemonList.component';
+import { PokemonList } from '../components/PokemonList/PokemonList';
 import {
   removePokemonWithVisibleDetails,
   addPokemonWithVisibleDetails,
@@ -16,30 +16,21 @@ import {
   setCurrentListUrl,
 } from './pokemonAppSlice';
 import { getpokemonApiList } from './pokemonApiListSlice';
-import { getPokemonItem } from './pokemonApiItemSlice';
 import './App.scss';
 
-export function App({
-  setCurrentListUrl,
-  getPokemonList,
-  pokemonApp,
-  pokemonApiList,
-}: any): JSX.Element {
-  const pokemons = useSelector((state: any) => state.pokemon.pokemonList);
+export function App(props: any): JSX.Element {
+  const pokemons = useSelector((state: any) => state.pokemonApiList);
   const dispatch = useDispatch();
-  // const { pokemonResponse, status, error } = pokemonApiList;
-  // const { listUrl } = pokemonApp;
+  const listUrl = pokemons?.data?.data?.url;
+  useEffect(() => {
+    setCurrentListUrl('https://pokeapi.co/api/v2/pokemon?limit=20');
+    getpokemonApiList(listUrl);
+  }, [pokemons, listUrl]);
 
-  // useEffect(() => {
-  //   setCurrentListUrl('https://pokeapi.co/api/v2/pokemon?limit=20');
-  //   getPokemonList(listUrl);
-  // }, [listUrl, getPokemonList, setCurrentListUrl, pokemonResponse]);
+  function loadMorePokemons() {
+    setCurrentListUrl(pokemons?.data?.data?.next);
+  }
 
-  // function loadMorePokemons() {
-  //   setCurrentListUrl(pokemonResponse.next);
-  // }
-
-  //switchDarkLightThemeReducer instead of local storage
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
     'theme',
@@ -52,7 +43,7 @@ export function App({
   }
 
   useEffect(() => {
-    dispatch(getPokemonList('https://pokeapi.co/api/v2/pokemon?limit=20'));
+    dispatch(getpokemonApiList('https://pokeapi.co/api/v2/pokemon?limit=20'));
   }, [dispatch]);
 
   useEffect(() => {
@@ -70,18 +61,20 @@ export function App({
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme
           </button>
-          {/* {pokemonResponse && (
+          {pokemons && (
             <section className="app__filters">
               <FilterByType />
               <FilterByName />
             </section>
-          )} */}
+          )}
         </div>
-        {/* <button onClick={loadMorePokemons}>Load more Pokemons</button> */}
+        <button onClick={loadMorePokemons}>Load more Pokemons</button>
       </div>
-      {pokemons?.data?.data?.results.length ? (
-        <PokemonList pokemons={pokemons.data.data.results} />
-      ) : null}
+      <ul>
+        {pokemons?.data?.results?.length ? (
+          <PokemonList pokemons={pokemons?.data?.data?.results} />
+        ) : null}
+      </ul>
 
       {/* <ul>
         {error ? (
@@ -98,16 +91,3 @@ export function App({
     </main>
   );
 }
-
-// function mapStateToProps(state: any) {
-//   console.log(state);
-//   return {
-//     pokemonApp: 'state.pokemonApp',
-//     pokemonApiList: 'state.pokemonApiList',
-//   };
-// };
-
-// export default connect(mapStateToProps, { setCurrentListUrl, getPokemonList })(
-//   App
-// );
-// export default connect(mapStateToProps)(App);
