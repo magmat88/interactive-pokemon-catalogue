@@ -9,12 +9,14 @@ import './FilterByType.scss';
 //   pokemons: Array<PokemonType>;
 // }
 
-export function FilterByType({ filterPokemonByType }: any): JSX.Element {
-  const { filter } = filterPokemonByType;
+export function FilterByType({ changePokemonTypeFilter, 
+  // pokemonApp
+ }: any): JSX.Element {
+  // const { filterByType } = pokemonApp;
 
   // useEffect(() => {
   //   changePokemonTypeFilter(filter);
-  // }, [filter, changePokemonTypeFilter]);
+  // }, [filterByType, changePokemonTypeFilter]);
 
   function changeTypeFilter(event: any): void {
     changePokemonTypeFilter(event.target.value);
@@ -48,7 +50,7 @@ export function FilterByType({ filterPokemonByType }: any): JSX.Element {
 
 const mapStateToProps = (state: any) => {
   return {
-    filterPokemonByType: state.filterPokemonByType,
+    pokemonApp: state.pokemonApp,
   };
 };
 

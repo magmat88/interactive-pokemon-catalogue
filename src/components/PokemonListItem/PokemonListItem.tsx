@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 // import axios from 'axios';
-import {
-  getPokemonItem,
-  setCurrentItemUrl,
-} from '../../actions';
+import { getPokemonItem, 
+  // setCurrentItemUrl, 
+  addPokemonWithVisibleDetails, addPokemonDetails } from '../../actions';
 import { LoadingIndicator } from '..';
 import './PokemonListItem.scss';
 
@@ -13,96 +12,121 @@ import './PokemonListItem.scss';
 //   url: string;
 // };
 
-type PokemonListItemTypesType = [
-  {
-    slot: number;
-    type: {
-      name: string;
-      url: string;
-    };
-  }
-];
+// type PokemonListItemTypesType = [
+//   {
+//     slot: number;
+//     type: {
+//       name: string;
+//       url: string;
+//     };
+//   }
+// ];
 
-type listItemResponseType = {
-  height: number | null;
-  sprite: string | null;
-  types: Array<PokemonListItemTypesType>;
-  weight: number | null;
-};
+// type listItemResponseType = {
+//   height: number | null;
+//   sprite: string | null;
+//   types: Array<PokemonListItemTypesType>;
+//   weight: number | null;
+// };
 
 // export interface PokemonListItemProps {
 //   pokemon: PokemonType;
 // }
+export type PokemonDetailsType = {
+  name: string | undefined;
+  height: number | undefined;
+  sprite: string | undefined;
+  types: Array<string | undefined>;
+  weight: number | undefined;
+  visibility: Boolean;
+};
 
 export function PokemonListItem({
+  pokemon,
   getPokemonItem,
-  setCurrentItemUrl,
+  // setCurrentItemUrl,
+  addPokemonDetails,
   pokemonApp,
-  pokemonApiItem
+  pokemonApiItem,
 }: any): JSX.Element {
   const { pokemonItemResponse, status, error } = pokemonApiItem;
-  const { itemUrl } = pokemonApp;
+  const { pokemonsWithVisibleDetails, pokemons, filterByName, filterByType } = pokemonApp;
 
-
-  const [listItemResponse, setListItemResponse] =
-    useState<listItemResponseType>({
-      height: null,
-      sprite: null,
-      types: [],
-      weight: null,
-    });
-  const [IsListItemRequestPending, setIsListItemRequestPending] =
-    useState(true);
-  const [listItemVisibility, setListItemVisibility] = useState(false);
-  const [IsListItemError, setIsListItemError] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(pokemonItemResponse.url)
-      .then((res) => {
-        const currentlistItem = {
-          height: res.data.height,
-          sprite: res.data.sprites.front_default,
-          types: res.data.types.map((typeItem: any) => {
-            return typeItem.type.name;
-          }),
-          weight: res.data.weight,
-        };
+    // setCurrentItemUrl(pokemon.url);
+    getPokemonItem(pokemon.url);
 
-        setListItemResponse(currentlistItem);
-        setIsListItemRequestPending(false);
-      })
-      .catch((error) => {
-        setIsListItemError(true);
-        setIsListItemRequestPending(false);
-      });
+    function filterByTypes(filterByType: string, currentTypes: Array<string>): Boolean {
+      return currentTypes.includes(filterByType);
+    }
+
+    function filterByNamaes(filterByName: string, currentPokemonName: string): Boolean {
+      return currentPokemonName.includes(filterByName.toLowerCase());
+    }
+
+    const currentPokemonTypes = pokemonItemResponse.types.map((typeItem: any) => {
+      return typeItem.type.name;
+    });
+    const currentPokemonName = pokemonItemResponse.name;
+    const currentPokemonVisibility = (filterByTypes(filterByType, currentPokemonTypes) && filterByNames(filterByName, currentPokemonName)) ? true : false;
+    const currentPokemonDetails: PokemonDetailsType = {
+      name: currentPokemonName,
+      height: pokemonItemResponse.height,
+      sprite: pokemonItemResponse.sprites.front_default,
+      types: currentPokemonTypes,
+      weight: pokemonItemResponse.weight,
+      visibility: currentPokemonVisibility,
+    };
+
+    addPokemonDetails(currentPokemonDetails);
+  }, [
+    // itemUrl, 
+    getPokemonItem, addPokemonDetails, pokemons, filterByName, filterByType,
+    // setCurrentItemUrl
+  ]);
+
+  
+      const currentPokemon = {
+        height: pokemonItemResponse.height,
+        sprite: pokemonItemResponse.sprites.front_default,
+        types: pokemonItemResponse.types.map((typeItem: any) => {
+          return typeItem.type.name;
+        }),
+        weight: pokemonItemResponse.weight,
+      };
+
+      addPokemonDetails(currentPokemon);
+  
+    });
   }, [pokemonItemResponse.url]);
 
-  function toggleListItemVisibility(): void {
-    if (!listItemVisibility) {
-      setListItemVisibility(true);
-    } else {
-      setListItemVisibility(false);
-    }
+  function togglePokemonDetailsVisibility(pokemonName: string): any {
+    addPokemonWithVisibleDetails(pokemonName);
   }
 
-  const listItemVisibilityClass = listItemVisibility
+  const listItemVisibilityClass = pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name)
     ? 'pokemonList__listItem--visible'
     : 'pokemonList__listItem--hidden';
 
   return (
-    <div className="pokemonListItem" onClick={toggleListItemVisibility}>
-      <h1 className="pokemonListItem__text--label">{pokemonItemResponse.name}</h1>
+    <div className="pokemonListItem" onClick={togglePokemonDetailsVisibility}>
+      <h1 className="pokemonListItem__text--label">
+        {pokemonItemResponse.name}
+      </h1>
       <figure className="pokemonListItem__figure">
         <img
           className="pokemonListItem__img--small"
-          src={`${listItemResponse.sprite}`}
+          src={`${pokemonItemResponse.sprite}`}
           alt={`${pokemonItemResponse.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          {listItemResponse.types.map((type: any, index: number) => {
+          {pokemonItemResponse.types.map((type: any, index: number) => {
             return (
-              <div className="pokemonListItem__figcaptionItem" key={`${index}-type`}>
+              <div
+                className="pokemonListItem__figcaptionItem"
+                key={`${index}-type`}
+              >
                 <p>{type}</p>
               </div>
             );
@@ -110,12 +134,16 @@ export function PokemonListItem({
         </figcaption>
       </figure>
       <article className={listItemVisibilityClass}>
-        { IsListItemRequestPending ? (
+        {error ? (
+          <p>Error</p>
+        ) : status === 'rejected' ? (
+          <p>Status: rejected</p>
+        ) : status === 'loading' ? (
           <LoadingIndicator />
         ) : (
           <div>
-            <p>Height: {listItemResponse.height} m</p>
-            <p>Weight: {listItemResponse.weight} kg</p>
+            <p>Height: {pokemonItemResponse.height} m</p>
+            <p>Weight: {pokemonItemResponse.weight} kg</p>
           </div>
         )}
       </article>
@@ -123,12 +151,13 @@ export function PokemonListItem({
   );
 }
 
-
 const mapStateToProps = (state: any) => {
   return {
     pokemonApiItem: state.pokemonApiItem,
     pokemonApp: state.pokemonApp,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, { getPokemonItem, setCurrentItemUrl })(PokemonListItem)
+export default connect(mapStateToProps, { getPokemonItem, setCurrentItemUrl })(
+  PokemonListItem
+);

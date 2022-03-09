@@ -1,13 +1,13 @@
 import React from 'react';
-import { PokemonType } from '../PokemonListItem/PokemonListItem';
+// import { PokemonType } from '../PokemonListItem/PokemonListItem';
 import { PokemonListItem } from '..';
 import './PokemonList.scss';
 
-interface PokemonListProps {
-  pokemons: Array<PokemonType>;
-}
+// interface PokemonListProps {
+//   pokemons: Array<PokemonType>;
+// }
 
-export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
+export function PokemonList({ pokemons }: any): JSX.Element {
   return (
     <section id="pokemon-list" className="pokemonList">
       <ul className="pokemonList--unordered">

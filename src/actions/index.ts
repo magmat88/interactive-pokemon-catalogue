@@ -1,3 +1,4 @@
+import { addPokemonDetails } from './addPokemonDetails';
 import { addPokemonWithVisibleDetails } from './addPokemonWithVisibleDetails';
 import { changePokemonNameFilter } from './changePokemonNameFilter';
 import { changePokemonTypeFilter } from './changePokemonTypeFilter';
@@ -7,6 +8,7 @@ import { setCurrentItemUrl } from './setCurrentItemUrl';
 import { setCurrentListUrl } from './setCurrentListUrl';
 
 export {
+  addPokemonDetails,
   addPokemonWithVisibleDetails,
   changePokemonNameFilter,
   changePokemonTypeFilter,

@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 // import { PokemonType } from '../../config/state';
 import { connect } from 'react-redux';
-import { changePokemonNameFilter, changePokemonTypeFilter } from '../../actions';
+import { changePokemonNameFilter } from '../../actions';
 import './FilterByName.scss';
 
 // interface FilterByNameProps {
 //   pokemons: Array<PokemonType>;
 // }
 
-export function FilterByName({ filterPokemonByName }: any): JSX.Element {
-  const { filter } = filterPokemonByName;
+export function FilterByName({ changePokemonNameFilter,
+   // pokemonApp
+}: any): JSX.Element {
+  // const { filterByName } = pokemonApp;
 
   // useEffect(() => {
   //   changePokemonNameFilter(filter);
-  // }, [ filter, changePokemonNameFilter]);
+  // }, [ filterByName, changePokemonNameFilter]);
 
   function changeNameFilter(event: any): void {
     changePokemonNameFilter(event.target.value);
@@ -45,7 +47,7 @@ export function FilterByName({ filterPokemonByName }: any): JSX.Element {
 
 const mapStateToProps = (state: any) => {
   return {
-    filterPokemonByName: state.filterPokemonByName,
+    pokemonApp: state.pokemonApp,
   };
 };
 

@@ -26,10 +26,10 @@ const defaultState: any = {
 };
 
 export default function filterPokemonByTypeReducer(state = defaultState, action: any) {
-  switch (action.type) {
-    case TYPE_CHANGE_POKEMON_TYPE_FILTER:
-      return action.filter;
-    default:
-      return state;
-  }
+  // switch (action.type) {
+  //   case TYPE_CHANGE_POKEMON_TYPE_FILTER:
+  //     return action.filter;
+  //   default:
+  //     return state;
+  // }
 }
