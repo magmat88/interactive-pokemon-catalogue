@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PokemonType } from '../components/PokemonListItem/PokemonListItem';
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -10,7 +11,7 @@ export function getPokemonPage(url: string) {
   };
 }
 
-export function getPokemonListItem(pokemon: any) {
+export function getPokemonListItem(pokemon: PokemonType) {
   const request = axios.get(pokemon.url);
   return {
     type: 'GET_POKEMON_LIST_ITEM',
@@ -23,4 +24,11 @@ export function setCurrentPageUrl(pageUrl: string) {
     type: 'SET_CURRENT_PAGE_URL',
     payload: pageUrl,
   };
+}
+
+export function setPokemonListItemPageUrl(pokemonListItemPageUrl: string) {
+    return {
+        type: 'SET_POKEMON_LIST_ITEM_PAGE_URL',
+        payload: pokemonListItemPageUrl,
+    }
 }

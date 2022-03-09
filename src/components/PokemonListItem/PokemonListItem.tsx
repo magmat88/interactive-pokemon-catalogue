@@ -1,118 +1,134 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { PokemonType } from '../../config/state';
-import { LoadingIndicator, ErrorIndicator } from '..';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import {
+  getPokemonListItem,
+  setPokemonListItemPageUrl,
+} from '../actions';
+import { LoadingIndicator, ErrorIndicator } from '..';
 import './PokemonListItem.scss';
 
-// interface PokemonListItemProps {
-//   pokemon: PokemonType;
-// }
-
-type DetailsResponseType = {
-  weight: number | null;
-  height: number | null;
-  types: Array<any>;
-  sprite: string | null;
+export type PokemonType = {
+  name: string;
+  url: string;
 };
 
-// type DetailsResponseType = {
-//   weight: number,
-//   height: number,
-//   types: Array<string>,
-//   sprite: string,
-// }
+type PokemonListItemTypesType = [
+  {
+    slot: number;
+    type: {
+      name: string;
+      url: string;
+    };
+  }
+];
 
-export function PokemonListItem({ pokemon }: any): JSX.Element {
-  const [detailsResponse, setDetailsResponse] = useState<DetailsResponseType>({
-    weight: null,
-    height: null,
-    types: [],
-    sprite: null,
-  });
-  const [isDetailsRequestPending, setIsDetailsRequestPending] = useState(true);
-  const [detailsVisibility, setDetailsVisibility] = useState(false);
-  const [isDetailsError, setIsDetailsError] = useState(false);
+type listItemResponseType = {
+  height: number | null;
+  sprite: string | null;
+  types: Array<PokemonListItemTypesType>;
+  weight: number | null;
+};
 
-  console.log(pokemon);
+export interface PokemonListItemProps {
+  pokemon: PokemonType;
+}
+
+export function PokemonListItem({
+  // pokemon,
+  setPokemonListItemPageUrl,
+  getPokemonListItem
+}: PokemonListItemProps): JSX.Element {
+
+
+
+  const [listItemResponse, setListItemResponse] =
+    useState<listItemResponseType>({
+      height: null,
+      sprite: null,
+      types: [],
+      weight: null,
+    });
+  const [IsListItemRequestPending, setIsListItemRequestPending] =
+    useState(true);
+  const [listItemVisibility, setListItemVisibility] = useState(false);
+  const [IsListItemError, setIsListItemError] = useState(false);
 
   useEffect(() => {
     axios
       .get(pokemon.url)
       .then((res) => {
-        console.log(res.data);
-        const newDetails = {
-          weight: res.data.weight,
+        const currentlistItem = {
           height: res.data.height,
+          sprite: res.data.sprites.front_default,
           types: res.data.types.map((typeItem: any) => {
             return typeItem.type.name;
           }),
-          sprite: res.data.sprites.front_default,
+          weight: res.data.weight,
         };
 
-        setDetailsResponse(newDetails);
-        setIsDetailsRequestPending(false);
+        setListItemResponse(currentlistItem);
+        setIsListItemRequestPending(false);
       })
       .catch((error) => {
-        setIsDetailsError(true);
-        setIsDetailsRequestPending(false);
+        setIsListItemError(true);
+        setIsListItemRequestPending(false);
       });
   }, [pokemon.url]);
 
-  function showHideDetailsOnClick(): any {
-    if (!detailsVisibility) {
-      setDetailsVisibility(true);
+  function toggleListItemVisibility(): void {
+    if (!listItemVisibility) {
+      setListItemVisibility(true);
     } else {
-      setDetailsVisibility(false);
+      setListItemVisibility(false);
     }
   }
 
-  const detailsVisibilityClass = detailsVisibility
-    ? 'pokemonList__details--visible'
-    : 'pokemonList__details--hidden';
+  const listItemVisibilityClass = listItemVisibility
+    ? 'pokemonList__listItem--visible'
+    : 'pokemonList__listItem--hidden';
 
   return (
-    <div
-      className="pokemonListItem"
-      onClick={showHideDetailsOnClick}
-    >
-      <p>Types: {`${detailsResponse.types}`}</p>
-      {/* <p>Types: {`${detailsResponse.types}`}</p> */}
-
+    <div className="pokemonListItem" onClick={toggleListItemVisibility}>
+      <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
       <figure className="pokemonListItem__figure">
-        {/* <img src={require(`${detailsResponse.sprite}`)} alt={`${pokemon.name}`} /> */}
         <img
           className="pokemonListItem__img--small"
-          src={`${detailsResponse.sprite}`}
+          src={`${listItemResponse.sprite}`}
           alt={`${pokemon.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
-          {/* <p className="pokemonListItem__text--description">Sprite: {pokemon.sprite}</p> */}
-          {/* {
-          // detailsResponse.types.map((type: any) => {
-          //   console.log(type.type)
-          
+          {listItemResponse.types.map((type, index) => {
             return (
-              <div>
-                <p className="pokemonListItem__text--description">`${type}`</p>
+              <div className="pokemonListItem__figcaptionItem" key={`${index}-type`}>
+                <p>{type}</p>
               </div>
             );
-          })} */}
+          })}
         </figcaption>
       </figure>
-      <article className={detailsVisibilityClass}>
-        {isDetailsError ? (
+      <article className={listItemVisibilityClass}>
+        {IsListItemError ? (
           <ErrorIndicator />
-        ) : isDetailsRequestPending ? (
+        ) : IsListItemRequestPending ? (
           <LoadingIndicator />
         ) : (
-          // <PokemonDetails pokemonDetails={pokemon} />
           <div>
-            <p>Height: {detailsResponse.height} m</p>
-            <p>Weight: {detailsResponse.weight} kg</p>
+            <p>Height: {listItemResponse.height} m</p>
+            <p>Weight: {listItemResponse.weight} kg</p>
           </div>
         )}
       </article>
     </div>
   );
 }
+
+
+const mapStateToProps = (state: any) => {
+  return {
+    pokemonList: state.pokemonList,
+    pokemonListPagination: state.pokemonListPagination,
+  }
+}
+
+export default connect(mapStateToProps, { getPokemonListItem, setPokemonListItemPageUrl })(App)

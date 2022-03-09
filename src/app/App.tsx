@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
 import axios from 'axios';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   ErrorIndicator,
   FilterByName,
@@ -11,7 +11,20 @@ import {
   LoadingIndicator,
   PokemonList,
 } from '../components';
+import {
+  getPokemonListItem,
+  getPokemonPage,
+  setCurrentPageUrl,
+} from '../actions';
+import { PokemonType } from '../components/PokemonListItem/PokemonListItem';
 import './App.scss';
+
+type PokemonResponseType = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Array<PokemonType>;
+};
 
 function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
   return (
@@ -34,13 +47,15 @@ function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
   );
 }
 
-export function App(): JSX.Element {
-  const [pokemonResponse, setPokemonResponse] = useState();
-  const [isRequestPending, setIsRequestPending] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [currentPageUrl, setCurrentPageUrl] = useState(
-    `https://pokeapi.co/api/v2/pokemon?limit=20`
-  );
+export function App({ pokemonList, pokemonListPagination, setCurrentPageUrl, getPokemonPage }: any): JSX.Element {
+  const { pokemonResponse, status, error } = pokemonList;
+  const { currentPageUrl } = pokemonListPagination; 
+  // const [pokemonResponse, setPokemonResponse] = useState();
+  // const [isRequestPending, setIsRequestPending] = useState(true);
+  // const [isError, setIsError] = useState(false);
+  // const [currentPageUrl, setCurrentPageUrl] = useState(
+  //   `https://pokeapi.co/api/v2/pokemon?limit=20`
+  // );
 
   useEffect(() => {
     setIsRequestPending(true);
@@ -74,7 +89,7 @@ export function App(): JSX.Element {
     defaultDark ? 'dark' : 'light'
   );
 
-  function handleOnClickSwitchTheme() {
+  function toggleDarkLightTheme() {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
   }
@@ -86,7 +101,7 @@ export function App(): JSX.Element {
         <div className="app__container" data-theme={theme}>
           <button
             className="app__btn app_btn--light-no-border"
-            onClick={handleOnClickSwitchTheme}
+            onClick={toggleDarkLightTheme}
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme
           </button>
@@ -116,3 +131,12 @@ export function App(): JSX.Element {
     </main>
   );
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    pokemonList: state.pokemonList,
+    pokemonListPagination: state.pokemonListPagination,
+  }
+}
+
+export default connect(mapStateToProps, { setCurrentPageUrl, getPokemonPage })(App)

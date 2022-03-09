@@ -1,5 +1,5 @@
 import React from 'react';
-import { PokemonType } from '../../config/state';
+import { PokemonType } from '../PokemonListItem/PokemonListItem';
 import { PokemonListItem } from '..';
 import './PokemonList.scss';
 
@@ -11,7 +11,7 @@ export function PokemonList({ pokemons }: PokemonListProps): JSX.Element {
   return (
     <section id="pokemon-list" className="pokemonList">
       <ul className="pokemonList--unordered">
-        {[...pokemons].slice(0, 20).map((pokemon) => {
+        {[...pokemons].map((pokemon) => {
           return (
             <li
               key={pokemon.name}

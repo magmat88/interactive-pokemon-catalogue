@@ -1,5 +1,6 @@
 import React from 'react';
 import { PokemonType } from '../../config/state';
+import { POKEMON_SELECT_TYPES } from '../../config/constants';
 import './FilterByType.scss';
 
 interface FilterByTypeProps {
@@ -17,9 +18,18 @@ export function FilterByType({ pokemons }: FilterByTypeProps): JSX.Element {
           className="filterByType__input filterByType__input--standard"
         >
           <option value="">Select type</option>
-          <option value="">Type #1</option>
-          <option value="">Type #2</option>
-          <option value="">Type #3</option>
+
+          {(
+            Object.keys(POKEMON_SELECT_TYPES) as Array<
+              keyof typeof POKEMON_SELECT_TYPES
+            >
+          ).map((key) => {
+            return (
+              <option value={[POKEMON_SELECT_TYPES[key]]}>
+                {POKEMON_SELECT_TYPES[key]}
+              </option>
+            );
+          })}
         </select>
       </div>
     </section>
