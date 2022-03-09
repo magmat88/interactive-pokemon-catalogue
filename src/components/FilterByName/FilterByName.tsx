@@ -1,23 +1,31 @@
-import React from 'react';
-import { PokemonType } from '../../config/state';
+import React, { useEffect } from 'react';
+// import { PokemonType } from '../../config/state';
+import { connect } from 'react-redux';
+import { changePokemonNameFilter, changePokemonTypeFilter } from '../../actions';
 import './FilterByName.scss';
 
-interface FilterByNameProps {
-  pokemons: Array<PokemonType>;
-}
+// interface FilterByNameProps {
+//   pokemons: Array<PokemonType>;
+// }
 
-export function FilterByName({ pokemons }: FilterByNameProps): JSX.Element {
+export function FilterByName({ filterPokemonByName }: any): JSX.Element {
+  const { filter } = filterPokemonByName;
+
+  // useEffect(() => {
+  //   changePokemonNameFilter(filter);
+  // }, [ filter, changePokemonNameFilter]);
+
+  function changeNameFilter(event: any): void {
+    changePokemonNameFilter(event.target.value);
+  }
+  
   return (
     <section className="filterByName">
       <div className="filterByName__container">
         <input
           placeholder="Filter by name"
           className="filterByName__input filterByName__input--standard"
-          onChange={(event: any) => {
-            const value = (event.target as any).value;
-            console.log(value);
-            return value;
-          }}
+          onChange={changeNameFilter}
         />
       </div>
       {/* <div className="filterByName__container">
@@ -33,3 +41,12 @@ export function FilterByName({ pokemons }: FilterByNameProps): JSX.Element {
     </section>
   );
 }
+
+
+const mapStateToProps = (state: any) => {
+  return {
+    filterPokemonByName: state.filterPokemonByName,
+  };
+};
+
+export default connect(mapStateToProps, changePokemonNameFilter)(FilterByName);

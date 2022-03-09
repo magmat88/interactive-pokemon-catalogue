@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
 import {
-  getPokemonListItem,
-  setPokemonListItemPageUrl,
-} from '../actions';
-import { LoadingIndicator, ErrorIndicator } from '..';
+  getPokemonItem,
+  setCurrentItemUrl,
+} from '../../actions';
+import { LoadingIndicator } from '..';
 import './PokemonListItem.scss';
 
-export type PokemonType = {
-  name: string;
-  url: string;
-};
+// export type PokemonType = {
+//   name: string;
+//   url: string;
+// };
 
 type PokemonListItemTypesType = [
   {
@@ -30,16 +30,18 @@ type listItemResponseType = {
   weight: number | null;
 };
 
-export interface PokemonListItemProps {
-  pokemon: PokemonType;
-}
+// export interface PokemonListItemProps {
+//   pokemon: PokemonType;
+// }
 
 export function PokemonListItem({
-  // pokemon,
-  setPokemonListItemPageUrl,
-  getPokemonListItem
-}: PokemonListItemProps): JSX.Element {
-
+  getPokemonItem,
+  setCurrentItemUrl,
+  pokemonApp,
+  pokemonApiItem
+}: any): JSX.Element {
+  const { pokemonItemResponse, status, error } = pokemonApiItem;
+  const { itemUrl } = pokemonApp;
 
 
   const [listItemResponse, setListItemResponse] =
@@ -56,7 +58,7 @@ export function PokemonListItem({
 
   useEffect(() => {
     axios
-      .get(pokemon.url)
+      .get(pokemonItemResponse.url)
       .then((res) => {
         const currentlistItem = {
           height: res.data.height,
@@ -74,7 +76,7 @@ export function PokemonListItem({
         setIsListItemError(true);
         setIsListItemRequestPending(false);
       });
-  }, [pokemon.url]);
+  }, [pokemonItemResponse.url]);
 
   function toggleListItemVisibility(): void {
     if (!listItemVisibility) {
@@ -90,15 +92,15 @@ export function PokemonListItem({
 
   return (
     <div className="pokemonListItem" onClick={toggleListItemVisibility}>
-      <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
+      <h1 className="pokemonListItem__text--label">{pokemonItemResponse.name}</h1>
       <figure className="pokemonListItem__figure">
         <img
           className="pokemonListItem__img--small"
           src={`${listItemResponse.sprite}`}
-          alt={`${pokemon.name}`}
+          alt={`${pokemonItemResponse.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          {listItemResponse.types.map((type, index) => {
+          {listItemResponse.types.map((type: any, index: number) => {
             return (
               <div className="pokemonListItem__figcaptionItem" key={`${index}-type`}>
                 <p>{type}</p>
@@ -108,9 +110,7 @@ export function PokemonListItem({
         </figcaption>
       </figure>
       <article className={listItemVisibilityClass}>
-        {IsListItemError ? (
-          <ErrorIndicator />
-        ) : IsListItemRequestPending ? (
+        { IsListItemRequestPending ? (
           <LoadingIndicator />
         ) : (
           <div>
@@ -126,9 +126,9 @@ export function PokemonListItem({
 
 const mapStateToProps = (state: any) => {
   return {
-    pokemonList: state.pokemonList,
-    pokemonListPagination: state.pokemonListPagination,
+    pokemonApiItem: state.pokemonApiItem,
+    pokemonApp: state.pokemonApp,
   }
 }
 
-export default connect(mapStateToProps, { getPokemonListItem, setPokemonListItemPageUrl })(App)
+export default connect(mapStateToProps, { getPokemonItem, setCurrentItemUrl })(PokemonListItem)

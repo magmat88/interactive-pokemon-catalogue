@@ -1,13 +1,16 @@
-import React from 'react';
 import { combineReducers } from 'redux';
-import pokemonListItemReducer from './pokemonListItemReducer';
-import pokemonListPaginationReducer from './pokemonListPaginationReducer';
-import pokemonListReducer from './pokemonListReducer';
+import filterPokemonByNameReducer from './filterPokemonByNameReducer';
+import filterPokemonByTypeReducer from './filterPokemonByTypeReducer';
+import pokemonApiItemReducer from './pokemonApiItemReducer';
+import pokemonApiListReducer from './pokemonApiListReducer';
+import pokemonAppReducer from './pokemonAppReducer';
 
 const rootReducer = combineReducers({
-  pokemonListItemReducer,
-  pokemonListPaginationReducer,
-  pokemonListReducer
+  filterPokemonByName: filterPokemonByNameReducer,
+  filterPokemonByType: filterPokemonByTypeReducer,
+  pokemonApiItem: pokemonApiItemReducer,
+  pokemonApiList: pokemonApiListReducer,
+  pokemonApp: pokemonAppReducer,
 });
 
 export default rootReducer;

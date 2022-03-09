@@ -1,6 +1,7 @@
 export const URL_ABOUT_API = 'https://pokeapi.co';
 
 export enum POKEMON_SELECT_TYPES {
+    // ALL = '',
     BUG = 'bug',
     DARK = 'dark',
     DRAGON = 'dragon',

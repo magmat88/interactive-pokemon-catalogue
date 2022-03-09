@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import {
-  ErrorIndicator,
   FilterByName,
   FilterByType,
   Footer,
@@ -11,78 +9,36 @@ import {
   LoadingIndicator,
   PokemonList,
 } from '../components';
-import {
-  getPokemonListItem,
-  getPokemonPage,
-  setCurrentPageUrl,
-} from '../actions';
-import { PokemonType } from '../components/PokemonListItem/PokemonListItem';
+import { getPokemonList, setCurrentListUrl } from '../actions';
+// import { PokemonType } from '../components/PokemonListItem/PokemonListItem';
 import './App.scss';
 
-type PokemonResponseType = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Array<PokemonType>;
-};
+// type PokemonResponseType = {
+//   count: number;
+//   next: string | null;
+//   previous: string | null;
+//   results: Array<PokemonType>;
+// };
 
-function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
-  return (
-    <footer className="app__pagination">
-      <button
-        className="app__btn app__btn--contrast"
-        onClick={gotoPrevPage}
-        disabled={isRequestPending}
-      >
-        {'<<'}
-      </button>
-      <button
-        className="app__btn  app__btn--contrast"
-        onClick={gotoNextPage}
-        disabled={isRequestPending}
-      >
-        {'>>'}
-      </button>
-    </footer>
-  );
-}
-
-export function App({ pokemonList, pokemonListPagination, setCurrentPageUrl, getPokemonPage }: any): JSX.Element {
-  const { pokemonResponse, status, error } = pokemonList;
-  const { currentPageUrl } = pokemonListPagination; 
-  // const [pokemonResponse, setPokemonResponse] = useState();
-  // const [isRequestPending, setIsRequestPending] = useState(true);
-  // const [isError, setIsError] = useState(false);
-  // const [currentPageUrl, setCurrentPageUrl] = useState(
-  //   `https://pokeapi.co/api/v2/pokemon?limit=20`
-  // );
+export function App({
+  setCurrentListUrl,
+  getPokemonList,
+  pokemonApp,
+  pokemonApiList,
+}: any): JSX.Element {
+  const { pokemonResponse, status, error } = pokemonApiList;
+  const { listUrl } = pokemonApp;
 
   useEffect(() => {
-    setIsRequestPending(true);
-    axios
-      .get(currentPageUrl)
-      .then((res) => {
-        setPokemonResponse(res.data);
-        setIsRequestPending(false);
-      })
-      .catch((error) => {
-        setIsError(true);
-        console.log(error);
-      });
-  }, [currentPageUrl]);
+    getPokemonList(listUrl);
+  }, [listUrl, getPokemonList]);
 
-  const gotoPrevPage = () => {
-    if ((pokemonResponse as any).previous) {
-      setCurrentPageUrl((pokemonResponse as any)?.previous);
-    }
-  };
+  function loadMorePokemons() {
+    setCurrentListUrl(pokemonResponse.next);
+    //load more pokemons from new url
+  }
 
-  const gotoNextPage = () => {
-    if ((pokemonResponse as any).next) {
-      setCurrentPageUrl((pokemonResponse as any).next);
-    }
-  };
-
+  //switchDarkLightThemeReducer instead of local storage
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
     'theme',
@@ -107,24 +63,24 @@ export function App({ pokemonList, pokemonListPagination, setCurrentPageUrl, get
           </button>
           {pokemonResponse ? (
             <section className="app__filters">
-              <FilterByType pokemons={(pokemonResponse as any)?.results} />
-              <FilterByName pokemons={(pokemonResponse as any)?.results} />
+              {/* <FilterByType pokemons={pokemonResponse.results} />
+              <FilterByName pokemons={pokemonResponse.results} /> */}
+              <FilterByType />
+              <FilterByName />
             </section>
           ) : null}
         </div>
-        <Pagination
-          gotoNextPage={gotoNextPage}
-          gotoPrevPage={gotoPrevPage}
-          isRequestPending={isRequestPending}
-        />
+        <button onClick={loadMorePokemons}>Load more Pokemons</button>
       </div>
       <ul>
-        {isError ? (
-          <ErrorIndicator />
-        ) : isRequestPending ? (
+        {error ? (
+          <p>Error</p>
+        ) : status === 'rejected' ? (
+          <p>Status: rejected</p>
+        ) : status === 'loading' ? (
           <LoadingIndicator />
         ) : (
-          <PokemonList pokemons={(pokemonResponse as any).results} />
+          <PokemonList pokemons={pokemonResponse.results} />
         )}
       </ul>
       <Footer />
@@ -134,9 +90,11 @@ export function App({ pokemonList, pokemonListPagination, setCurrentPageUrl, get
 
 const mapStateToProps = (state: any) => {
   return {
-    pokemonList: state.pokemonList,
-    pokemonListPagination: state.pokemonListPagination,
-  }
-}
+    pokemonApp: state.pokemonApp,
+    pokemonApiList: state.pokemonApiList,
+  };
+};
 
-export default connect(mapStateToProps, { setCurrentPageUrl, getPokemonPage })(App)
+export default connect(mapStateToProps, { setCurrentListUrl, getPokemonList })(
+  App
+);
