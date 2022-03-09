@@ -4,7 +4,7 @@ import { changePokemonNameFilter } from './changePokemonNameFilter';
 import { changePokemonTypeFilter } from './changePokemonTypeFilter';
 import { getPokemonItem } from './getPokemonItem';
 import { getPokemonList } from './getPokemonList';
-import { setCurrentItemUrl } from './setCurrentItemUrl';
+import { removePokemonWithVisibleDetails } from './removePokemonWithVisibleDetails';
 import { setCurrentListUrl } from './setCurrentListUrl';
 
 export {
@@ -14,6 +14,6 @@ export {
   changePokemonTypeFilter,
   getPokemonItem,
   getPokemonList,
-  setCurrentItemUrl,
+  removePokemonWithVisibleDetails,
   setCurrentListUrl,
 };

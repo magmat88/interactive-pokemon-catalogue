@@ -10,15 +10,7 @@ import {
   PokemonList,
 } from '../components';
 import { getPokemonList, setCurrentListUrl } from '../actions';
-// import { PokemonType } from '../components/PokemonListItem/PokemonListItem';
 import './App.scss';
-
-// type PokemonResponseType = {
-//   count: number;
-//   next: string | null;
-//   previous: string | null;
-//   results: Array<PokemonType>;
-// };
 
 export function App({
   setCurrentListUrl,
@@ -35,7 +27,6 @@ export function App({
 
   function loadMorePokemons() {
     setCurrentListUrl(pokemonResponse.next);
-    //load more pokemons from new url
   }
 
   //switchDarkLightThemeReducer instead of local storage
@@ -63,8 +54,6 @@ export function App({
           </button>
           {pokemonResponse ? (
             <section className="app__filters">
-              {/* <FilterByType pokemons={pokemonResponse.results} />
-              <FilterByName pokemons={pokemonResponse.results} /> */}
               <FilterByType />
               <FilterByName />
             </section>

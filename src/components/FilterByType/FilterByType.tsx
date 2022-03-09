@@ -1,25 +1,18 @@
 import React, { useEffect } from 'react';
-// import { PokemonType } from '../../config/state';
 import { POKEMON_SELECT_TYPES } from '../../config/constants';
 import { connect } from 'react-redux';
 import { changePokemonTypeFilter } from '../../actions';
 import './FilterByType.scss';
 
-// interface FilterByTypeProps {
-//   pokemons: Array<PokemonType>;
-// }
+export function FilterByType({
+  changePokemonTypeFilter,
+  pokemonApp,
+}: any): JSX.Element {
 
-export function FilterByType({ changePokemonTypeFilter, 
-  // pokemonApp
- }: any): JSX.Element {
-  // const { filterByType } = pokemonApp;
-
-  // useEffect(() => {
-  //   changePokemonTypeFilter(filter);
-  // }, [filterByType, changePokemonTypeFilter]);
+  useEffect(() => {}, [changePokemonTypeFilter, pokemonApp]);
 
   function changeTypeFilter(event: any): void {
-    changePokemonTypeFilter(event.target.value);
+    changePokemonTypeFilter(event.target.value as string);
   }
 
   return (
@@ -29,7 +22,7 @@ export function FilterByType({ changePokemonTypeFilter,
           onChange={changeTypeFilter}
           className="filterByType__input filterByType__input--standard"
         >
-          <option value="">ALL</option>
+          <option value="">FILTER BY TYPE</option>
 
           {(
             Object.keys(POKEMON_SELECT_TYPES) as Array<

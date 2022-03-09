@@ -1,37 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-// import axios from 'axios';
 import { getPokemonItem, 
-  // setCurrentItemUrl, 
-  addPokemonWithVisibleDetails, addPokemonDetails } from '../../actions';
+  addPokemonWithVisibleDetails, removePokemonWithVisibleDetails, addPokemonDetails } from '../../actions';
 import { LoadingIndicator } from '..';
 import './PokemonListItem.scss';
 
-// export type PokemonType = {
-//   name: string;
-//   url: string;
-// };
-
-// type PokemonListItemTypesType = [
-//   {
-//     slot: number;
-//     type: {
-//       name: string;
-//       url: string;
-//     };
-//   }
-// ];
-
-// type listItemResponseType = {
-//   height: number | null;
-//   sprite: string | null;
-//   types: Array<PokemonListItemTypesType>;
-//   weight: number | null;
-// };
-
-// export interface PokemonListItemProps {
-//   pokemon: PokemonType;
-// }
 export type PokemonDetailsType = {
   name: string | undefined;
   height: number | undefined;
@@ -44,7 +17,6 @@ export type PokemonDetailsType = {
 export function PokemonListItem({
   pokemon,
   getPokemonItem,
-  // setCurrentItemUrl,
   addPokemonDetails,
   pokemonApp,
   pokemonApiItem,
@@ -54,14 +26,13 @@ export function PokemonListItem({
 
 
   useEffect(() => {
-    // setCurrentItemUrl(pokemon.url);
     getPokemonItem(pokemon.url);
 
     function filterByTypes(filterByType: string, currentTypes: Array<string>): Boolean {
       return currentTypes.includes(filterByType);
     }
 
-    function filterByNamaes(filterByName: string, currentPokemonName: string): Boolean {
+    function filterByNames(filterByName: string, currentPokemonName: string): Boolean {
       return currentPokemonName.includes(filterByName.toLowerCase());
     }
 
@@ -80,29 +51,11 @@ export function PokemonListItem({
     };
 
     addPokemonDetails(currentPokemonDetails);
-  }, [
-    // itemUrl, 
-    getPokemonItem, addPokemonDetails, pokemons, filterByName, filterByType,
-    // setCurrentItemUrl
-  ]);
+  }, [getPokemonItem, addPokemonDetails, pokemons, filterByName, filterByType]);
 
-  
-      const currentPokemon = {
-        height: pokemonItemResponse.height,
-        sprite: pokemonItemResponse.sprites.front_default,
-        types: pokemonItemResponse.types.map((typeItem: any) => {
-          return typeItem.type.name;
-        }),
-        weight: pokemonItemResponse.weight,
-      };
-
-      addPokemonDetails(currentPokemon);
-  
-    });
-  }, [pokemonItemResponse.url]);
-
-  function togglePokemonDetailsVisibility(pokemonName: string): any {
-    addPokemonWithVisibleDetails(pokemonName);
+  function togglePokemonDetailsVisibility(event: any): any {
+    pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name) ?
+    removePokemonWithVisibleDetails(pokemonItemResponse.name) : addPokemonWithVisibleDetails(pokemonItemResponse.name);
   }
 
   const listItemVisibilityClass = pokemonsWithVisibleDetails.hasOwnProperty(pokemonItemResponse.name)
@@ -158,6 +111,6 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-export default connect(mapStateToProps, { getPokemonItem, setCurrentItemUrl })(
+export default connect(mapStateToProps, { getPokemonItem })(
   PokemonListItem
 );

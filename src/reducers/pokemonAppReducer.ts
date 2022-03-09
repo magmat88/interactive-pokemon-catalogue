@@ -1,5 +1,6 @@
 import {
   TYPE_ADD_POKEMON_WITH_VISIBLE_DETAILS,
+  TYPE_REMOVE_POKEMON_WITH_VISIBLE_DETAILS,
   TYPE_ADD_POKEMON_DETAILS,
   TYPE_SET_CURRENT_LIST_URL,
   TYPE_CHANGE_POKEMON_NAME_FILTER,
@@ -7,7 +8,7 @@ import {
 } from '../config/actionTypes';
 
 interface DefaultStateProps {
-  pokemonsWithVisibleDetails: {};
+  pokemonsWithVisibleDetails: Array<string>;
   filterByName: string;
   filterByType: string;
   pokemons: [
@@ -24,9 +25,9 @@ interface DefaultStateProps {
 }
 
 const defaultState: DefaultStateProps = {
-  pokemonsWithVisibleDetails: {},
+  pokemonsWithVisibleDetails: [],
   filterByName: '',
-  filterByType: 'ALL',
+  filterByType: '',
   pokemons: [
     {
       name: undefined,
@@ -46,17 +47,24 @@ export default function pokemonAppReducer(state = defaultState, action: any) {
       return {
         ...state,
         pokemonsWithVisibleDetails: {
-          ...state.pokemonsWithVisibleDetails,
-          [action.payload]: true,
+          ...state.pokemonsWithVisibleDetails.concat(action.payload),
         },
       };
+    case TYPE_REMOVE_POKEMON_WITH_VISIBLE_DETAILS:
+      const index = state.pokemonsWithVisibleDetails.indexOf(action.payload);
+      return (
+        index !== -1 && {
+          ...state,
+          pokemonsWithVisibleDetails: [
+            ...state.pokemonsWithVisibleDetails.slice(0, index),
+            ...state.pokemonsWithVisibleDetails.slice(index + 1),
+          ],
+        }
+      );
     case TYPE_ADD_POKEMON_DETAILS:
       return {
         ...state,
-        pokemons: [
-          ...state.pokemons,
-          action.payload,
-        ],
+        pokemons: [...state.pokemons, action.payload],
       };
     case TYPE_SET_CURRENT_LIST_URL:
       return {
@@ -64,9 +72,15 @@ export default function pokemonAppReducer(state = defaultState, action: any) {
         currentListUrl: action.payload,
       };
     case TYPE_CHANGE_POKEMON_NAME_FILTER:
-      return action.filterByName;
+      return {
+        ...state,
+        filterByName: action.payload,
+      };
     case TYPE_CHANGE_POKEMON_TYPE_FILTER:
-      return action.filterByType;
+      return {
+        ...state,
+        filterByType: action.payload,
+      };
     default:
       return state;
   }
