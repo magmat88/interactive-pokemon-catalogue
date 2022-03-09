@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { PokemonType } from '../../config/state';
-import { PokemonDetails, LoadingIndicator, ErrorIndicator } from '..';
+import { LoadingIndicator, ErrorIndicator } from '..';
 import axios from 'axios';
 import './PokemonListItem.scss';
 

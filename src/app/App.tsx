@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
+import axios from 'axios';
+import { connect } from "react-redux";
 import {
-  PokemonList,
-  Footer,
-  LandingPage,
+  ErrorIndicator,
   FilterByName,
   FilterByType,
+  Footer,
+  LandingPage,
   LoadingIndicator,
-  ErrorIndicator,
+  PokemonList,
 } from '../components';
 import './App.scss';
-import axios from 'axios';
-import '../components/PokemonList/PokemonList.scss';
 
 function Pagination({ gotoPrevPage, gotoNextPage, isRequestPending }: any) {
   return (
