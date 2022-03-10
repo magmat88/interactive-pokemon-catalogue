@@ -8,27 +8,35 @@ import { LandingPage } from '../components/LandingPage/LandingPage';
 import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
 import { PokemonList } from '../components/PokemonList/PokemonList';
 import {
-  removePokemonWithVisibleDetails,
-  addPokemonWithVisibleDetails,
-  addPokemonDetails,
-  changePokemonTypeFilter,
-  changePokemonNameFilter,
   setCurrentListUrl,
 } from './pokemonAppSlice';
 import { getpokemonApiList } from './pokemonApiListSlice';
 import './App.scss';
 
 export function App(props: any): JSX.Element {
-  const pokemons = useSelector((state: any) => state.pokemonApiList);
+  const pokemons = useSelector((state: any) => state.pokemonApiList.pokemonApiList.data);
   const dispatch = useDispatch();
-  const listUrl = pokemons?.data?.data?.url;
+  // const listUrl = pokemons?.data?.results?.url;
   useEffect(() => {
-    setCurrentListUrl('https://pokeapi.co/api/v2/pokemon?limit=20');
-    getpokemonApiList(listUrl);
-  }, [pokemons, listUrl]);
+  //   // console.log(pokemons, listUrl)
+  //   dispatch(setCurrentListUrl('https://pokeapi.co/api/v2/pokemon?limit=20'));
+    dispatch(getpokemonApiList('https://pokeapi.co/api/v2/pokemon?limit=20'));
+  }, [dispatch]);
 
+  useEffect(() => {
+    for (let key in pokemons){
+      console.log(pokemons[key])
+    };
+    console.log(pokemons["results"]);
+    console.log(pokemons["results"].map((result: any)=>{console.log(result)}))
+  }, [pokemons]);
+
+  // useEffect(() => {
+  //   console.log(pokemons?.pokemonApiList);
+  // }, [pokemons]);
   function loadMorePokemons() {
-    setCurrentListUrl(pokemons?.data?.data?.next);
+    // TODO
+    setCurrentListUrl(pokemons?.data?.results?.next);
   }
 
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -42,14 +50,11 @@ export function App(props: any): JSX.Element {
     setTheme(newTheme);
   }
 
-  useEffect(() => {
-    dispatch(getpokemonApiList('https://pokeapi.co/api/v2/pokemon?limit=20'));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getpokemonApiList('https://pokeapi.co/api/v2/pokemon?limit=20'));
+  // }, [dispatch]);
 
-  useEffect(() => {
-    console.log(pokemons);
-  }, [pokemons]);
-
+  
   return (
     <main className="app app--dark-light" data-theme={theme}>
       <LandingPage />
@@ -71,8 +76,8 @@ export function App(props: any): JSX.Element {
         <button onClick={loadMorePokemons}>Load more Pokemons</button>
       </div>
       <ul>
-        {pokemons?.data?.results?.length ? (
-          <PokemonList pokemons={pokemons?.data?.data?.results} />
+        {pokemons?.length ? (
+          <PokemonList pokemons={pokemons["results"]} />
         ) : null}
       </ul>
 

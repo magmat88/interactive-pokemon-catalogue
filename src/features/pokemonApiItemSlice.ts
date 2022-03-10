@@ -28,21 +28,21 @@ export const pokemonApiItemSlice = createSlice({
   initialState: pokemonApiItemInitState,
   reducers: {},
   extraReducers: {
-    POKEMON_API_ITEM__GET_POKEMON_ITEM_PENDING: (state, action) => {
+    "pokemonApiItem/getPokemonList/status/pending": (state, action) => {
       state.pokemonApiItem = {
         status: 'loading',
         data: {},
         error: null,
       };
     },
-    POKEMON_API_ITEM__GET_POKEMON_ITEM_FULFILLED: (state, action) => {
+    "pokemonApiItem/getPokemonList/status/fulfilled": (state, action) => {
       state.pokemonApiItem = {
         status: 'idle',
         data: action.payload,
         error: null,
       };
     },
-    POKEMON_API_ITEM__GET_POKEMON_ITEM_REJECTED: (state, action) => {
+    "pokemonApiItem/getPokemonList/status/rejected": (state, action) => {
       state.pokemonApiItem = {
         status: 'idle',
         data: {},
