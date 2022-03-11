@@ -12,7 +12,8 @@ import {
 
 export function useGetPokemonByNameQuery(name: string) {
   const dispatch = useDispatch();
-  //   const status = useSelector((state: RootState) =>
+  // const status = useSelector((state: any) => selectStatusByName(state, name));
+
   const status = useSelector((state: any) => selectStatusByName(state, name));
   const data = useSelector((state: any) => selectDataByName(state, name));
   useEffect(() => {

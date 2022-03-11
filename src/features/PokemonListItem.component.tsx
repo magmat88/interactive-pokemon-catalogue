@@ -60,6 +60,7 @@ export function PokemonListItem(pokemon: any): JSX.Element {
       filterByNames(filterByName, currentPokemonName)
         ? true
         : false;
+
     const currentPokemonDetails: PokemonDetailsType = {
       name: currentPokemonName,
       height: pokemonApiItem.data.height,

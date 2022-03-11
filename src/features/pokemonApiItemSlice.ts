@@ -121,9 +121,9 @@ export const selectDataByName = (state: any, name: string) =>
   state.pokemonApiItem.dataByName[name];
 
 export const selectStatusPokemons = (state: any, name: string) =>
-  state.pokemonApiItem.statusByName[name];
+  state.pokemonApiItem.statusPokemons;
 export const selectDataPokemons = (state: any, name: string) =>
-  state.pokemonApiItem.dataByName[name];
+  state.pokemonApiItem.dataPokemons;
 
 // {
 //   'pokemonApiItem/getPokemonList/status/pending': (state, action) => {

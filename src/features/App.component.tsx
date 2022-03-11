@@ -17,14 +17,55 @@ import {
   useGetPokemonByNameQuery,
   useGetPokemonsWithLimitAndOffset,
 } from '../hooks';
-// import {
-//   // useGetPokemonByNameQuery,
-//   getPokemonsWithLimitAndOffset,
-// } from '../services/api';
+import './PokemonListItem.scss';
+
+function MyPokemonItem({ pokemon }: any): JSX.Element {
+  // console.log('pokemon in pokemon item: ', pokemon);
+
+  const types: Array<string> = [];
+  pokemon.types.map((item: any) => {
+    return types.push(item.type.name);
+  });
+
+  return (
+    <div className="pokemonListItem" onClick={() => {}}>
+      <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
+      <figure className="pokemonListItem__figure">
+        <img
+          className="pokemonListItem__img--small"
+          src={`${pokemon.sprites['front_default']}`}
+          alt={`${pokemon.name}`}
+        />
+        <figcaption className="pokemonListItem__figcaption">
+          {types.map((type) => {
+            return (
+              <div className="pokemonListItem__figcaptionItem" key={type}>
+                <p>{type}</p>
+              </div>
+            );
+          })}
+        </figcaption>
+      </figure>
+      <article>
+        {/* {error ? (
+      <p>Error</p>
+    ) : status === 'rejected' ? (
+      <p>Status: rejected</p>
+    ) : status === 'loading' ? (
+      <LoadingIndicator />
+    ) : ( */}
+        <div>
+          <p>Height: {pokemon.height} m</p>
+          <p>Weight: {pokemon.weight} kg</p>
+        </div>
+      </article>
+    </div>
+  );
+}
 
 export function MyPokemon({ name }: any): JSX.Element {
   const { data, isError, isLoading } = useGetPokemonByNameQuery(name);
-
+  // console.log('data for single pokemon in app: ', data);
   return (
     <article className="app app--dark-light">
       {isError ? (
@@ -33,10 +74,7 @@ export function MyPokemon({ name }: any): JSX.Element {
         <LoadingIndicator />
       ) : data ? (
         <>
-          <button className="app__btn app_btn--light-no-border">
-            <p>{data.species.name}</p>
-            <img src={data.sprites.front_shiny} alt={data.species.name} />
-          </button>
+          <MyPokemonItem pokemon={data} />
         </>
       ) : null}
     </article>
@@ -46,15 +84,16 @@ export function MyPokemon({ name }: any): JSX.Element {
 export function App(props: any): JSX.Element {
   const [limit, setLimit] = useState<number>(20);
   const [offset, setOffset] = useState<number>(0);
-  const [limitAndOffset, setLimitAndOffset] = useState<string>(`limit=${limit}&offset=${offset}`);
-
+  const [limitAndOffset, setLimitAndOffset] =
+    useState<string>('limit=20&offset=0');
+  console.log(limitAndOffset);
   // const limitAndOffset = `limit=${limit}&offset=${offset}`;
   const { data, isError, isLoading } = useGetPokemonsWithLimitAndOffset(
     `${limitAndOffset}`
   );
-  
-  console.log('data in app:', data)
-  
+
+  console.log('data in app:', data);
+
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
     'theme',
@@ -67,9 +106,11 @@ export function App(props: any): JSX.Element {
   }
 
   function loadMorePokemons() {
-
+    setLimit(limit + 20);
+    setOffset(offset + 20);
+    setLimitAndOffset(`limit=${limit}&offset=${offset}`);
   }
-  
+
   return (
     <main className="app app--dark-light" data-theme={theme}>
       <LandingPage />
@@ -81,46 +122,30 @@ export function App(props: any): JSX.Element {
           >
             {theme === 'light' ? 'Dark' : 'Light'} Theme
           </button>
-          <section className="app__filters">
+          {/* <section className="app__filters">
             <FilterByType />
             <FilterByName />
-          </section>
+          </section> */}
         </div>
-        <button
-        onClick={loadMorePokemons}
-        >
-          Load more Pokemons
-        </button>
+        <button onClick={loadMorePokemons}>Load more Pokemons</button>
       </div>
       {/* ========================================sandbox */}
-      {/* <MyPokemon name="spearow" />
-      <MyPokemon name="bulbasaur" />
-      <MyPokemon name="fearow" /> */}
+    
       <MyPokemon name="bulbasaur" />
       {'pokemon list:'}
 
+      <br />
+    {/* {'data'}{data} */}
+    <br />
       {isError ? (
         <>Error occured</>
       ) : isLoading ? (
         <LoadingIndicator />
       ) : data ? (
         'data present'
-
-        // // [...data].map((pokemon) => {
-        // //   console.log(pokemon);
-        // //   return (
-        // //     <li key={pokemon.name}>
-        // //       <MyPokemon name={pokemon.name} />
-        // //     </li>
-        // //     // (<>
-        // //     //   <button className="app__btn app_btn--light-no-border">
-        // //     //     <p>{data.species.name}</p>
-        // //     //     <img src={data.sprites.front_shiny} alt={data.species.name} />
-        // //     //   </button>
-        // //     // </>)
-        // //   );
-        // })
-      ) : 'no data'}
+      ) : (
+        'no data'
+      )}
 
       {/* ========================sandbox============================ */}
       <ScrollIntoView selector="#landing-page">
