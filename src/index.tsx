@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-import { App } from './features/App.component';
+import { App } from './features/App/App.component';
 import './index.scss';
 const rootElement = document.getElementById('root')
 

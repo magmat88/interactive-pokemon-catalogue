@@ -1,11 +1,8 @@
-export const POKEMON_API_ITEM__GET_POKEMON_ITEM_FULFILLED = 'pokemonApiItem/getPokemonItem/fulfilled';
-export const POKEMON_API_ITEM__GET_POKEMON_ITEM_PENDING = 'pokemonApiItem/getPokemonItem/pending';
-export const POKEMON_API_ITEM__GET_POKEMON_ITEM_REJECTED = 'pokemonApiItem/getPokemonItem/rejected';
-export const POKEMON_API_ITEM__GET_POKEMON_ITEM_STATUS = 'pokemonApiItem/getPokemonItem/status';
-export const POKEMON_API_LIST__GET_POKEMON_LIST_FULFILLED = 'pokemonApiList/getPokemonList/fulfilled';
-export const POKEMON_API_LIST__GET_POKEMON_LIST_PENDING = 'pokemonApiList/getPokemonList/pending';
-export const POKEMON_API_LIST__GET_POKEMON_LIST_REJECTED = 'pokemonApiList/getPokemonList/rejected';
-export const POKEMON_API_LIST__GET_POKEMON_LIST_STATUS = 'pokemonApiList/getPokemonList/status';
+export const POKEMON__FETCH_BY_NAME = 'pokemon/fetchByName';
+export const POKEMON__FETCH_LIST ='pokemon/fetchList';
+
+
+
 export const POKEMON_APP__ADD_POKEMON_DETAILS = 'pokemonApp/addPokemonDetails';
 export const POKEMON_APP__ADD_POKEMON_WITH_VISIBLE_DETAILS = 'pokemonApp/addPokemonWithVisibleDetails';
 export const POKEMON_APP__CHANGE_POKEMON_NAME_FILTER = 'pokemonApp/changePokemonNameFilter';

@@ -9,7 +9,7 @@ export function LandingPage() {
         <h1>Pokedex</h1>
         <h3>Discover amazing world of Pokemons</h3>
         <div className="landingPage__btn--container">
-          <ScrollIntoView selector="#pokemon-list">
+          <ScrollIntoView selector="#app-container">
             <button className="landingPage__btn landingPage__btn--light">
               Browse Pokemons
             </button>
