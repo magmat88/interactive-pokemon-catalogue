@@ -1,11 +1,12 @@
 import promise from 'redux-promise-middleware';
 import logger from 'redux-logger';
 import {
-  configureStore,
+  configureStore
 } from '@reduxjs/toolkit';
 import { pokemonApiItemSlice } from './features/pokemonApiItemSlice';
 import { pokemonApiListSlice } from './features/pokemonApiListSlice';
 import { pokemonAppSlice } from './features/pokemonAppSlice';
+
 
 const middlewares = [promise];
 
@@ -17,10 +18,16 @@ const reducer = {
     pokemonApiItem: pokemonApiItemSlice.reducer,
     pokemonApiList: pokemonApiListSlice.reducer,
     pokemonApp: pokemonAppSlice.reducer,
+
 };
 
 const store = configureStore({
-  reducer,
+  reducer
+  // middleware: (gDM) => gDM().concat(api.middleware),
+
 });
 
 export default store;
+
+// export type RootState = ReturnType<typeof store.getState>
+

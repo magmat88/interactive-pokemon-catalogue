@@ -4,10 +4,11 @@
 
 .footer {
     align-items: center;
-    background-color: $color_contrast;
+    background-color: $color_light-grey;
+    border-top: 3px solid $color_contrast;
     display: flex;
     flex-direction: row;
-    font-weight: 400;
+    font-weight: 500;
     justify-content: center;
     margin: 30px 0 0 0;
     padding: 10px 0;
@@ -15,13 +16,13 @@
 }
 
 a {
-    color: $color_medium;
+    color: $color_contrast;
     text-decoration: none;
     transition: color 0.5s;
 
     &:active {
         background-color: none;
-        color: $color_contrast;
+        color: $color_medium;
     }
 
     &:hover,
