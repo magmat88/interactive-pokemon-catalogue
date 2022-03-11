@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
 import ScrollIntoView from 'react-scroll-into-view';
 import { useGetPokemonListQuery } from '../../hooks';
-import { FilterByName } from '../FilterByName.component';
-import { FilterByType } from '../FilterByType.component';
+import { FilterByName } from '../Filter/FilterByName.component';
+import { FilterByType } from '../Filter/FilterByType.component';
 import { Footer } from '../../components/Footer/Footer';
 import { LandingPage } from '../../components/LandingPage/LandingPage';
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
-import { PokemonList } from '../PokemonList.component';
+import { PokemonList } from '../PokemonList/PokemonList.component';
 import './App.scss';
 
 function RenderPokemonsList({ pokemons }: any): JSX.Element {
   return (
-    <div>
+    <>
       {pokemons.map((name: string) => (
         <PokemonList name={name} key={name} />
       ))}
-    </div>
+    </>
   );
 }
 
@@ -71,7 +71,6 @@ export function App(props: any): JSX.Element {
             <FilterByName />
           </section>
         </div>
-        <button onClick={loadMorePokemons}>Load more Pokemons</button>
       </div>
 
       {isError ? (
@@ -83,6 +82,14 @@ export function App(props: any): JSX.Element {
       ) : (
         <>No data</>
       )}
+      <div className="app__btn--container">
+        <button
+          className="app__btn app_btn--light-no-border"
+          onClick={loadMorePokemons}
+        >
+          Load more Pokemons
+        </button>
+      </div>
       <ScrollIntoView selector="#landing-page">
         <button className="app__btn app_btn--light-no-border">
           Scroll to top

@@ -8,7 +8,7 @@ import {
   selectStatusList,
   selectDataList,
   fetchPokemonList,
-} from './features/pokemonApiISlice';
+} from './features/pokemonApiSlice';
 
 export function useGetPokemonByNameQuery(name: string) {
   const dispatch = useDispatch();

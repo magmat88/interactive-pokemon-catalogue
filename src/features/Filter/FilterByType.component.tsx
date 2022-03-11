@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { POKEMON_SELECT_TYPES } from '../config/constants';
+import { POKEMON_SELECT_TYPES } from '../../config/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePokemonTypeFilter } from './pokemonAppSlice';
+import { changePokemonTypeFilter } from '../pokemonAppSlice';
 import './FilterByType.scss';
 
 export function FilterByType(props: any): JSX.Element {

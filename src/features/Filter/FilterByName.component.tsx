@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePokemonNameFilter } from './pokemonAppSlice';
+import { changePokemonNameFilter } from '../pokemonAppSlice';
 import './FilterByName.scss';
 
 export function FilterByName(props: any): JSX.Element {

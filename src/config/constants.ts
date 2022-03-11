@@ -5,7 +5,6 @@ export const REQUEST_STATE__FULFILLED = 'fulfilled';
 export const REQUEST_STATE__REJECTED = 'rejected';
 export const POKEMON_API = 'pokemonApi';
 
-
 export enum POKEMON_SELECT_TYPES {
     BUG = 'bug',
     DARK = 'dark',

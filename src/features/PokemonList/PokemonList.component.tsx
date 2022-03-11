@@ -1,7 +1,7 @@
 import React from 'react';
-import { useGetPokemonByNameQuery } from '../hooks';
-import { PokemonListItem } from './PokemonListItem.component';
-import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
+import { useGetPokemonByNameQuery } from '../../hooks';
+import { PokemonListItem } from '../PokemonListItem/PokemonListItem.component';
+import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import './PokemonList.scss';
 
 export function PokemonList({ name, key }: any): JSX.Element {

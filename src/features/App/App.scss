@@ -59,6 +59,14 @@ button {
     }
 }
 
+// 
+
+.app__btn--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .app__btn {
     @extend %btn;
     border-radius: 10px;
@@ -74,14 +82,6 @@ button {
     }
 }
 
-.app__pagination {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 10px 20px 0 0;
-    // padding: 10px;
-}
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
     .app__filters {

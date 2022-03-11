@@ -6,8 +6,8 @@ import // removePokemonWithVisibleDetails,
 // changePokemonTypeFilter,
 // changePokemonNameFilter,
 // setCurrentListUrl,
-'./pokemonAppSlice';
-import { LoadingIndicator } from '../components/LoadingIndicator/LoadingIndicator';
+'../pokemonAppSlice';
+import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
 import './PokemonListItem.scss';
 
 export type PokemonDetailsType = {
