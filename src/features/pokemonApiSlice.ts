@@ -1,25 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import {
-  TYPE__REQUEST_STATE__FULFILLED,
-  TYPE__REQUEST_STATE__PENDING,
-  TYPE__REQUEST_STATE__REJECTED,
-} from '../config/types';
-import {
   URL_API,
-  REQUEST_STATE__FULFILLED,
-  REQUEST_STATE__PENDING,
-  REQUEST_STATE__REJECTED,
-  POKEMON_API
+  POKEMON_API,
 } from '../config/constants';
 import {
   POKEMON__FETCH_BY_NAME,
   POKEMON__FETCH_LIST,
 } from '../config/actionTypes';
+
 type RequestState =
-  | TYPE__REQUEST_STATE__PENDING
-  | TYPE__REQUEST_STATE__FULFILLED
-  | TYPE__REQUEST_STATE__REJECTED;
+  | 'pending'
+  | 'fulfilled'
+  | 'rejected';
 
 export const fetchPokemonByName = createAsyncThunk<any, string>(
   POKEMON__FETCH_BY_NAME,
@@ -52,6 +45,12 @@ const pokemonApiInitState = {
   statusList: {} as Record<any, RequestState | undefined>,
 };
 
+export const POKEMON_API__FETCH_POKEMON_BY_NAME = 'fetchPokemonByName.pending';
+export const POKEMON_API__FETCH_POKEMON_BY_NAME__FULFILLED = 'fetchPokemonByName.fulfilled';
+export const POKEMON_API__FETCH_POKEMON_BY_NAME__REJECTED = 'fetchPokemonByName.rejected';
+export const POKEMON_API__FETCH_POKEMON_LIST__PENDING = 'fetchPokemonList.pending';
+export const POKEMON_API__FETCH_POKEMON_LIST__FULFILLED = 'fetchPokemonList.fulfilled';
+export const POKEMON_API__FETCH_POKEMON_LIST__REJECTED = 'fetchPokemonList.rejected';
 
 export const pokemonApiSlice = createSlice({
   name: POKEMON_API,
@@ -59,28 +58,28 @@ export const pokemonApiSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPokemonByName.pending, (state, action) => {
-      state.statusByName[action.meta.arg] = REQUEST_STATE__PENDING;
+      state.statusByName[action.meta.arg] = 'pending';
     });
 
     builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
-      state.statusByName[action.meta.arg] = REQUEST_STATE__FULFILLED;
+      state.statusByName[action.meta.arg] = 'fulfilled';
       state.dataByName[action.meta.arg] = action.payload;
     });
 
     builder.addCase(fetchPokemonByName.rejected, (state, action) => {
-      state.statusByName[action.meta.arg] = REQUEST_STATE__REJECTED;
+      state.statusByName[action.meta.arg] = 'rejected';
     });
 
     builder.addCase(fetchPokemonList.pending, (state, action) => {
-      state.statusList[action.meta.arg] = REQUEST_STATE__PENDING;
+      state.statusList[action.meta.arg] = 'pending';
     });
 
     builder.addCase(fetchPokemonList.fulfilled, (state, action) => {
-      state.statusList[action.meta.arg] = REQUEST_STATE__FULFILLED;
+      state.statusList[action.meta.arg] = 'fulfilled';
       state.dataList = { ...state.dataList, ...action.payload };
     });
     builder.addCase(fetchPokemonList.rejected, (state, action) => {
-      state.statusList[action.meta.arg] = REQUEST_STATE__REJECTED;
+      state.statusList[action.meta.arg] = 'rejected';
     });
   },
 });
@@ -92,5 +91,4 @@ export const selectDataByName = (state: RootState, name: string) =>
 
 export const selectStatusList = (state: RootState, limitAndOffset: string) =>
   state.pokemonApi.statusList[limitAndOffset];
-export const selectDataList = (state: RootState) =>
-  state.pokemonApi.dataList;
+export const selectDataList = (state: RootState) => state.pokemonApi.dataList;

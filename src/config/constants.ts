@@ -1,9 +1,9 @@
 export const URL_ABOUT_API = 'https://pokeapi.co';
 export const URL_API = 'https://pokeapi.co/api/v2/pokemon';
-export const REQUEST_STATE__PENDING = 'pending';
-export const REQUEST_STATE__FULFILLED = 'fulfilled';
-export const REQUEST_STATE__REJECTED = 'rejected';
 export const POKEMON_API = 'pokemonApi';
+export const APP_THEME__LIGHT = 'light';
+export const APP_THEME__DARK = 'dark';
+
 
 export enum POKEMON_SELECT_TYPES {
     BUG = 'bug',
