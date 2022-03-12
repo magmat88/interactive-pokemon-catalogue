@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from './store';
 import {
   fetchPokemonByName,
   selectStatusByName,
@@ -51,3 +51,6 @@ export function useGetPokemonListQuery(limitAndOffset: string) {
 
   return { data, isUninitialized, isLoading, isError, isSuccess };
 }
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

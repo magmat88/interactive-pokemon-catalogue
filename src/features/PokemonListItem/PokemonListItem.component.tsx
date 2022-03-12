@@ -1,5 +1,27 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { POKEMON_SELECT_TYPES } from '../../config/constants';
+import {
+  useGetPokemonListQuery,
+  useAppDispatch,
+  useAppSelector,
+} from '../../hooks';
+import {
+  addPokemonWithVisibleDetails,
+  changeAppTheme,
+  changeOffset,
+  changeUserInput,
+  changeLimit,
+  changePokemonNameFilter,
+  changePokemonTypeFilter,
+  removePokemonWithVisibleDetails,
+  selectAppTheme,
+  selectUserInput,
+  selectLimit,
+  selectOffset,
+  selectFilterByName,
+  selectFilterByType,
+  selectPokemonsWithVisibleDetails,
+} from '../pokemonAppSlice';
 import // removePokemonWithVisibleDetails,
 // addPokemonWithVisibleDetails,
 // addPokemonDetails,
@@ -19,30 +41,28 @@ export type PokemonDetailsType = {
   visibility: Boolean;
 };
 
-export function PokemonListItem({pokemon}: any): JSX.Element {
+export function PokemonListItem({ pokemon }: any): JSX.Element {
+  const dispatch = useAppDispatch();
+  const {
+    appTheme,
+    filterByName,
+    filterByType,
+    limit,
+    offset,
+    userInput,
+    pokemonsWithVisibleDetails,
+  } = useAppSelector((state) => state.pokemonApp);
+
   const types: Array<string> = [];
   pokemon.types.map((item: any) => {
     return types.push(item.type.name);
   });
-  // const filterByName = useSelector((state: any) => state.pokemonApp.filterByName);
-  // const filterByType = useSelector((state: any) => state.pokemonApp.filterByType);
-  // const pokemonsWithVisibleDetails = useSelector((state: any) => state.pokemonApp.pokemonsWithVisibleDetails);
 
-  // useEffect(() => {
-  //   dispatch(getPokemonItem(itemUrl));
-
-  //   function filterByTypes(
-  //     filterByType: string,
-  //     currentTypes: Array<string>
-  //   ): Boolean {
-  //     return currentTypes.includes(filterByType);
-  //   }
-
-  //   function filterByNames(
+  //   function filterPokemonByName(
   //     filterByName: string,
-  //     currentPokemonName: string
+  //     name: string
   //   ): Boolean {
-  //     return currentPokemonName.includes(filterByName.toLowerCase());
+  //     return name.includes(filterByName.toLowerCase());
   //   }
 
   //   const currentPokemonTypes = pokemonApiItem.data.types.map(
@@ -50,15 +70,15 @@ export function PokemonListItem({pokemon}: any): JSX.Element {
   //       return typeItem.type.name;
   //     }
   //   );
-  //   const currentPokemonName = pokemonApiItem.data.name;
+  //   const name = pokemonApiItem.data.name;
   //   const currentPokemonVisibility =
-  //     filterByTypes(filterByType, currentPokemonTypes) &&
-  //     filterByNames(filterByName, currentPokemonName)
+  //     filterPokemonByType(filterByType, currentPokemonTypes) &&
+  //     filterPokemonByName(filterByName, name)
   //       ? true
   //       : false;
 
   //   const currentPokemonDetails: PokemonDetailsType = {
-  //     name: currentPokemonName,
+  //     name: name,
   //     height: pokemonApiItem.data.height,
   //     sprite: pokemonApiItem.data.sprites.front_default,
   //     types: currentPokemonTypes,
@@ -92,11 +112,40 @@ export function PokemonListItem({pokemon}: any): JSX.Element {
   // )
   //   ? 'pokemonList__listItem--visible'
   //   : 'pokemonList__listItem--hidden';
+  function filterPokemonByType(filterByType: string, types: Array<string>): Boolean {
+    return !filterByType ? true : types.includes(filterByType);
+  }
+
+  function filterPokemonByName(
+        filterByName: string,
+        name: string
+      ): Boolean {
+        console.log('filterbyname: ', filterByName)
+        console.log('pokemon name:', name)
+        return !filterByName ? true : name.includes(filterByName.toLowerCase());
+      }
+
+      useEffect(()=>{}, [userInput])
+
+  function setPokemonListItemVisibility() {
+    const filteredByType = filterPokemonByType(filterByType, types);
+    const filteredByName = filterPokemonByName(filterByName, pokemon.name)
+    console.log(filteredByName, pokemon.name)
+
+    // const filtered = filterPokemonByType(types, filterByType))
+    // console.log(filtered)
+    const listItemVisibility =
+      // filteredByNames && 
+      // filterPokemonByType(types) 
+      filteredByType && filteredByName
+      ? 'pokemonList__listItem--visible' : 'pokemonList__listItem--hidden';
+    return `pokemonListItem ${listItemVisibility}`;
+  }
 
   return (
     // <div className="pokemonListItem" onClick={togglePokemonDetailsVisibility}>
-          <div className="pokemonListItem" onClick={()=>{}}>
-
+    // <div className="pokemonListItem" onClick={()=>{}}>
+    <div className={setPokemonListItemVisibility()} onClick={() => {}}>
       <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
       <figure className="pokemonListItem__figure">
         <img
