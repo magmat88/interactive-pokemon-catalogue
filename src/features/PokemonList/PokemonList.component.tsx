@@ -7,6 +7,10 @@ import './PokemonList.scss';
 export function PokemonList({ name, key }: any): JSX.Element {
   const { data, isError, isLoading } = useGetPokemonByNameQuery(name);
 
+  function EmptyList(): JSX.Element {
+    return <>There are no pokemons of selected type. Load more pokemons.</>;
+  }
+
   return (
     // TODO: this should be not a list
     <section className="pokemonList">
@@ -20,7 +24,7 @@ export function PokemonList({ name, key }: any): JSX.Element {
             <PokemonListItem pokemon={data} />
           </li>
         </ul>
-      ) : null}
+      ) : <EmptyList />}
     </section>
   );
 }

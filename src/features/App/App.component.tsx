@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
 import ScrollIntoView from 'react-scroll-into-view';
 import { POKEMON_SELECT_TYPES } from '../../config/constants';
@@ -59,33 +59,22 @@ export function App(props: any): JSX.Element {
     userInput,
     pokemonsWithVisibleDetails,
   } = useAppSelector((state) => state.pokemonApp);
-  // const [limit, setLimit] = useState<number>(20);
-  // const [offset, setOffset] = useState<number>(0);
-  // const [limitAndOffset, setLimitAndOffset] =
-  //   useState<string>('limit=20&offset=0');
-  // const limitAndOffset = `limit=${limit}&offset=${offset}`;
   const { data, isError, isLoading } = useGetPokemonListQuery(
     `limit=${limit}&offset=${offset}`
   );
 
   function FilterByName(props: any): JSX.Element {
-    // const filterByName = useSelector(
-    //   (state: any) => state.pokemonApp.filterByName
-    // );
-    // const dispatch = useDispatch();
 
-    // useEffect(() => {}, [changePokemonNameFilter, filterByName]);
+    // useEffect(() => {}, [changePokemonNameFilter, filterByName, userInput, changeUserInput]);
+    // const inputRef = useRef<HTMLInputElement | null>(null);
 
     function onChangeUserInput(
       event: React.ChangeEvent<HTMLInputElement>
     ): void {
       dispatch(changeUserInput(event.target.value));
       dispatch(changePokemonNameFilter(userInput));
+      // inputRef.current?.focus();
     }
-
-    // function onKeyDownInput(
-    //   event: React.KeyboardEvent<HTMLInputElement>
-    // ): void {}
 
     return (
       <section className="filterByName">
@@ -94,8 +83,8 @@ export function App(props: any): JSX.Element {
             placeholder="Filter by name"
             className="filterByName__input filterByName__input--standard"
             onChange={onChangeUserInput}
-            // onKeyDown={onKeyDownInput}
             type="text"
+            // ref={(element) => (inputRef.current = element)}
             value={userInput}
           />
         </div>
@@ -104,13 +93,6 @@ export function App(props: any): JSX.Element {
   }
 
   function FilterByType(props: any): JSX.Element {
-    // const filterByType = useSelector(
-    //   (state: any) => state.pokemonApp.filterByType
-    // );
-    // const dispatch = useDispatch();
-
-    // useEffect(() => {}, [changePokemonTypeFilter, filterByType]);
-
     function changeTypeFilter(event: any): void {
       dispatch(changePokemonTypeFilter(event.target.value as string));
     }
@@ -143,18 +125,17 @@ export function App(props: any): JSX.Element {
   }
 
   //TODO: dark-light mode in redux
-  // const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  // const [theme, setTheme] = useLocalStorage(
-  //   'theme',
-  //   defaultDark ? 'dark' : 'light'
-  // );
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage(
+    'theme',
+    defaultDark ? 'dark' : 'light'
+  );
 
-  // function toggleDarkLightTheme() {
-  //   dispatchEvent();
-  //   const newTheme = theme === 'light' ? 'dark' : 'light';
-  //   // const newTheme = selectCurrentAppTheme === 'light' ? 'dark' : 'light';
-  //   setTheme(newTheme);
-  // }
+  function toggleDarkLightTheme() {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    // const newTheme = selectCurrentAppTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  }
 
   function loadMorePokemons() {
     const increasedLimit = limit + COUNT_PER_SINGLE_REQUEST;

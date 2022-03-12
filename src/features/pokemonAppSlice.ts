@@ -81,30 +81,31 @@ export const pokemonAppSlice = createSlice({
       state.userInput = action.payload;
     },
 
-    addPokemonWithVisibleDetails: (state, action: any) => {
-      // return {
-      //   ...state,
-      //   pokemonsWithVisibleDetails: {
-      //     ...state.pokemonsWithVisibleDetails.concat(
-      //       action.payload.pokemonName
-      //     ),
-      //   },
-      // };
+    addPokemonWithVisibleDetails: (state, action: any) => { 
+        state.pokemonsWithVisibleDetails = [
+          ...state.pokemonsWithVisibleDetails.concat(
+            action.payload)]
     },
 
     removePokemonWithVisibleDetails: (state, action: any) => {
-      // const index = state.pokemonsWithVisibleDetails.indexOf(
-      //   action.payload.pokemonName
-      // );
-      // return (
-      //   index !== -1 && {
-      //     ...state,
-      //     pokemonsWithVisibleDetails: [
-      //       ...state.pokemonsWithVisibleDetails.slice(0, index),
-      //       ...state.pokemonsWithVisibleDetails.slice(index + 1),
-      //     ],
-      //   }
-      // );
+      const index = state.pokemonsWithVisibleDetails.indexOf(
+        action.payload.pokemonName
+      );
+      if (index !== -1) {
+        state.pokemonsWithVisibleDetails = [
+            ...state.pokemonsWithVisibleDetails.slice(0, index),
+            ...state.pokemonsWithVisibleDetails.slice(index + 1),
+          ];
+          return state;
+        };
+        // index !== -1 && {
+        //   ...state,
+        //   pokemonsWithVisibleDetails: [
+        //     ...state.pokemonsWithVisibleDetails.slice(0, index),
+        //     ...state.pokemonsWithVisibleDetails.slice(index + 1),
+        //   ],
+        // }
+      
     },
 
     changeAppTheme: (state, action: any) => {
