@@ -1,0 +1,45 @@
+@import "../../styles/mixins/mixins.scss";
+@import "../../styles/placeholders/placeholders.scss";
+@import "../../styles/variables/variables.scss";
+
+.pokemonItem {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95vw;
+    margin: 0;
+    background-color: transparent;
+}
+
+.pokemonItem__btn--light {
+    @extend %btnLight;
+}
+
+.pokemonItem__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    margin: 10px;
+    padding: 10px;
+    width: 250px;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+    .pokemonItemItem {
+        width: 20%;
+    }
+}
+
+@include forLargeScreens($breakpoint-medium) {
+    .pokemonItemItem {
+        width: 20%;
+    }
+}

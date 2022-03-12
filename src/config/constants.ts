@@ -4,8 +4,6 @@ export const POKEMON_API = 'pokemonApi';
 export const APP_THEME__LIGHT = 'light';
 export const APP_THEME__DARK = 'defaultDark';
 export const COUNT_PER_SINGLE_REQUEST = 20;
-export const EVENT_CODE_ENTER_KEY = 'Enter';
-
 
 export enum POKEMON_SELECT_TYPES {
     BUG = 'bug',

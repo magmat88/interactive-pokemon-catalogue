@@ -1,13 +1,15 @@
+import { checkIfPokemonDetailsVisible } from './checkIfPokemonDetailsVisible';
 import { filterPokemonByName } from './filterPokemonByName';
 import { filterPokemonByType } from './filterPokemonByType';
-import { checkIfPokemonDetailsVisible } from './checkIfPokemonDetailsVisible';
 import { renderPokemonTypes } from './renderPokemonTypes';
+import { selectPokemonNames } from './selectPokemonNames';
 import { setListItemVisibilityClass } from './setListItemVisibilityClass';
 
 export {
-  setListItemVisibilityClass,
+  checkIfPokemonDetailsVisible,
   filterPokemonByName,
   filterPokemonByType,
-  checkIfPokemonDetailsVisible,
   renderPokemonTypes,
+  selectPokemonNames,
+  setListItemVisibilityClass,
 };

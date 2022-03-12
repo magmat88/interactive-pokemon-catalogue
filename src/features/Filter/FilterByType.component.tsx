@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
-import { POKEMON_SELECT_TYPES } from '../../config/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changePokemonTypeFilter } from '../pokemonAppSlice';
+import { POKEMON_SELECT_TYPES } from '../../config/constants';
 import './FilterByType.scss';
 
-export function FilterByType(props: any): JSX.Element {
-  const filterByType = useSelector(
-    (state: any) => state.pokemonApp.filterByType
-  );
-  const dispatch = useDispatch();
-
-  useEffect(() => {}, [changePokemonTypeFilter, filterByType]);
-
-  function changeTypeFilter(event: any): void {
+export function FilterByType(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { filterByType } = useAppSelector((state) => state.pokemonApp);
+  function onChangeSelectOption(
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void {
     dispatch(changePokemonTypeFilter(event.target.value as string));
   }
 
@@ -20,10 +17,11 @@ export function FilterByType(props: any): JSX.Element {
     <section className="filterByType">
       <div className="filterByType___container">
         <select
-          onChange={changeTypeFilter}
+          onChange={onChangeSelectOption}
           className="filterByType__input filterByType__input--standard"
+          value={filterByType}
         >
-          <option value="">FILTER BY TYPE</option>
+          <option value="">ALL TYPES</option>
 
           {(
             Object.keys(POKEMON_SELECT_TYPES) as Array<
@@ -31,7 +29,7 @@ export function FilterByType(props: any): JSX.Element {
             >
           ).map((key) => {
             return (
-              <option value={[POKEMON_SELECT_TYPES[key]]}>
+              <option key={key} value={[POKEMON_SELECT_TYPES[key]]}>
                 {POKEMON_SELECT_TYPES[key]}
               </option>
             );

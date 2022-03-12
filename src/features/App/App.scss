@@ -10,12 +10,12 @@
     width: 100vw;
 }
 
-.app__filters {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+// .app__filters {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+// }
 
 .app--dark-light {
     color: var(--text-primary);
@@ -82,12 +82,11 @@ button {
     }
 }
 
-
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    .app__filters {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+    // .app__filters {
+    //     flex-direction: row;
+    //     justify-content: space-between;
+    // }
 
     .app__container {
         flex-direction: row;
@@ -96,10 +95,10 @@ button {
 }
 
 @include forLargeScreens($breakpoint-medium) {
-    .app__filters {
-        flex-direction: row;
-        justify-content: space-between;
-    }
+    // .app__filters {
+    //     flex-direction: row;
+    //     justify-content: space-between;
+    // }
 
     .app__container {
         flex-direction: row;
