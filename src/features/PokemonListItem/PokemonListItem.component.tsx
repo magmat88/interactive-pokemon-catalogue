@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   addPokemonWithVisibleDetails,
-  changeUserInput,
-  changePokemonNameFilter,
   removePokemonWithVisibleDetails,
-  selectUserInput,
-  selectFilterByName,
 } from '../pokemonAppSlice';
 import {
   filterPokemonByType,
@@ -21,23 +17,26 @@ export function PokemonListItem({ pokemon }: any): JSX.Element {
   const dispatch = useAppDispatch();
   const { filterByName, filterByType, userInput, pokemonsWithVisibleDetails } =
     useAppSelector((state) => state.pokemonApp);
-  // const pokemonTypes = renderPokemonTypes(pokemon);
 
-  function togglePokemonDetailsVisibility(pokemonName: string): any {
-    checkIfPokemonDetailsVisible(pokemonsWithVisibleDetails, pokemonName)
-      ? dispatch(removePokemonWithVisibleDetails(pokemonName))
-      : dispatch(addPokemonWithVisibleDetails(pokemonName));
-  }
+  // function togglePokemonDetailsVisibility(pokemonName: string): any {
+  //   checkIfPokemonDetailsVisible(pokemonsWithVisibleDetails, pokemonName)
+  //     ? dispatch(removePokemonWithVisibleDetails(pokemonName))
+  //     : dispatch(addPokemonWithVisibleDetails(pokemonName));
+  // }
 
-  useEffect(() => {}, [userInput]);
-  // console.log(pokemonTypes)
+  useEffect(() => {}, [
+    filterByName,
+    filterByType,
+    userInput,
+    pokemonsWithVisibleDetails,
+  ]);
   return (
     <>
       {filterPokemonByType(filterByType, renderPokemonTypes(pokemon)) &&
         filterPokemonByName(filterByName, pokemon.name) && (
           <div
             className="pokemonList__listItem--visible pokemonListItem"
-            onClick={togglePokemonDetailsVisibility(pokemon.name)}
+            // onClick={togglePokemonDetailsVisibility(pokemon.name)}
           >
             <h1 className="pokemonListItem__text--label">{pokemon.name}</h1>
             <figure className="pokemonListItem__figure">

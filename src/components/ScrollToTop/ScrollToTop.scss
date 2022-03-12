@@ -1,0 +1,23 @@
+@import "../../styles/mixins/mixins.scss";
+@import "../../styles/placeholders/placeholders.scss";
+@import "../../styles/variables/variables.scss";
+
+.scrollToTop__btn--light-no-border {
+    width: 150px;
+}
+
+
+.scrollToTop__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 50px;
+    margin: 0;
+    padding: 10px;
+    
+
+    a {
+        text-decoration: none;
+    }
+}

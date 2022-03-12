@@ -1,11 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  changeOffset,
-  changeLimit,
-  // selectLimit,
-  // selectOffset,
-} from '../pokemonAppSlice';
+import { changeOffset, changeLimit } from '../pokemonAppSlice';
 import { COUNT_PER_SINGLE_REQUEST } from '../../config/constants';
 
 export function LoadMorePokemons() {

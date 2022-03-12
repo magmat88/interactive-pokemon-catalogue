@@ -1,10 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import {
-  changeUserInput,
-  changePokemonNameFilter,
-  // selectFilterByName,
-} from '../pokemonAppSlice';
+import { changeUserInput, changePokemonNameFilter } from '../pokemonAppSlice';
 import './FilterByName.scss';
 
 export function FilterByName(props: any): JSX.Element {

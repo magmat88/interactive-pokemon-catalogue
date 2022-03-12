@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetPokemonByNameQuery } from '../../hooks';
-import { PokemonListItem } from '../PokemonListItem/PokemonListItem.component';
-import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator';
+import { PokemonListItem } from '../../features';
+import { LoadingIndicator } from '../../components/';
 import './RenderPokemonItem.scss';
 
 interface RenderPokemonItemProps {
