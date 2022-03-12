@@ -2,7 +2,7 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.pokemonList--unordered {
+.pokemons--unordered {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -13,8 +13,7 @@
     background-color: transparent;
 }
 
-
-.pokemonList__listItem {
+.pokemons__listItem {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +44,7 @@
     }
 }
 
-.app__filters {
+.pokemons__filters {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,14 +52,14 @@
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    .app__filters {
+    .pokemons__filters {
         flex-direction: row;
         justify-content: space-between;
     }
 }
 
 @include forLargeScreens($breakpoint-medium) {
-    .app__filters {
+    .pokemons__filters {
         flex-direction: row;
         justify-content: space-between;
     }

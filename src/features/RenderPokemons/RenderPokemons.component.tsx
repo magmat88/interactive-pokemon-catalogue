@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetPokemonListQuery, useAppSelector } from '../../hooks';
 import { selectPokemonNames } from '../../utils';
-import { LoadingIndicator, PokemonListByNames } from '../../components';
+import { LoadingIndicator, Pokemons } from '../../components';
 
 export function RenderPokemons(): JSX.Element {
   //   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ export function RenderPokemons(): JSX.Element {
   ) : isLoading ? (
     <LoadingIndicator />
   ) : data ? (
-    <PokemonListByNames pokemons={selectPokemonNames(data.results)} />
+    <Pokemons pokemons={selectPokemonNames(data.results)} />
   ) : (
     <>No data</>
   );
