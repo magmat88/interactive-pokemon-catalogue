@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { extractPokemonTypeNames } from '../../utils';
+import React, { useState } from 'react';
 import { PokemonTypeName } from '../';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addPokemonTypesNames } from '../pokemonAppSlice';
-import { PokemonTypesNamesObject, PokemonDataType } from '../../config/state';
+import { PokemonDataType } from '../../config/state';
 import './PokemonListItem.scss';
 
 interface PokemonListItemProps {
@@ -14,33 +11,6 @@ export function PokemonListItem({
   pokemon,
 }: PokemonListItemProps): JSX.Element {
   const [areDetailsVisible, setAreDetailsVisible] = useState<boolean>(false);
-
-  const dispatch = useAppDispatch();
-  const { pokemonsTypesNames } = useAppSelector((state) => state.pokemonApp);
-
-  useEffect(() => {
-    const pokemonTypesNamesObject: PokemonTypesNamesObject = {
-      pokemonName: pokemon.name,
-      pokemonTypesNames: extractPokemonTypeNames(pokemon),
-    };
-
-    const arePokemonTypesAvailable: boolean = !pokemonsTypesNames.some(
-      (pokemonTypesNamesObject) =>
-        pokemonTypesNamesObject.pokemonName === pokemon.name
-    );
-
-    if (arePokemonTypesAvailable) {
-      dispatch(addPokemonTypesNames(pokemonTypesNamesObject));
-    }
-  }, [pokemon, pokemonsTypesNames]);
-
-  function pokemonTypes(pokemonName: string) {
-    const pokemonTypes = pokemonsTypesNames.find(
-      (pokemonTypesNamesObject) =>
-        pokemonTypesNamesObject.pokemonName === pokemon.name
-    )?.pokemonTypesNames;
-    return pokemonTypes;
-  }
 
   return (
     <div
@@ -55,7 +25,9 @@ export function PokemonListItem({
           alt={`${pokemon.name}`}
         />
         <figcaption className="pokemonListItem__figcaption">
-          {pokemonTypes(pokemon.name)?.map(PokemonTypeName)}
+          {pokemon.types.map((pokemonTypesObject) => {
+            return <PokemonTypeName typeName={pokemonTypesObject.type.name} />;
+          })}
         </figcaption>
       </figure>
       {areDetailsVisible && (

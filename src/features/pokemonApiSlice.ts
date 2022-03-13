@@ -45,18 +45,15 @@ export const fetchPokemonList = createAsyncThunk<any, string>(
     const response = await fetch(`${URL_API}?${limitAndOffset}`);
     const data = await response.json();
     const basicPokemonData: Array<PokemonType> = data.results;
-    console.log(basicPokemonData);
-    const morePokemonDataPromises = basicPokemonData.map((basicData) => fetch(`${URL_API}/${basicData.name}`));
-    const test = await Promise.all(morePokemonDataPromises).then(testData => {
-      console.log(testData);
-      return testData.map(item => item.json())
-    }).then(async (testData) => {
-      const x = await Promise.all(testData);
-      console.log(x)
+    const extendedPokemonDataPromises = basicPokemonData.map((basicData) => fetch(`${URL_API}/${basicData.name}`));
+    return Promise.all(extendedPokemonDataPromises).then(extendedPokemonData => {
+      return extendedPokemonData.map(item => item.json())
+    }).then(async (extendedPokemonDataResponses) => {
+      const extendedPokemonData = await Promise.all(extendedPokemonDataResponses);
       if (response.status < 200 || response.status >= 300) {
-        return rejectWithValue(data);
+        return rejectWithValue(extendedPokemonData);
       }
-      return data;
+      return extendedPokemonData;
     })
   }
 );
@@ -64,7 +61,7 @@ export const fetchPokemonList = createAsyncThunk<any, string>(
 const pokemonApiInitState = {
   dataByName: {} as Record<string, any | undefined>,
   statusByName: {} as Record<string, RequestState | undefined>,
-  dataList: {} as Record<any, any | undefined>,
+  dataList: [] as any,
   statusList: {} as Record<any, RequestState | undefined>,
 };
 
@@ -80,18 +77,18 @@ export const pokemonApiSlice = createSlice({
   initialState: pokemonApiInitState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchPokemonByName.pending, (state, action) => {
-      state.statusByName[action.meta.arg] = 'pending';
-    });
+    // builder.addCase(fetchPokemonByName.pending, (state, action) => {
+    //   state.statusByName[action.meta.arg] = 'pending';
+    // });
 
-    builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
-      state.statusByName[action.meta.arg] = 'fulfilled';
-      state.dataByName[action.meta.arg] = action.payload;
-    });
+    // builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
+    //   state.statusByName[action.meta.arg] = 'fulfilled';
+    //   state.dataByName[action.meta.arg] = action.payload;
+    // });
 
-    builder.addCase(fetchPokemonByName.rejected, (state, action) => {
-      state.statusByName[action.meta.arg] = 'rejected';
-    });
+    // builder.addCase(fetchPokemonByName.rejected, (state, action) => {
+    //   state.statusByName[action.meta.arg] = 'rejected';
+    // });
 
     builder.addCase(fetchPokemonList.pending, (state, action) => {
       state.statusList[action.meta.arg] = 'pending';
@@ -99,7 +96,7 @@ export const pokemonApiSlice = createSlice({
 
     builder.addCase(fetchPokemonList.fulfilled, (state, action) => {
       state.statusList[action.meta.arg] = 'fulfilled';
-      state.dataList = { ...state.dataList, ...action.payload };
+      state.dataList = [ ...state.dataList, ...action.payload];
     });
     builder.addCase(fetchPokemonList.rejected, (state, action) => {
       state.statusList[action.meta.arg] = 'rejected';

@@ -2,9 +2,13 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
+.loadMorePokemons__btn--light-no-border {
+    width: 250px;
+}
+
 .loadMorePokemons__btn--container {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
 }
 
@@ -16,13 +20,8 @@
     height: 50px;
     margin: 0;
     padding: 10px;
-    
 
     a {
         text-decoration: none;
     }
-}
-
-.loadMorePokemons__btn--light-no-border {
-    width: 150px;
 }

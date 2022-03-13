@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeOffset, changeLimit } from '../pokemonAppSlice';
 import { COUNT_PER_SINGLE_REQUEST } from '../../config/constants';
+import './LoadMorePokemons.scss';
 
 export function LoadMorePokemons() {
   const dispatch = useAppDispatch();

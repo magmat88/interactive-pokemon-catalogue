@@ -4,6 +4,7 @@ import {
   FilterByType,
   LoadMorePokemons,
   PokemonItemToDisplay,
+  PokemonListItem
 } from '..';
 import { useAppSelector } from '../../hooks';
 import {
@@ -11,35 +12,37 @@ import {
   getCommonElementsFromArrays,
   filterPokemonsByType,
 } from '../../utils';
-
+import { PokemonDataType } from '../../config/state';
 import './Pokemons.scss';
 
 interface PokemonsProps {
-  pokemons: Array<string>;
+  pokemons: Array<PokemonDataType>;
 }
 
 export function Pokemons({ pokemons }: PokemonsProps): JSX.Element {
-  const [pokemonsToDisplay, setPokemonsToDisplay] =
-    useState<Array<string>>(pokemons);
+  // const [pokemonsToDisplay, setPokemonsToDisplay] =
+  //   useState<Array<string>>(pokemons);
 
-  const { filterByType, filterByName, pokemonsTypesNames } = useAppSelector(
-    (state) => state.pokemonApp
-  );
+  // const { filterByType, filterByName, pokemonsTypesNames } = useAppSelector(
+  //   (state) => state.pokemonApp
+  // );
 
-  useEffect(() => {
-    const pokemonsToDisplayFilteredByName = filterPokemonsByName(
-      pokemons,
-      filterByName
-    );
-    const pokemonsToDisplayFilteredByType = !filterByType
-      ? pokemons
-      : filterPokemonsByType(pokemonsTypesNames, filterByType);
-    const pokemonsToDisplayFilteredByNameAndType = getCommonElementsFromArrays(
-      pokemonsToDisplayFilteredByName,
-      pokemonsToDisplayFilteredByType
-    );
-    setPokemonsToDisplay(pokemonsToDisplayFilteredByNameAndType);
-  }, [filterByName, filterByType, pokemonsTypesNames, pokemons]);
+  // useEffect(() => {
+  //   const pokemonsToDisplayFilteredByName = filterPokemonsByName(
+  //     pokemons,
+  //     filterByName
+  //   );
+  //   const pokemonsToDisplayFilteredByType = !filterByType
+  //     ? pokemons
+  //     : filterPokemonsByType(pokemonsTypesNames, filterByType);
+  //   const pokemonsToDisplayFilteredByNameAndType = getCommonElementsFromArrays(
+  //     pokemonsToDisplayFilteredByName,
+  //     pokemonsToDisplayFilteredByType
+  //   );
+  //   setPokemonsToDisplay(pokemonsToDisplayFilteredByNameAndType);
+  // }, [filterByName, filterByType, pokemonsTypesNames, pokemons]);
+
+  useEffect(()=>{}, [pokemons])
 
   return (
     <>
@@ -48,7 +51,12 @@ export function Pokemons({ pokemons }: PokemonsProps): JSX.Element {
         <FilterByName />
       </section>
       <ul className="pokemons--unordered">
-        {pokemonsToDisplay.map(PokemonItemToDisplay)}
+        {/* {pokemonsToDisplay.map(PokemonItemToDisplay)} */}
+        {pokemons.map((pokemon) =>
+          <li className="pokemons__listItem" key={pokemon.name}>
+            <PokemonListItem pokemon={pokemon} />
+          </li>
+        )}
       </ul>
       <LoadMorePokemons />
     </>

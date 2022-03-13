@@ -1,8 +1,8 @@
-import { Footer } from './Footer/Footer';
-import { LandingPage } from './LandingPage/LandingPage';
-import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator';
+import { Footer } from './Footer/Footer.component';
+import { LandingPage } from './LandingPage/LandingPage.component';
+import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator.component';
 import { Pokemons } from '../features/Pokemons/Pokemons';
-import { ScrollToTop } from './ScrollToTop/ScrollToTop';
+import { ScrollToTop } from './ScrollToTop/ScrollToTop.component';
 
 export {
   Footer,

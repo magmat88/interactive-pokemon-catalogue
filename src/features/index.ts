@@ -4,8 +4,8 @@ import { LoadMorePokemons } from './LoadMorePokemons/LoadMorePokemons.component'
 import { PokemonItemToDisplay } from './Pokemons/PokemonItemToDisplay.component';
 import { PokemonListItem } from './PokemonListItem/PokemonListItem.component';
 import { PokemonTypeName } from './PokemonListItem/PokemonTypeName.component';
-import { RenderPokemonItem } from './RenderPokemonItem/RenderPokemonItem.component';
-import { RenderPokemons } from './RenderPokemons/RenderPokemons.component';
+import { PokemonsWrapper } from './PokemonsWrapper/PokemonsWrapper.component';
+import { Pokemons } from './Pokemons/Pokemons';
 
 export {
   FilterByName,
@@ -14,6 +14,6 @@ export {
   PokemonItemToDisplay,
   PokemonListItem,
   PokemonTypeName,
-  RenderPokemonItem,
-  RenderPokemons,
+  PokemonsWrapper,
+  Pokemons
 };

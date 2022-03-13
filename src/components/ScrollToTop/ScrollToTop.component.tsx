@@ -1,5 +1,6 @@
 import React from 'react';
 import ScrollIntoView from 'react-scroll-into-view';
+import './ScrollToTop.scss';
 
 export function ScrollToTop(): JSX.Element {
   return (
