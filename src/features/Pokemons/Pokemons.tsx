@@ -6,8 +6,11 @@ import {
   PokemonItemToDisplay,
 } from '..';
 import { useAppSelector } from '../../hooks';
-import { filterPokemonsByName } from '../../utils';
-import { PokemonTypesNamesObject } from '../../config/state';
+import {
+  filterPokemonsByName,
+  getCommonElementsFromArrays,
+  filterPokemonsByType,
+} from '../../utils';
 
 import './Pokemons.scss';
 
@@ -23,35 +26,14 @@ export function Pokemons({ pokemons }: PokemonsProps): JSX.Element {
     (state) => state.pokemonApp
   );
 
-  function filterPokemonsByType(
-    pokemonsTypesNames: Array<PokemonTypesNamesObject>,
-    filterByType: string
-  ): Array<string> {
-    const filteredPokemonsTypesNames = pokemonsTypesNames.filter(
-      (pokemonTypesNamesObject) =>
-        pokemonTypesNamesObject.pokemonTypesNames.includes(filterByType)
-    );
-    return filteredPokemonsTypesNames.map(
-      (filteredPokemonTypesNames) => filteredPokemonTypesNames.pokemonName
-    );
-  }
-
-  function getCommonElementsFromArrays(
-    a: Array<string>,
-    b: Array<string>
-  ): Array<string> {
-    return a.filter((item) => b.indexOf(item) !== -1);
-  }
-
   useEffect(() => {
     const pokemonsToDisplayFilteredByName = filterPokemonsByName(
       pokemons,
       filterByName
     );
-    const pokemonsToDisplayFilteredByType = !filterByType ? pokemons : filterPokemonsByType(
-      pokemonsTypesNames,
-      filterByType
-    );
+    const pokemonsToDisplayFilteredByType = !filterByType
+      ? pokemons
+      : filterPokemonsByType(pokemonsTypesNames, filterByType);
     const pokemonsToDisplayFilteredByNameAndType = getCommonElementsFromArrays(
       pokemonsToDisplayFilteredByName,
       pokemonsToDisplayFilteredByType

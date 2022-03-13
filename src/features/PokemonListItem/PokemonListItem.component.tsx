@@ -13,7 +13,7 @@ interface PokemonListItemProps {
 export function PokemonListItem({
   pokemon,
 }: PokemonListItemProps): JSX.Element {
-  const [areDetailsVisible, setAreDetailsVisible] = useState<Boolean>(false);
+  const [areDetailsVisible, setAreDetailsVisible] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const { pokemonsTypesNames } = useAppSelector((state) => state.pokemonApp);
@@ -23,12 +23,13 @@ export function PokemonListItem({
       pokemonName: pokemon.name,
       pokemonTypesNames: extractPokemonTypeNames(pokemon),
     };
-    if (
-      !pokemonsTypesNames.some(
-        (pokemonTypesNamesObject) =>
-          pokemonTypesNamesObject.pokemonName === pokemon.name
-      )
-    ) {
+
+    const arePokemonTypesAvailable: boolean = !pokemonsTypesNames.some(
+      (pokemonTypesNamesObject) =>
+        pokemonTypesNamesObject.pokemonName === pokemon.name
+    );
+
+    if (arePokemonTypesAvailable) {
       dispatch(addPokemonTypesNames(pokemonTypesNamesObject));
     }
   }, [pokemon, pokemonsTypesNames]);

@@ -8,6 +8,7 @@ import {
   POKEMON__FETCH_BY_NAME,
   POKEMON__FETCH_LIST,
 } from '../config/actionTypes';
+import { PokemonType } from '../config/state';
 
 type RequestState =
   | 'pending'
@@ -26,15 +27,37 @@ export const fetchPokemonByName = createAsyncThunk<any, string>(
   }
 );
 
+// export const fetchPokemonList = createAsyncThunk<any, string>(
+//   POKEMON__FETCH_LIST,
+//   async (limitAndOffset, { rejectWithValue }) => {
+//     const response = await fetch(`${URL_API}?${limitAndOffset}`);
+//     const data = await response.json();
+//     if (response.status < 200 || response.status >= 300) {
+//       return rejectWithValue(data);
+//     }
+//     return data;
+//   }
+// );
+
 export const fetchPokemonList = createAsyncThunk<any, string>(
   POKEMON__FETCH_LIST,
   async (limitAndOffset, { rejectWithValue }) => {
     const response = await fetch(`${URL_API}?${limitAndOffset}`);
     const data = await response.json();
-    if (response.status < 200 || response.status >= 300) {
-      return rejectWithValue(data);
-    }
-    return data;
+    const basicPokemonData: Array<PokemonType> = data.results;
+    console.log(basicPokemonData);
+    const morePokemonDataPromises = basicPokemonData.map((basicData) => fetch(`${URL_API}/${basicData.name}`));
+    const test = await Promise.all(morePokemonDataPromises).then(testData => {
+      console.log(testData);
+      return testData.map(item => item.json())
+    }).then(async (testData) => {
+      const x = await Promise.all(testData);
+      console.log(x)
+      if (response.status < 200 || response.status >= 300) {
+        return rejectWithValue(data);
+      }
+      return data;
+    })
   }
 );
 
