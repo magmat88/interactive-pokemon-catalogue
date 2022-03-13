@@ -7,6 +7,8 @@ import {
 } from '..';
 import { useAppSelector } from '../../hooks';
 import { filterPokemonsByName } from '../../utils';
+import { PokemonTypesNamesObject } from '../../config/state';
+
 import './Pokemons.scss';
 
 interface PokemonsProps {
@@ -17,21 +19,45 @@ export function Pokemons({ pokemons }: PokemonsProps): JSX.Element {
   const [pokemonsToDisplay, setPokemonsToDisplay] =
     useState<Array<string>>(pokemons);
 
-  const { filterByType, filterByName } = useAppSelector(
+  const { filterByType, filterByName, pokemonsTypesNames } = useAppSelector(
     (state) => state.pokemonApp
   );
 
-  useEffect(() => {
-    const pokemonsToDisplayFilteredByName = filterPokemonsByName(pokemons, filterByName);
-    if (pokemonsToDisplayFilteredByName) {
-      // pokemonsToDisplayFilteredByName.filter((pokemonName) => )
-    }
-    setPokemonsToDisplay(pokemonsToDisplayFilteredByName);
+  function filterPokemonsByType(
+    pokemonsTypesNames: Array<PokemonTypesNamesObject>,
+    filterByType: string
+  ): Array<string> {
+    const filteredPokemonsTypesNames = pokemonsTypesNames.filter(
+      (pokemonTypesNamesObject) =>
+        pokemonTypesNamesObject.pokemonTypesNames.includes(filterByType)
+    );
+    return filteredPokemonsTypesNames.map(
+      (filteredPokemonTypesNames) => filteredPokemonTypesNames.pokemonName
+    );
+  }
 
-    //   const pokemonsTypes: Array<Array<string>> = pokemons.map(pokemon => extractPokemonTypeNames(pokemon));
-    //   pokemons.filter((pokemonsTypes) => pokemonsTypes.map((pokemonTypes: Array<Array<string>>) => pokemonTypes.includes(filterByType)));
-    //     //zwrócić tylko części wspólne w obu filtrach
-  }, [filterByName, pokemons]);
+  function getCommonElementsFromArrays(
+    a: Array<string>,
+    b: Array<string>
+  ): Array<string> {
+    return a.filter((item) => b.indexOf(item) !== -1);
+  }
+
+  useEffect(() => {
+    const pokemonsToDisplayFilteredByName = filterPokemonsByName(
+      pokemons,
+      filterByName
+    );
+    const pokemonsToDisplayFilteredByType = !filterByType ? pokemons : filterPokemonsByType(
+      pokemonsTypesNames,
+      filterByType
+    );
+    const pokemonsToDisplayFilteredByNameAndType = getCommonElementsFromArrays(
+      pokemonsToDisplayFilteredByName,
+      pokemonsToDisplayFilteredByType
+    );
+    setPokemonsToDisplay(pokemonsToDisplayFilteredByNameAndType);
+  }, [filterByName, filterByType, pokemonsTypesNames, pokemons]);
 
   return (
     <>
