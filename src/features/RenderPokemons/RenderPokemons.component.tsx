@@ -4,7 +4,6 @@ import { selectPokemonNames } from '../../utils';
 import { LoadingIndicator, Pokemons } from '../../components';
 
 export function RenderPokemons(): JSX.Element {
-  //   const dispatch = useAppDispatch();
   const { limit, offset } = useAppSelector((state) => state.pokemonApp);
   const { data, isError, isLoading } = useGetPokemonListQuery(
     `limit=${limit}&offset=${offset}`

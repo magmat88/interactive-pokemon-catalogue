@@ -1,16 +1,12 @@
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeUserInput, changePokemonNameFilter } from '../pokemonAppSlice';
+import { useAppDispatch } from '../../hooks';
+import { changePokemonNameFilter } from '../pokemonAppSlice';
 import './FilterByName.scss';
 
 export function FilterByName(props: any): JSX.Element {
   const dispatch = useAppDispatch();
-  const { filterByName, userInput } = useAppSelector(
-    (state) => state.pokemonApp
-  );
-
   function onChangeUserInput(event: React.ChangeEvent<HTMLInputElement>): void {
-    dispatch(changeUserInput(event.target.value));
+    dispatch(changePokemonNameFilter(event.target.value));
   }
 
   return (

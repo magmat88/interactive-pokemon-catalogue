@@ -1,14 +1,8 @@
-interface PokemonType {
-  name: string;
-  url: string;
-}
+import { PokemonDataType, PokemonTypesObject } from '../config/state';
 
-interface PokemonTypesObject {
-  slot: number;
-  type: PokemonType;
-}
-
-export function extractPokemonTypeNames(pokemon: any): Array<string> {
+export function extractPokemonTypeNames(
+  pokemon: PokemonDataType
+): Array<string> {
   return pokemon.types.map((typeObject: PokemonTypesObject) => {
     return typeObject.type.name;
   });
