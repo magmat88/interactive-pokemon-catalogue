@@ -2,59 +2,56 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.pokemonListItem {
+.pokemon {
+    align-items: center;
     display: flex;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
     text-align: center;
     width: 100%;
 }
 
-.pokemonListItem__img--small {
-    height: 150px;
-}
-
-.pokemonListItem__text--description {
-    @extend %textDescription;
-}
-
-.pokemonListItem__text--label {
+.pokemon__description {
     @extend %textLabel;
+    font-size: 0.8rem;
 }
 
-.pokemonListItem__figcaption {
+.pokemon__figcaption {
+    align-items: center;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
 }
 
-.pokemonListItem__figcaptionItem {
-    display: flex;
+.pokemon__figcaptionItem {
     align-items: center;
-    margin: 5px;
-    border-radius: 5px;
     background-color: $color_contrast;
+    border-radius: 5px;
     color: $color_light;
-    font-weight: 400;
-    text-transform: uppercase;
+    display: flex;
     font-size: 0.7rem;
+    font-weight: 400;
+    margin: 5px;
+    text-transform: uppercase;
 
     p {
-        padding: 5px;;
         margin: 0;
+        padding: 5px;
     }
 }
 
-.pokemonList__listItem--visible {
-    visibility: visible;
+.pokemon__img--small {
+    height: 10rem;
 }
 
-.pokemonList__listItem--hidden {
-    visibility: hidden;
+.pokemon__text--description {
+    @extend %textDescription;
+}
+
+.pokemon__text--label {
+    @extend %textLabel;
 }

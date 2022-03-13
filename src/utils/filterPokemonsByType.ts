@@ -1,14 +1,10 @@
-import { PokemonTypesNamesObject } from '../config/state';
+import { PokemonDataType } from '../config/state';
 
 export function filterPokemonsByType(
-  pokemonsTypesNames: Array<PokemonTypesNamesObject>,
+  pokemons: Array<PokemonDataType>,
   filterByType: string
-): Array<string> {
-  const filteredPokemonsTypesNames = pokemonsTypesNames.filter(
-    (pokemonTypesNamesObject) =>
-      pokemonTypesNamesObject.pokemonTypesNames.includes(filterByType)
-  );
-  return filteredPokemonsTypesNames.map(
-    (filteredPokemonTypesNames) => filteredPokemonTypesNames.pokemonName
+): Array<PokemonDataType> {
+  return pokemons.filter((pokemon) =>
+    pokemon.types.some((typeObject) => typeObject.type.name === filterByType)
   );
 }

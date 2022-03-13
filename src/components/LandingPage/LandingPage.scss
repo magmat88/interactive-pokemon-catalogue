@@ -2,29 +2,6 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.landingPage__btn--light {
-    @extend %btnLight;
-}
-
-.landingPage__btn--container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.landingPage__btn {
-    @extend %btn;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    height: 50px;
-    margin: 10px;
-    padding: 10px;
-    width: 200px;
-}
-
-//source of landing image: https://unsplash.com/photos/TWCnHKKhqSo
-
 .landingPage {
     align-items: center;
     background-image: url("../../images/landingImageSmall.jpg");
@@ -35,35 +12,63 @@
     flex-direction: column;
     height: 100vh;
     justify-content: center;
-    width: 100vw;
     padding: 0;
     position: relative;
     text-align: center;
+    width: 100vw;
 
-    @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-        background-image: url("../../images/landingImageMedium.jpg");
+    .landingPage__btn {
+        @extend %btn;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        height: 50px;
+        margin: 10px;
+        padding: 10px;
+        width: 200px;
     }
 
-    @include forLargeScreens($breakpoint-medium) {
-        background-image: url("../../images/landingImageLarge.jpg");
+    .landingPage__btn--container {
+        align-items: center;
+        display: flex;
+        justify-content: center;
     }
+
+    .landingPage__btn--light {
+        @extend %btnLight;
+    }
+
+    //source of landing image: https://unsplash.com/photos/TWCnHKKhqSo
 }
 
 .landingPage__container {
-    font-size: 1.4rem;
+    background-color: var(--background-landing);
     color: $color_contrast;
     cursor: default;
-    background-color: var(--background-landing);
-    width: 100%;
+    font-size: 1.4rem;
     margin: 0;
+    opacity: 0.9;
     padding: 0;
+    width: 100%;
+}
 
-    h1 {
-        font-size: 2.7rem;
-        line-height: 1.2;
+.landingPage__subtitle {
+    font-size: 1.2rem;
+}
+
+.landingPage__title {
+    font-size: 2.7rem;
+    line-height: 1.2;
+}
+
+@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
+    .landingPage {
+        background-image: url("../../images/landingImageMedium.jpg");
     }
+}
 
-    h3 {
-        font-size: 1.2rem;
+@include forLargeScreens($breakpoint-medium) {
+    .landingPage {
+        background-image: url("../../images/landingImageLarge.jpg");
     }
 }

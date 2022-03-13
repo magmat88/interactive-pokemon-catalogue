@@ -3,11 +3,11 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    // height: 90vh;
     justify-content: center;
+    opacity: 0.5;
 }
 
-// https://icons8.com/cssload/en/spinners
+// source of loading indicator: https://icons8.com/cssload/en/spinners
 
 #floatingCirclesG {
     height: 125px;

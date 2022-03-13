@@ -1,8 +1,8 @@
+import { PokemonDataType } from '../config/state';
+
 export function filterPokemonsByName(
-  pokemons: Array<string>,
+  pokemons: Array<PokemonDataType>,
   filterByName: string
-): Array<string> {
-  return pokemons.filter((pokemonName: string) =>
-    pokemonName.includes(filterByName)
-  );
+): Array<PokemonDataType> {
+  return pokemons.filter((pokemon) => pokemon.name.includes(filterByName));
 }

@@ -2,53 +2,40 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
+.pokemons__filters {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pokemons__listItem {
+    align-items: center;
+    background-color: var(--background-tile-primary);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+    min-width: 250px;
+    text-decoration: none;
+    transition: background-color 0.5s;
+
+    &:hover {
+        background-color: var(--background-tile-secondary);
+        cursor: pointer;
+    }
+}
+
 .pokemons--unordered {
     align-items: center;
+    background-color: transparent;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    width: 90%;
     margin: 0;
-    background-color: transparent;
-}
-
-.pokemons__listItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    // width: 100%;
-    min-width: 250px;
-    margin: 10px;
-    background-color: var(--background-tile-primary);
-    transition: background-color 0.5s;
-    border-radius: 5px;
-    text-decoration: none;
-
-    &:hover {
-        cursor: pointer;
-        background-color: var(--background-tile-secondary);
-    }
-}
-
-@include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    .pokemonItem__listItem {
-        width: 20%;
-    }
-}
-
-@include forLargeScreens($breakpoint-medium) {
-    .pokemonItem__listItem {
-        width: 20%;
-    }
-}
-
-.pokemons__filters {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 90%;
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
@@ -56,11 +43,19 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    .pokemons__listItem {
+        width: 20%;
+    }
 }
 
 @include forLargeScreens($breakpoint-medium) {
     .pokemons__filters {
         flex-direction: row;
         justify-content: space-between;
+    }
+
+    .pokemons__listItem {
+        width: 20%;
     }
 }

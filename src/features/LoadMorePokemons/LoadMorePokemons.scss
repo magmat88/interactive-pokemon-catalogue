@@ -2,16 +2,6 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.loadMorePokemons__btn--light-no-border {
-    width: 250px;
-}
-
-.loadMorePokemons__btn--container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-
 .loadMorePokemons__btn {
     @extend %btn;
     border-radius: 10px;
@@ -24,4 +14,14 @@
     a {
         text-decoration: none;
     }
+}
+
+.loadMorePokemons__btn--container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.loadMorePokemons__btn--light-no-border {
+    width: 250px;
 }

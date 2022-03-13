@@ -10,41 +10,24 @@
     width: 100vw;
 }
 
-// .app__filters {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-// }
-
-.app--dark-light {
-    color: var(--text-primary);
-    background-color: var(--background);
-    font-size: large;
-    font-weight: bold;
-    height: calc(100% - 40px);
-    transition: all 0.5s;
-}
-
-.app__container {
-    align-items: center;
+.app__btn {
+    @extend %btn;
+    border-radius: 10px;
+    cursor: pointer;
     display: flex;
-    justify-content: center;
-    padding: 10px;
+    height: 50px;
     margin: 0;
-    flex-direction: column;
+    padding: 10px;
+
+    a {
+        text-decoration: none;
+    }
 }
 
-button {
-    color: var(--text-secondary);
-    background-color: var(--background);
-    border: 2px var(--text-primary) solid;
-    float: right;
-    transition: all 0.5s;
-}
-
-.app_btn--light-no-border {
-    width: 150px;
+.app__btn--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .app__btn--contrast {
@@ -59,35 +42,37 @@ button {
     }
 }
 
-// 
-
-.app__btn--container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.app__btn--light-no-border {
+    width: 150px;
 }
 
-.app__btn {
-    @extend %btn;
-    border-radius: 10px;
-    cursor: pointer;
+.app__container {
+    align-items: center;
     display: flex;
-    height: 50px;
-    margin: 0;
+    justify-content: center;
     padding: 10px;
-    
+    margin: 0;
+    flex-direction: column;
+}
 
-    a {
-        text-decoration: none;
-    }
+.app--dark-light {
+    color: var(--text-primary);
+    background-color: var(--background);
+    font-size: large;
+    font-weight: bold;
+    height: calc(100% - 40px);
+    transition: all 0.5s;
+}
+
+button {
+    color: var(--text-secondary);
+    background-color: var(--background);
+    border: 2px var(--text-primary) solid;
+    float: right;
+    transition: all 0.5s;
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    // .app__filters {
-    //     flex-direction: row;
-    //     justify-content: space-between;
-    // }
-
     .app__container {
         flex-direction: row;
         justify-content: space-between;
@@ -95,11 +80,6 @@ button {
 }
 
 @include forLargeScreens($breakpoint-medium) {
-    // .app__filters {
-    //     flex-direction: row;
-    //     justify-content: space-between;
-    // }
-
     .app__container {
         flex-direction: row;
         justify-content: space-between;

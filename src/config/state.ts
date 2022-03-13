@@ -43,7 +43,4 @@ export interface PokemonTypesObject {
   type: PokemonType;
 }
 
-export interface PokemonTypesNamesObject {
-  pokemonName: string;
-  pokemonTypesNames: Array<string>;
-}
+

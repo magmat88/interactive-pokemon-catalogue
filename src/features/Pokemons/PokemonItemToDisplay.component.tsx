@@ -1,9 +1,10 @@
-// import { RenderPokemonItem } from '../';
+import { PokemonDataType } from '../../config/state';
+import { Pokemon } from '..';
 
-export function PokemonItemToDisplay(name: string): JSX.Element {
+export function PokemonItemToDisplay(pokemon: PokemonDataType): JSX.Element {
   return (
-    <li className="pokemons__listItem" key={name}>
-      {/* <RenderPokemonItem name={name} /> */}
+    <li className="pokemons__listItem" key={pokemon.name}>
+      <Pokemon pokemon={pokemon} />
     </li>
   );
 }

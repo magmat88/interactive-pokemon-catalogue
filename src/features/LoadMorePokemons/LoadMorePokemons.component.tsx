@@ -1,17 +1,15 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeOffset, changeLimit } from '../pokemonAppSlice';
+import { changeOffset } from '../pokemonAppSlice';
 import { COUNT_PER_SINGLE_REQUEST } from '../../config/constants';
 import './LoadMorePokemons.scss';
 
 export function LoadMorePokemons() {
   const dispatch = useAppDispatch();
-  const { limit, offset } = useAppSelector((state) => state.pokemonApp);
+  const { offset } = useAppSelector((state) => state.pokemonApp);
 
   function onLoadMorePokemons() {
-    const increasedLimit = limit + COUNT_PER_SINGLE_REQUEST;
     const increasedOffset = offset + COUNT_PER_SINGLE_REQUEST;
-    dispatch(changeLimit(increasedLimit));
     dispatch(changeOffset(increasedOffset));
   }
 

@@ -2,11 +2,17 @@
 @import "../../styles/placeholders/placeholders.scss";
 @import "../../styles/variables/variables.scss";
 
-.scrollToTop__btn--light-no-border {
+.scrollToSection {
+    display: flex;
+    justify-content: center;
+}
+
+.scrollToSection__btn--light-no-border {
+    border: none;
     width: 150px;
 }
 
-.scrollToTop__btn {
+.scrollToSection__btn {
     @extend %btn;
     border-radius: 10px;
     cursor: pointer;
