@@ -17,6 +17,7 @@
     "@types/react-redux": "^7.1.23",
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
+    "gh-pages": "^3.2.3",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -33,7 +34,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,5 +55,6 @@
   },
   "devDependencies": {
     "@types/redux-logger": "^3.0.9"
-  }
+  },
+  "homepage": "https://magmat88.github.io/interactive-pokemon-catalogue/"
 }
