@@ -19,7 +19,7 @@ export function App(): JSX.Element {
   return (
     <main className="app app--dark-light" data-theme={theme}>
       <LandingPage />
-      <div data-theme={theme}>
+      <div className="app__mainContent" data-theme={theme}>
         <div className="app__container" id="app-container" data-theme={theme}>
           <button
             className="app__btn app__btn--light-no-border"

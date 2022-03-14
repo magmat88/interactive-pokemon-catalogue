@@ -35,13 +35,15 @@
     flex-wrap: wrap;
     justify-content: center;
     margin: 0;
-    width: 90%;
+    padding: 10px 0;
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
     .pokemons__filters {
         flex-direction: row;
-        justify-content: space-between;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: 0 5vh;
     }
 
     .pokemons__listItem {
@@ -53,6 +55,7 @@
     .pokemons__filters {
         flex-direction: row;
         justify-content: space-between;
+        margin: 0 10vh;
     }
 
     .pokemons__listItem {

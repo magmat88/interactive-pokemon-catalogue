@@ -3,10 +3,10 @@
 @import "../../styles/variables/variables.scss";
 
 .app {
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
     width: 100vw;
 }
 
@@ -25,16 +25,16 @@
 }
 
 .app__btn--container {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
 }
 
 .app__btn--contrast {
-    width: 50px;
     font-size: 0.7rem;
     margin: 10px;
     padding: 10px;
+    width: 50px;
 
     &:active {
         border: 5px solid $color_active;
@@ -50,38 +50,40 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 10px;
     margin: 0;
-    flex-direction: column;
+    padding: 10px;
 }
 
 .app--dark-light {
-    color: var(--text-primary);
     background-color: var(--background);
+    color: var(--text-primary);
     font-size: large;
     font-weight: bold;
     height: calc(100% - 40px);
     transition: all 0.5s;
 }
 
+.app__mainContent {
+    display: flex;
+    flex-direction: column;
+}
+
 button {
-    color: var(--text-secondary);
     background-color: var(--background);
     border: 2px var(--text-primary) solid;
+    color: var(--text-secondary);
     float: right;
     transition: all 0.5s;
 }
 
 @include forMediumScreens($breakpoint-small, $breakpoint-medium) {
-    .app__container {
-        flex-direction: row;
-        justify-content: space-between;
+    .app__mainContent {
+        margin: 0 5vw;
     }
 }
 
 @include forLargeScreens($breakpoint-medium) {
-    .app__container {
-        flex-direction: row;
-        justify-content: space-between;
+    .app__mainContent {
+        margin: 0 10vw;
     }
 }
