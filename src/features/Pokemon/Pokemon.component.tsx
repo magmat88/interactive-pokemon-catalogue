@@ -10,6 +10,24 @@ interface PokemonProps {
 export function Pokemon({ pokemon }: PokemonProps): JSX.Element {
   const [areDetailsVisible, setAreDetailsVisible] = useState<boolean>(false);
 
+  function renderDetails(): JSX.Element {
+    return (
+      <div>
+        <p>Height: {pokemon.height} m</p>
+        <p>Weight: {pokemon.weight} kg</p>
+      </div>
+    );
+  }
+
+  function seeDetails(): JSX.Element {
+    return (
+      <div>
+        <p>+</p>
+        <p>See details</p>
+      </div>
+    );
+  }
+
   return (
     <div
       className="pokemon"
@@ -28,17 +46,7 @@ export function Pokemon({ pokemon }: PokemonProps): JSX.Element {
       </figure>
 
       <article className="pokemon__description">
-        {areDetailsVisible ? (
-          <div>
-            <p>Height: {pokemon.height} m</p>
-            <p>Weight: {pokemon.weight} kg</p>
-          </div>
-        ) : (
-          <div>
-            <p>+</p>
-            <p>See details</p>
-          </div>
-        )}
+        {areDetailsVisible ? renderDetails() : seeDetails()}
       </article>
     </div>
   );

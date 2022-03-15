@@ -5,6 +5,11 @@ export const URL_ABOUT_API = 'https://pokeapi.co';
 export const URL_API = 'https://pokeapi.co/api/v2/pokemon';
 export const URL_AUTHOR = 'https://github.com/magmat88';
 
+export enum COLOR_THEMES {
+  DARK = 'dark',
+  LIGHT = 'light',
+}
+
 export enum POKEMON_SELECT_TYPES {
   BUG = 'bug',
   DARK = 'dark',

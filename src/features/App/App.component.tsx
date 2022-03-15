@@ -2,17 +2,18 @@ import React from 'react';
 import useLocalStorage from 'use-local-storage';
 import { Footer, LandingPage, ScrollToSection } from '../../components';
 import { PokemonsWrapper } from '../../features';
+import { COLOR_THEMES } from '../../config/constants';
 import './App.scss';
 
 export function App(): JSX.Element {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage(
     'theme',
-    defaultDark ? 'dark' : 'light'
+    defaultDark ? COLOR_THEMES["DARK"] : COLOR_THEMES["LIGHT"]
   );
 
   function toggleDarkLightTheme() {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = theme === COLOR_THEMES["LIGHT"] ? COLOR_THEMES["DARK"] : COLOR_THEMES["LIGHT"];
     setTheme(newTheme);
   }
 
@@ -25,7 +26,7 @@ export function App(): JSX.Element {
             className="app__btn app__btn--light-no-border"
             onClick={toggleDarkLightTheme}
           >
-            {theme === 'light' ? 'Dark' : 'Light'} Theme
+            {theme === COLOR_THEMES["LIGHT"] ? COLOR_THEMES["DARK"] : COLOR_THEMES["LIGHT"]} Theme
           </button>
         </div>
         <PokemonsWrapper />
