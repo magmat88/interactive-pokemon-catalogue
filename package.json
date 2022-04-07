@@ -54,6 +54,8 @@
     ]
   },
   "devDependencies": {
+    "@cypress/react": "^5.12.4",
+    "@cypress/webpack-dev-server": "^1.8.4",
     "@types/redux-logger": "^3.0.9"
   },
   "homepage": "https://magmat88.github.io/interactive-pokemon-catalogue/"

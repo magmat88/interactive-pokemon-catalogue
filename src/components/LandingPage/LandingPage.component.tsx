@@ -1,4 +1,3 @@
-import React from 'react';
 import ScrollIntoView from 'react-scroll-into-view';
 import './LandingPage.scss';
 

@@ -12,7 +12,7 @@ export function Pokemon({ pokemon }: PokemonProps): JSX.Element {
 
   function renderDetails(): JSX.Element {
     return (
-      <div>
+      <div className="pokemonDetails">
         <p>Height: {pokemon.height} m</p>
         <p>Weight: {pokemon.weight} kg</p>
       </div>
