@@ -2,5 +2,6 @@
   "component": {
     "testFiles": "**/*.test.{js,ts,jsx,tsx}",
     "componentFolder": "src"
-  }
+  },
+  "baseUrl": "https://magmat88.github.io/interactive-pokemon-catalogue/"
 }
