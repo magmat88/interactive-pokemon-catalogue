@@ -1,16 +1,17 @@
 describe('Interactive Pokemon Catalogue', () => {
+  const browsePokemonsBtnSelector = 'button.landingPage__btn';
+  const footerSelector = 'footer';
+  const landingPageSelector = '#landing-page';
+  const mainContentSelector = 'div.app__mainContent';
+  const scrollToTopBtnSelector =
+    'div.scrollToSection button.scrollToSection__btn';
+
   beforeEach(() => {
     cy.visit('/');
   });
 
   describe('Page loaded', () => {
     context('When the page is loaded', () => {
-      const footerSelector = 'footer';
-      const landingPageSelector = '#landing-page';
-      const mainContentSelector = 'div.app__mainContent';
-      const scrollToTopBtnSelector =
-        'div.scrollToSection button.scrollToSection__btn';
-
       it('then it should focus on the landing page', () => {
         cy.get(landingPageSelector).should('exist').should('be.visible');
       });
@@ -24,19 +25,17 @@ describe('Interactive Pokemon Catalogue', () => {
         cy.fixture('pokemonAppData').then((data) => {
           const headerText = data.landingPage.header;
           const subheaderText = data.landingPage.subheader;
-          const browsePokemonsBtnText = data.buttons.browsePokemons;
+          const browsePokemonsBtnSelectorText = data.buttons.browsePokemons;
 
           cy.get(landingPageContainerSelector)
             .should('contain.text', headerText)
             .should('contain.text', subheaderText)
-            .should('contain.text', browsePokemonsBtnText);
+            .should('contain.text', browsePokemonsBtnSelectorText);
         });
       });
 
       it('then when the button "Browse Pokemons" is clicked, it should focus on the main content', () => {
-        const browsePokemonsBtn = 'button.landingPage__btn';
-
-        cy.get(browsePokemonsBtn).click();
+        cy.get(browsePokemonsBtnSelector).click();
         cy.get(mainContentSelector).should('exist');
       });
 
@@ -102,17 +101,20 @@ describe('Interactive Pokemon Catalogue', () => {
             .should('have.text', scrollToTopBtnText);
         });
       });
+    });
+
+    context('When the page is loaded and scrolled down', () => {
+      beforeEach(() => {
+        cy.wait(5000);
+        cy.get(scrollToTopBtnSelector).scrollIntoView();
+      });
 
       it('then when the page is scrolled down and the button "Scroll to top" is clicked, it should focus on the landing page', () => {
-        // TODO: before
-        cy.get(scrollToTopBtnSelector).scrollIntoView();
         cy.get(scrollToTopBtnSelector).click();
         cy.get(landingPageSelector).should('be.visible');
       });
 
       it('then when the page is scrolled down it should contain footer with text "This page relies on data provided by PokeApi" and "©magmat88"', () => {
-        // TODO: before
-        cy.get(scrollToTopBtnSelector).scrollIntoView();
         cy.get(footerSelector).should('exist');
 
         cy.fixture('pokemonAppData').then((data) => {
@@ -125,8 +127,6 @@ describe('Interactive Pokemon Catalogue', () => {
       });
 
       it('then when the page is scrolled down, in footer it should be working links opened in the new browser tab - to author: "https://github.com/magmat88" and to used API: "https://pokeapi.co"', () => {
-        // TODO: before
-        cy.get(scrollToTopBtnSelector).scrollIntoView();
         cy.fixture('pokemonAppData').then((data) => {
           const linkToAuthor = data.links.author;
           const linkToPokeApi = data.links.pokeApi;
@@ -149,9 +149,110 @@ describe('Interactive Pokemon Catalogue', () => {
     });
   });
 
-  describe('Pokemons list loaded', () => {});
+  describe('Toggle color theme', () => {
+    const toggleThemeBtnSelector = 'div.app__container button.app__btn';
+    const appContainerSelector = 'div.app__container';
+    const mainSelector = 'main.app';
+    context(
+      'When the page is loaded and "Browse Pokemons" button is clicked',
+      () => {
+        beforeEach(() => {
+          cy.wait(5000);
+          cy.get(browsePokemonsBtnSelector).click();
+        });
 
-  describe('Pokemon data loaded', () => {});
+        it('then the page should have light theme and the button for toggling theme should have text "Dark Theme"', () => {
+          cy.fixture('pokemonAppData').then((data) => {
+            const lightThemeText = data.theme.light;
+            const toggleThemeWhenIsLightBtnText = data.buttons.theme.darkTheme;
+
+            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsLightBtnText);
+
+            cy.get(mainContentSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+            cy.get(mainSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+            cy.get(appContainerSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+          });
+        });
+
+        it('then when the "Dark Theme" button is clicked, the page should toggle to dark theme and the button for toggling theme should toggle text to "Light Theme"', () => {
+          cy.get(toggleThemeBtnSelector).click();
+
+          cy.fixture('pokemonAppData').then((data) => {
+            const darkThemeText = data.theme.dark;
+            const toggleThemeWhenIsDarkBtnText = data.buttons.theme.lightTheme;
+
+            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsDarkBtnText);
+
+            cy.get(mainContentSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+            cy.get(mainSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+            cy.get(appContainerSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+          });
+        });
+      }
+    );
+
+    context(
+      'When the page is loaded, "Browse Pokemons" button is clicked and "Dark Theme" is clicked',
+      () => {
+        beforeEach(() => {
+          cy.get(browsePokemonsBtnSelector).click();
+          cy.get(toggleThemeBtnSelector).click();
+        });
+
+        it('then the page should have dark theme and the button for toggling theme should have text "Light Theme"', () => {
+          cy.fixture('pokemonAppData').then((data) => {
+            const darkThemeText = data.theme.dark;
+            const toggleThemeWhenIsDarkBtnText = data.buttons.theme.lightTheme;
+
+            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsDarkBtnText);
+
+            cy.get(mainContentSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+            cy.get(mainSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+            cy.get(appContainerSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', darkThemeText);
+          });
+        });
+
+        it('then when the "Light Theme" button is clicked, the page should toggle to light theme and the button for toggling theme should toggle text to "Dark Theme"', () => {
+          cy.get(toggleThemeBtnSelector).click();
+
+          cy.fixture('pokemonAppData').then((data) => {
+            const lightThemeText = data.theme.light;
+            const toggleThemeWhenIsLightBtnText = data.buttons.theme.darkTheme;
+
+            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsLightBtnText);
+
+            cy.get(mainContentSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+            cy.get(mainSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+            cy.get(appContainerSelector)
+              .should('have.attr', 'data-theme')
+              .and('include', lightThemeText);
+          });
+        });
+      }
+    );
+  });
 
   describe('Load more Pokemons', () => {});
 
@@ -164,8 +265,6 @@ describe('Interactive Pokemon Catalogue', () => {
   describe('Filter Pokemons by type', () => {});
 
   describe('Filter Pokemons simultaneously by name and by type', () => {});
-
-  describe('Toggle color theme', () => {});
 });
 
 //cy.fixture()
