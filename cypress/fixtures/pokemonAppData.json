@@ -1,18 +1,18 @@
 {
   "buttons": {
     "browsePokemons": "Browse Pokemons",
-    "loadMorePokemons": "Load More Pokemons",
-    "scrollToTop": "Scroll To Top",
+    "loadMorePokemons": "Load more Pokemons",
+    "scrollToTop": "Scroll to top",
     "theme": {
-      "darkTheme": "Dark Theme",
-      "lightTheme": "Light Theme"
+      "darkTheme": "dark Theme",
+      "lightTheme": "light Theme"
     }
   },
   "filters": {
     "initialValue": "",
     "placeholders": {
-      "filterByName": "Filter By Name",
-      "filterByType": "All Types"
+      "filterByName": "Filter by name",
+      "filterByType": "ALL TYPES"
     },
     "pokemonTypes": [
       "bug",
@@ -35,9 +35,28 @@
       "water"
     ]
   },
-  "footer": [
-    "This page relies on data provided by", 
-    "&copy;"
+  "footer": ["This page relies on data provided by", "&copy;"],
+  "initiallyLoadedPokemons": [
+    "bulbasaur",
+    "ivysaur",
+    "venusaur",
+    "charmander",
+    "charmeleon",
+    "charizard",
+    "squirtle",
+    "wartortle",
+    "blastoise",
+    "caterpie",
+    "metapod",
+    "butterfree",
+    "weedle",
+    "kakuna",
+    "beedrill",
+    "pidgey",
+    "pidgeotto",
+    "pidgeot",
+    "rattata",
+    "raticate"
   ],
   "landingPage": {
     "header": "Pokedex",
