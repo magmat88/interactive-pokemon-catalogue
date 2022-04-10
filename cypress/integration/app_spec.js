@@ -281,7 +281,7 @@ describe('Interactive Pokemon Catalogue', () => {
             const initialyLoadedPokemonsListLength =
               initialyLoadedPokemonsList.length;
             cy.get(pokemonsListSelector).children().should('not.be.empty');
-  
+
             cy.get(pokemonsListSelector)
               .children()
               .should('have.length', initialyLoadedPokemonsListLength);
@@ -297,7 +297,7 @@ describe('Interactive Pokemon Catalogue', () => {
             const onceReloadedPokemonsListLength =
               initialyLoadedPokemonsList.length + 20;
             cy.get(pokemonsListSelector).children().should('not.be.empty');
-  
+
             cy.get(pokemonsListSelector)
               .children()
               .should('have.length', onceReloadedPokemonsListLength);
@@ -307,13 +307,13 @@ describe('Interactive Pokemon Catalogue', () => {
         it('when the "Load more Pokemons" is clicked twice, then the list of pokemons should contain 60 items', () => {
           cy.get(loadMorePokemonsBtnSelector).click().click();
           cy.wait(5000);
-          
+
           cy.fixture('pokemonAppData').then((data) => {
             const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
             const twiceReloadedPokemonsListLength =
               initialyLoadedPokemonsList.length + 40;
             cy.get(pokemonsListSelector).children().should('not.be.empty');
-  
+
             cy.get(pokemonsListSelector)
               .children()
               .should('have.length', twiceReloadedPokemonsListLength);
@@ -323,9 +323,67 @@ describe('Interactive Pokemon Catalogue', () => {
     );
   });
 
-  describe('Pokemon tile content', () => {});
+  describe('Pokemon tile content', () => {
+    context(
+      'When the page is loaded and the "Browse Pokemons" button is clicked',
+      () => {
+        beforeEach(() => {
+          cy.wait(5000);
+          cy.get(browsePokemonsBtnSelector).click();
+        });
 
-  describe('Toggle details visibility', () => {});
+        it('then a tile with Pokemon data should contain a header with text "bulbasaur", an image with Pokemon sprite, labels with Pokemon types, a text "+ See details"', () => {
+          cy.get(pokemonsListSelector)
+            .children()
+            .first()
+            .find('h1')
+            .should('exist')
+            .should('contain.text', 'bulbasaur');
+          cy.get(pokemonsListSelector)
+            .children()
+            .first()
+            .find('img')
+            .should('exist')
+            .invoke('attr', 'src')
+            .should(
+              'contain',
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
+            );
+          cy.get(pokemonsListSelector)
+            .children()
+            .first()
+            .find('figcaption')
+            .children()
+            .first()
+            .should('exist')
+            .should('have.text', 'grass');
+          cy.get(pokemonsListSelector)
+            .children()
+            .first()
+            .find('figcaption')
+            .children()
+            .last()
+            .should('exist')
+            .should('have.text', 'poison');
+          cy.get(pokemonsListSelector)
+            .children()
+            .first()
+            .find('article.pokemon__description div p')
+            .should('exist')
+            .should('have.length', 2)
+            .and('contain.text', '+')
+            .and('contain.text', 'See details');
+          //     cy.get('article.pokemon__description div p').first().should('have.text', 'Height: 17 m');
+        });
+
+        it('when tile is clicked in any place inside it, then a tile with Pokemon data should not contain a text "+ See details" and should contain a text with details: "Height: 7m" and "Weight: 69 kg"', () => {
+          //
+        });
+      }
+    );
+  });
+
+  describe('Toggle Pokemon details visibility', () => {});
 
   describe('Filter Pokemons by name', () => {});
 
