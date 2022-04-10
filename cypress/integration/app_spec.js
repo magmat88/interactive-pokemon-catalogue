@@ -2,7 +2,9 @@ describe('Interactive Pokemon Catalogue', () => {
   const browsePokemonsBtnSelector = 'button.landingPage__btn';
   const footerSelector = 'footer';
   const landingPageSelector = '#landing-page';
+  const loadMorePokemonsBtnSelector = 'button.loadMorePokemons__btn';
   const mainContentSelector = 'div.app__mainContent';
+  const pokemonsListSelector = 'div.app__mainContent ul.pokemons--unordered';
   const scrollToTopBtnSelector =
     'div.scrollToSection button.scrollToSection__btn';
 
@@ -70,10 +72,7 @@ describe('Interactive Pokemon Catalogue', () => {
       });
 
       it('then the list of initially loaded Pokemons should consist of 20 elements', () => {
-        const pokemonsListSelector =
-          'div.app__mainContent ul.pokemons--unordered';
-
-        // TODO: wait before
+        cy.wait(5000);
 
         cy.fixture('pokemonAppData').then((data) => {
           const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
@@ -166,7 +165,10 @@ describe('Interactive Pokemon Catalogue', () => {
             const lightThemeText = data.theme.light;
             const toggleThemeWhenIsLightBtnText = data.buttons.theme.darkTheme;
 
-            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsLightBtnText);
+            cy.get(toggleThemeBtnSelector).should(
+              'have.text',
+              toggleThemeWhenIsLightBtnText
+            );
 
             cy.get(mainContentSelector)
               .should('have.attr', 'data-theme')
@@ -187,7 +189,10 @@ describe('Interactive Pokemon Catalogue', () => {
             const darkThemeText = data.theme.dark;
             const toggleThemeWhenIsDarkBtnText = data.buttons.theme.lightTheme;
 
-            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsDarkBtnText);
+            cy.get(toggleThemeBtnSelector).should(
+              'have.text',
+              toggleThemeWhenIsDarkBtnText
+            );
 
             cy.get(mainContentSelector)
               .should('have.attr', 'data-theme')
@@ -216,7 +221,10 @@ describe('Interactive Pokemon Catalogue', () => {
             const darkThemeText = data.theme.dark;
             const toggleThemeWhenIsDarkBtnText = data.buttons.theme.lightTheme;
 
-            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsDarkBtnText);
+            cy.get(toggleThemeBtnSelector).should(
+              'have.text',
+              toggleThemeWhenIsDarkBtnText
+            );
 
             cy.get(mainContentSelector)
               .should('have.attr', 'data-theme')
@@ -237,7 +245,10 @@ describe('Interactive Pokemon Catalogue', () => {
             const lightThemeText = data.theme.light;
             const toggleThemeWhenIsLightBtnText = data.buttons.theme.darkTheme;
 
-            cy.get(toggleThemeBtnSelector).should('have.text', toggleThemeWhenIsLightBtnText);
+            cy.get(toggleThemeBtnSelector).should(
+              'have.text',
+              toggleThemeWhenIsLightBtnText
+            );
 
             cy.get(mainContentSelector)
               .should('have.attr', 'data-theme')
@@ -254,7 +265,63 @@ describe('Interactive Pokemon Catalogue', () => {
     );
   });
 
-  describe('Load more Pokemons', () => {});
+  describe('Load more Pokemons', () => {
+    context(
+      'When the page is loaded, "Browse Pokemons" button is clicked and page is scrolled down',
+      () => {
+        beforeEach(() => {
+          cy.wait(5000);
+          cy.get(browsePokemonsBtnSelector).click();
+          cy.get(scrollToTopBtnSelector).scrollIntoView();
+        });
+
+        it('then the list of pokemons should contain 20 items', () => {
+          cy.fixture('pokemonAppData').then((data) => {
+            const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
+            const initialyLoadedPokemonsListLength =
+              initialyLoadedPokemonsList.length;
+            cy.get(pokemonsListSelector).children().should('not.be.empty');
+  
+            cy.get(pokemonsListSelector)
+              .children()
+              .should('have.length', initialyLoadedPokemonsListLength);
+          });
+        });
+
+        it('when the "Load more Pokemons" is clicked once, then the list of pokemons should contain 40 items', () => {
+          cy.get(loadMorePokemonsBtnSelector).click();
+          cy.wait(5000);
+
+          cy.fixture('pokemonAppData').then((data) => {
+            const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
+            const onceReloadedPokemonsListLength =
+              initialyLoadedPokemonsList.length + 20;
+            cy.get(pokemonsListSelector).children().should('not.be.empty');
+  
+            cy.get(pokemonsListSelector)
+              .children()
+              .should('have.length', onceReloadedPokemonsListLength);
+          });
+        });
+
+        it('when the "Load more Pokemons" is clicked twice, then the list of pokemons should contain 60 items', () => {
+          cy.get(loadMorePokemonsBtnSelector).click().click();
+          cy.wait(5000);
+          
+          cy.fixture('pokemonAppData').then((data) => {
+            const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
+            const twiceReloadedPokemonsListLength =
+              initialyLoadedPokemonsList.length + 40;
+            cy.get(pokemonsListSelector).children().should('not.be.empty');
+  
+            cy.get(pokemonsListSelector)
+              .children()
+              .should('have.length', twiceReloadedPokemonsListLength);
+          });
+        });
+      }
+    );
+  });
 
   describe('Pokemon tile content', () => {});
 
