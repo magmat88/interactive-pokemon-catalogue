@@ -1,38 +1,33 @@
-const url = 'https://magmat88.github.io/interactive-pokemon-catalogue/';
+const { timeStamp } = require('console');
 
-describe('example to-do app', () => {
+describe('Interactive Pokemon Catalogue', () => {
   beforeEach(() => {
-    cy.visit(url);
+    cy.visit('/');
   });
 
-  it('displays header', () => {
-    const titleSelector = '.landingPage__title';
-    const title = cy.get(titleSelector);
-
-    title.should('have.length', 1);
-    title.first().should('have.text', 'Pokedex');
+  describe('Page loaded', () => {
+   
   });
 
-  it('should filter', () => {
-    const filterInputSelector = 'input.filterByName__input';
-    cy.wait(5000);
+  describe('Links', () => {});
 
-    const filterInput = cy.get(filterInputSelector);
+  describe('Scroll into view buttons', () => {});
 
+  describe('Pokemons list loaded', () => {});
 
-    filterInput.type('charizard')
-        .should('have.value', 'charizard');
+  describe('Pokemon data loaded', () => {});
 
-    cy.get('.pokemons--unordered li.pokemons__listItem')
-    .should('have.length', 1);
+  describe('Load more Pokemons', () => {});
 
-    cy.get('.pokemon h1.pokemon__text--label')
-        .should('have.text', 'charizard');
+  describe('Pokemon tile content', () => {});
 
-    cy.get('div.pokemon').click();
-    cy.get('article.pokemon__description div p').should('have.length', 2);
-    cy.get('article.pokemon__description div p').first().should('have.text', 'Height: 17 m')    
-    
+  describe('Toggle details visibility', () => {});
 
-  });
+  describe('Filter Pokemons by name', () => {});
+
+  describe('Filter Pokemons by type', () => {});
+
+  describe('Filter Pokemons simultaneously by name and by type', () => {});
+
+  describe('Toggle color theme', () => {});
 });
