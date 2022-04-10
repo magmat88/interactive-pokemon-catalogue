@@ -35,7 +35,7 @@
       "water"
     ]
   },
-  "footer": ["This page relies on data provided by", "&copy;"],
+  "footer": ["This page relies on data provided by PokeApi", "©magmat88"],
   "initiallyLoadedPokemons": [
     "bulbasaur",
     "ivysaur",

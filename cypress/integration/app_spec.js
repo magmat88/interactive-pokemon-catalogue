@@ -5,13 +5,14 @@ describe('Interactive Pokemon Catalogue', () => {
 
   describe('Page loaded', () => {
     context('When the page is loaded', () => {
+      const footerSelector = 'footer';
       const landingPageSelector = '#landing-page';
       const mainContentSelector = 'div.app__mainContent';
       const scrollToTopBtnSelector =
         'div.scrollToSection button.scrollToSection__btn';
 
       it('then it should focus on the landing page', () => {
-        cy.get(landingPageSelector).should('exist');
+        cy.get(landingPageSelector).should('exist').should('be.visible');
       });
 
       it('then the landing page should contain a container with a header with text "Pokedex", a subheader with text "Discover amazing world of Pokemons" and a button with text "Browse Pokemons"', () => {
@@ -79,10 +80,8 @@ describe('Interactive Pokemon Catalogue', () => {
           const initialyLoadedPokemonsList = data.initiallyLoadedPokemons;
           const initialyLoadedPokemonsListLength =
             initialyLoadedPokemonsList.length;
-          cy.get(pokemonsListSelector)
-            .children()
-            .should('not.be.empty');
-            
+          cy.get(pokemonsListSelector).children().should('not.be.empty');
+
           cy.get(pokemonsListSelector)
             .children()
             .should('have.length', initialyLoadedPokemonsListLength);
@@ -93,35 +92,60 @@ describe('Interactive Pokemon Catalogue', () => {
         });
       });
 
-      it('then when the page is scrolled down, it contains "Scroll to top" button', () => {
-        // cy.get(mainContentSelector).scrollTo('bottom');
+      it('then when the page is scrolled down, it should contain "Scroll to top" button', () => {
+        cy.get(scrollToTopBtnSelector).scrollIntoView();
         cy.fixture('pokemonAppData').then((data) => {
           const scrollToTopBtnText = data.buttons.scrollToTop;
-          cy.get(mainContentSelector).next().children().should(
-            'have.text',
-            scrollToTopBtnText
-          );
+          cy.get(mainContentSelector)
+            .next()
+            .children()
+            .should('have.text', scrollToTopBtnText);
         });
       });
 
-      it('then when the button "Scroll to top" is clicked, it should focuses on the landing page', () => {
-        // cy.get(scrollToTopBtnSelector).click().find(landingPageSelector)
+      it('then when the page is scrolled down and the button "Scroll to top" is clicked, it should focus on the landing page', () => {
+        // TODO: before
+        cy.get(scrollToTopBtnSelector).scrollIntoView();
+        cy.get(scrollToTopBtnSelector).click();
+        cy.get(landingPageSelector).should('be.visible');
       });
 
-      it('then it contains working links', () => {});
+      it('then when the page is scrolled down it should contain footer with text "This page relies on data provided by PokeApi" and "©magmat88"', () => {
+        // TODO: before
+        cy.get(scrollToTopBtnSelector).scrollIntoView();
+        cy.get(footerSelector).should('exist');
 
-      it('then it Scroll into view buttons', () => {});
+        cy.fixture('pokemonAppData').then((data) => {
+          const footerText = data.footer;
 
-      // it('page is loaded', () => {
-      //   cy.log('page loaded...');
-      // });
-      // it('show example fixture data from array', () => {
-      //   const pokemonTypes = [];
-      //   cy.fixture('pokemonAppData').then((data)=>{
-      //     pokemonTypes.push(...data.pokemonTypes);
-      //     cy.log(pokemonTypes);
-      //   });
-      // });
+          cy.get(footerSelector)
+            .children()
+            .should('contain.text', ...footerText);
+        });
+      });
+
+      it('then when the page is scrolled down, in footer it should be working links opened in the new browser tab - to author: "https://github.com/magmat88" and to used API: "https://pokeapi.co"', () => {
+        // TODO: before
+        cy.get(scrollToTopBtnSelector).scrollIntoView();
+        cy.fixture('pokemonAppData').then((data) => {
+          const linkToAuthor = data.links.author;
+          const linkToPokeApi = data.links.pokeApi;
+
+          cy.get(footerSelector)
+            .children()
+            .eq(0)
+            .find('a')
+            .should('have.attr', 'href')
+            .and('include', linkToPokeApi);
+
+          cy.get(footerSelector)
+            .children()
+            .eq(1)
+            .find('a')
+            .should('have.attr', 'href')
+            .and('include', linkToAuthor);
+        });
+      });
     });
   });
 
