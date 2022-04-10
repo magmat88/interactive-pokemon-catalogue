@@ -69,5 +69,9 @@
   "pokemonTile": {
     "details": ["Height", "m", "Weight", "kg"],
     "withoutDetails": ["+", "See details"]
+  },
+  "theme": {
+    "dark": "dark",
+    "light": "light"
   }
 }
